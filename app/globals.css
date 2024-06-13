@@ -2,32 +2,114 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+body{
+  transition: all 0.5s;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.linked {
+  @apply  flex rounded-md gap-6 items-center md:cursor-pointer cursor-default text-[12px] ;
+}
+
+.active {
+  @apply bg-[#00BCD4] text-white;
+}
+
+/************************************************************/
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+}
+
+.zui-table-rounded {
+  border: none;
+}
+
+.theading:first-child {
+  border-radius: 0.5rem 0 0 0;
+}
+.theading:last-child {
+  border-radius: 0 0.5rem 0 0;
+}
+
+
+
+.tablerow:last-child .tablecold:first-child {
+  border-radius: 0 0 0 0.5rem;
+}
+.tablerow:last-child .tablecold:last-child {
+  border-radius: 0 0 0.5rem 0;
+}
+
+@keyframes changeBackground {
+  0% {
+    background-image: url('/background1.png');
+  }
+  33.33% {
+    background-image: url('/background2.png');
+  }
+  66.66% {
+    background-image: url('/background3.png');
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.light::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(1) sepia(100%) saturate(100000%) hue-rotate(170deg);
+}
+.dark::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(2) sepia(100%) saturate(100000%) hue-rotate(170deg);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.shadowHover:hover{
+  @apply shadow-[0_1px_12px_#00bcd4ab];
+}
+.shadowHoverRed:hover{
+  @apply shadow-[0_1px_12px_#ff4d4d]
+}
+
+.emoji-404{
+
+  position: relative;
+  animation: mymove 2.5s infinite;
+}
+
+@keyframes mymove {
+  33%   {top: 0px;}
+  66%  {top: 20px;}
+  100%  {top: 0px}
+
+
+
+}
+
+@font-face {
+  font-family: khmerContent;
+  src: url('/Kh-Content.ttf') format('truetype');
+
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1)
+          brightness(20%)
+          sepia(20%)
+          saturate(200%)
+          hue-rotate(180deg)
+}
+
+
+.notes {
+  background-image: -webkit-linear-gradient(left, white 10px, transparent 10px), -webkit-linear-gradient(right, white 10px, transparent 10px), -webkit-linear-gradient(white 30px, #ccc 30px, #ccc 31px, white 31px);
+  background-image: -moz-linear-gradient(left, white 10px, transparent 10px), -moz-linear-gradient(right, white 10px, transparent 10px), -moz-linear-gradient(white 30px, #ccc 30px, #ccc 31px, white 31px);
+  background-image: -ms-linear-gradient(left, white 10px, transparent 10px), -ms-linear-gradient(right, white 10px, transparent 10px), -ms-linear-gradient(white 30px, #ccc 30px, #ccc 31px, white 31px);
+  background-image: -o-linear-gradient(left, white 10px, transparent 10px), -o-linear-gradient(right, white 10px, transparent 10px), -o-linear-gradient(white 30px, #ccc 30px, #ccc 31px, white 31px);
+  background-image: linear-gradient(left, white 10px, transparent 10px), linear-gradient(right, white 10px, transparent 10px), linear-gradient(white 30px, #ccc 30px, #ccc 31px, white 31px);
+  background-size: 100% 100%, 100% 100%, 100% 31px;
+
+  line-height: 31px;
+  font-family: Arial, Helvetica, Sans-serif;
+  padding: 8px;
 }
