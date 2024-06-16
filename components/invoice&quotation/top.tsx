@@ -34,12 +34,12 @@ const Top = ({topTitle,text,classname,which,children,...props}:topProps) => {
         {
           which === 'invoice' && (
             <button className={`py-1 text-white ${!notification ? "bg-insomnia-primary" : "bg-[#BFBFBF]"} px-1 my-2 rounded-md mr-[10px]`} onClick={setNotifcation}>
-            <IoIosNotifications size={20}/>
+             <IoIosNotifications size={20}/>
             </button>
           )
         }
         
-        <button className={`py-1 text-white ${!enableNote ? "bg-insomnia-primary" : "bg-[#BFBFBF]"} px-1 my-2 rounded-md`} onClick={setEnableNote}>
+        <button className={`py-1 text-white ${!enableNote ? "bg-[#BFBFBF]" : "bg-insomnia-primary"} px-1 my-2 rounded-md`} onClick={setEnableNote}>
           <PiNotePencilBold size={20}/>
         </button>
       

@@ -17,6 +17,8 @@ import { useQuotation } from '@/hooks/usedatas';
 import { IoPrintOutline } from "react-icons/io5";
 import { GrDocumentTransfer } from "react-icons/gr";
 import { recentlyActivity } from '@/app/(protected)/recently/action';
+import { LuCalendarSearch } from "react-icons/lu";
+import { LuCalendarX2 } from "react-icons/lu";
 
 type qtProps = {
   id:string;
@@ -29,6 +31,7 @@ type qtProps = {
   total:number;
   createdAt:string;
   updatedAt:string;
+  qtDate:string;
 }
 
 type Option ={
@@ -47,6 +50,7 @@ const QtTable = () => {
   const[page , setPage] = useState(1);
   const [currentPage , setCurrentPage] = useState(1);
   const [focus , setFocus] = useState<number | null>(0)
+  const [switched , setSwitched] = useState<boolean>(false)
   const [selectedItemId, setSelectedItemId] = useState<string>("");
   const [take , setTake] = useState<number>(15)
   const [paperNo , setPaperno] = useState<string>('')
@@ -272,7 +276,7 @@ const QtTable = () => {
                 name='filter'
                 value={val.filter}
                 onChange={handleChange}
-                placeholder='all'
+                placeholder='Search'
                 />
                 <label  className={`absolute top-0 lg:text-[15px] xl:text-md ${darkMode ? "bg-dark-box-color" : "bg-white"} p-4 -z-1 transform text-input-primary scale-75 -translate-y-4 z-0 px-1 py-0 duration-300 origin-0`}>
                     FILTER
@@ -334,6 +338,20 @@ const QtTable = () => {
                             </label>
                 </div>
             </div>
+
+            <button className='bg-insomnia-primary h-full px-2 p-1 rounded lg:text-[15px] xl:text-md' onClick={()=>setSwitched(!switched)}>
+                  {
+                    !switched ? (
+                      <div className='text-white'>
+                          <LuCalendarSearch />
+                      </div>
+                    ) : (
+                      <div className='text-white'>
+                        <LuCalendarX2 />
+                      </div>
+                    )
+                  }
+            </button>
           </div>
         </div>
         <table className='w-full mt-[10px]'>
@@ -342,7 +360,7 @@ const QtTable = () => {
                 {
                   thead?.map((item,i)=>{
                     return(
-                      <th key={item.label} className={`${item.textAlign} ${item.textAlign} ${i === 0 ? 'rounded-tl-md' : ''} ${i === 8 ? 'rounded-tr-md' : ''} xl:text-[16px] lg:text-[10px] xl:leading-7 pt-[3px] text-white bg-thead-primary`}>{item.label}</th>
+                      <th key={item.label} className={`${item.textAlign} ${item.textAlign} ${i === 0 ? 'rounded-tl-md' : ''} ${i === 8 ? 'rounded-tr-md' : ''} xl:text-[16px] lg:text-[10px] xl:leading-7 pt-[3px] text-white bg-thead-primary`}>{item.label === 'CREATE DATE' ? !switched ? "QT DATE" : "CREATE DATE" : item.label }</th>
                     )
                   })
                 }
@@ -359,10 +377,22 @@ const QtTable = () => {
                     <td className={`${placeholderClass} text-start`}>{item.customer.cusName}</td>
                     <td className={`${placeholderClass} text-start`}>{item.qtBus}</td>
                     <td className={`${placeholderClass} text-end`}>${item.total.toFixed(2)}</td>
-                    <td className={placeholderClass}><div className='flex justify-end items-center'>
-                    <div className='pr-[5px]'>{!item.createdAt ? '' : dateFormat(item.createdAt)}</div>
-                    <div>{item.createdAt ? convertTime(item.createdAt) : ''}</div>
-                    </div></td>
+                    <td className={placeholderClass}>
+                      {
+                        !switched ?  (
+                          <div className='text-end'>
+                            {dateFormat(item.qtDate)}
+                          </div>
+                        ) : (
+                          <div className='flex justify-end items-center'>
+                              <div className='pr-[5px]'>{!item.createdAt ? '' : dateFormat(item.createdAt)}</div>
+                              <div>{item.createdAt ? convertTime(item.createdAt) : ''}</div>
+                          </div>
+                        )
+                      }
+                        
+                    
+                    </td>
                     <td className={placeholderClass}><div className='flex justify-end items-center gap-1'>
                     <div className='pr-[5px]'>{!item.updatedAt ? '' : dateFormat(item.updatedAt.split("T")[0])}</div><div>{item.updatedAt ? convertTime(item.updatedAt) : ''}</div></div></td>
                     <td className={placeholderClass}>

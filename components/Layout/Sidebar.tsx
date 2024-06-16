@@ -320,6 +320,7 @@ const Sidebar = ({children}:layoutProps) => {
             
         </div>
         <div className='flex flex-col h-full'>
+          {/*overflow-x-hidden md:h-[68%] h-[70%]**/}
           <ul className={`whitespace-pre 
           px-2.5 
           text-[0.9rem] 
@@ -327,12 +328,8 @@ const Sidebar = ({children}:layoutProps) => {
           flex-col 
           gap-1  
           font-medium 
-          overflow-x-hidden 
           scrollbar-thin 
-          ${darkMode ? "scrollbar-track-dark-box-color scrollbar-thumb-dark-sm-color" : "scrollbar-track-[#024466] scrollbar-thumb-[#024466]"}
-          
-          
-          md:h-[68%] h-[70%]`}>
+          ${darkMode ? "scrollbar-track-dark-box-color scrollbar-thumb-dark-sm-color" : "scrollbar-track-[#024466] scrollbar-thumb-[#024466]"}`}>
             {
               leftMenu?.map((item)=>{
                 return(

@@ -170,11 +170,11 @@ const CusTable = () => {
       textAlign:"text-start"
     },
     {
-      label:"PHONE NUMBER 1",
+      label:"PHONE #1",
       textAlign:"text-end"
     },
     {
-      label: "PHONE NUMBER 2",
+      label: "PHONE #2",
       textAlign:"text-end"
     },
     {

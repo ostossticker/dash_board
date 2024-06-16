@@ -109,6 +109,9 @@ export const addGeneral = async ({
     if(items?.length === 0){
         return {error:"sorry u cant save this invoice without adding some item"}
     }
+    if(!customerId){
+        return {error:"sorry this not work"}
+    }
 
     const creatcustomer = await prisma.customer.update({
         where:{

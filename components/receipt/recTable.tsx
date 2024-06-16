@@ -25,6 +25,7 @@ type recProps = {
     usd:number;
     createdAt:string;
     updatedAt:string;
+    date:string;
   }
   
   type Option ={
@@ -169,16 +170,20 @@ const RecTable = () => {
       textAlign:"text-end"
     },
     {
-        label:"CREATE DATE",
-        textAlign:"text-end"
+      label:"REC DATE",
+      textAlign:"text-end"
     },
     {
-        label:"UPDATE DATE",
-        textAlign:"text-end"
+      label:"CREATE DATE",
+      textAlign:"text-end"
     },
     {
-        label:"ACTIONS",
-        textAlign:"text-center"
+      label:"UPDATE DATE",
+      textAlign:"text-end"
+    },
+    {
+      label:"ACTIONS",
+      textAlign:"text-center"
     }
   ],[])
 
@@ -277,7 +282,7 @@ const RecTable = () => {
                 onBlur={()=>setTimeout(() => {
                   setFocus(null)
                 }, 150)}
-                placeholder='all'
+                placeholder='All'
                 />
                 <label  className={`absolute top-0 lg:text-[15px] xl:text-md ${darkMode ? "bg-dark-box-color" : "bg-white"} p-4 -z-1 transform text-input-primary scale-75 -translate-y-4 z-0 px-1 py-0 duration-300 origin-0`}>
                     BUSINESS
@@ -326,7 +331,7 @@ const RecTable = () => {
                 {
                   thead?.map((item,i)=>{
                     return(
-                      <th key={item.label} className={`${item.textAlign} ${i === 0 ? 'rounded-tl-md' : ''} ${i === 6 ? 'rounded-tr-md' : ''} xl:text-[16px] lg:text-[10px] xl:leading-7 pt-[3px] text-white bg-thead-primary text-[15px]`}>{item.label}</th>
+                      <th key={item.label} className={`${item.textAlign} ${i === 0 ? 'rounded-tl-md' : ''} ${i === 7 ? 'rounded-tr-md' : ''} xl:text-[16px] lg:text-[10px] xl:leading-7 pt-[3px] text-white bg-thead-primary text-[15px]`}>{item.label}</th>
                     )
                   })
                 }
@@ -341,6 +346,11 @@ const RecTable = () => {
                     <td className={`${placeholderClass} text-start pl-[30px]`}>{item.recNo}</td>
                     <td className={`${placeholderClass} text-start`}>{item.recBus}</td>
                     <td className={`${placeholderClass} text-end`}>${item.usd.toFixed(2)}</td>
+                    <td className={placeholderClass}>
+                      <div className='text-center'>
+                        {item.date}
+                      </div>
+                    </td>
                     <td className={placeholderClass}><div className='flex justify-end items-center'>
                     <div className='pr-[5px]'>{!item.createdAt ? '' : dateFormat(item.createdAt)}</div>
                     <div>{item.createdAt ? convertTime(item.createdAt) : ''}</div>
@@ -386,6 +396,7 @@ const RecTable = () => {
                     row.push(
                       <tr key={crypto.randomUUID()} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} xl:text-[16px] lg:text-[11px]`}>
                        <td className={placeholderClass}><div className='invisible'>-</div></td>
+                        <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>

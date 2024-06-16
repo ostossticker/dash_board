@@ -10,13 +10,15 @@ import { MdOutlineArrowDropDown } from "react-icons/md";
 import useSWR, { mutate } from 'swr';
 import Modal from '../ui/modal/modal';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { softDelete } from '@/app/(protected)/invoice/actions/meters';
 import { usedatainvoice } from '@/hooks/usedatas';
 import { useCurrentRole } from '@/hooks/use-current-role';
 import { IoPrintOutline } from "react-icons/io5";
 import { PiReceipt } from "react-icons/pi";
 import { recentlyActivity } from '@/app/(protected)/recently/action';
+import { LuCalendarSearch } from "react-icons/lu";
+import { LuCalendarX2 } from "react-icons/lu";
 
 type arr = {
   id:string;
@@ -63,13 +65,21 @@ const InvTable = () => {
     toDate:''
   })
   const [icon ,  setIcon] = useState<boolean>(false)
-
+  const pathname = usePathname()
   const anagramFilter:string =''
   const {data , error} = useSWR(`${url}/api/invoicetable?switchMode=${routerSwitch}&name=${user.name}&email=${user.id}&page=${page}&take=${take}&filter=${val.filter}&filter1=${val.filter1}&filter2=${val.status}&fromDate=${val.fromDate}&toDate=${val.toDate}`,fetchData)
+
+  useEffect(()=>{
+    if(pathname === '/invoice/table'){
+      setIcon(false)
+      setSwitch('invoice')
+    }
+  },[])
 
   const invoices:arr[] = data?.invoices || []
   const totalPages: number = data?.pagination.totalPages || 0;
   const totalFilter:number = data?.totalFilter || 0
+  
 
   const ulRef = useRef<HTMLUListElement>(null);
 
@@ -176,10 +186,6 @@ const filteredUsers = anagramFilter
     {
       label:"INVOICE#",
       textAlign:"text-start pl-[30px]"
-    },
-    {
-      label:"TITLE",
-      textAlign:"text-start"
     },
     {
       label:"CUSTOMER",
@@ -375,11 +381,11 @@ const filteredUsers = anagramFilter
                   {
                     !switched ? (
                       <div className='text-white'>
-                          Created Date
+                          <LuCalendarSearch />
                       </div>
                     ) : (
                       <div className='text-white'>
-                          Off
+                        <LuCalendarX2 />
                       </div>
                     )
                   }
@@ -421,7 +427,7 @@ const filteredUsers = anagramFilter
                   thead?.map((item,i)=>{
                     return(
                       <React.Fragment key={item.label}>
-                        <th className={`${item.textAlign} ${i === 0 ? 'rounded-tl-md' : ''} ${i === 9 ? 'rounded-tr-md' : ''} text-white bg-thead-primary xl:text-[16px] lg:text-[10px] xl:leading-7 pt-[3px] ${routerSwitch === 'delivery' && item.label === 'STATUS' && "hidden"} text-[14px]`}>{ routerSwitch === 'delivery' && item.label === 'INVOICE#' ? "DELIVERY#" : item.label} </th>
+                        <th className={`${item.textAlign} ${i === 0 ? 'rounded-tl-md' : ''} ${i === 9 ? 'rounded-tr-md' : ''} text-white bg-thead-primary xl:text-[16px] lg:text-[10px] xl:leading-7 pt-[3px] ${routerSwitch === 'delivery' && item.label === 'STATUS' && "hidden"} text-[14px]`}>{ routerSwitch === 'delivery' && item.label === 'INVOICE#' ? "DELIVERY#" : item.label === 'CREATE DATE' ? !switched ? "INV DATE" : "CREATE DATE" : item.label } </th>
                       </React.Fragment>
                     )
                   })
@@ -435,7 +441,6 @@ const filteredUsers = anagramFilter
                   <tr key={item.id} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} hover:bg-[#F9FAFB]`}>
                     <td className={`${placeholderClass}`}>{(page - 1) * take + i + 1}</td>
                     <td className={`${placeholderClass} text-start pl-[30px]`}>{item.invNo}</td>
-                    <td className={`${placeholderClass} text-start `}>{item.invTitle}</td>
                     <td className={`${placeholderClass} text-start `}>{item.customer.cusName}</td>
                     <td className={`${placeholderClass} text-start `}>{item.invBus}</td>
                     <td className={`${placeholderClass}  ${routerSwitch === 'delivery' ? "hidden" : ""} `}>
@@ -517,7 +522,6 @@ const filteredUsers = anagramFilter
                     row.push(
                       <tr key={crypto.randomUUID()} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} xl:text-[16px] lg:text-[11px]`}>
                         <td className={placeholderClass}><div className='invisible'>-</div></td>
-                        <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>

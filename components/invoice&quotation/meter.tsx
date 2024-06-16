@@ -379,7 +379,7 @@ const formatTotal = (value: string): string => {
         const width = updatedCalculation.sizeWidth;
         const height = updatedCalculation.sizeHeight;
         if (!isNaN(width) && width !== 0 && !isNaN(height) && height !== 0) {
-            updatedCalculation.m2 = parseFloat(((width * height) / 10000).toFixed(2));
+            updatedCalculation.m2 = ((width * height) / 10000);
         } else {
             updatedCalculation.m2 = updatedCalculation.m2;
         }
@@ -640,7 +640,7 @@ const calculateBalance = () => {
       if(value.trim() === ''){
         handleChange(index , 'm2' , '')
       }else{
-        const parsedValue = parseFloat(value).toFixed(2) 
+        const parsedValue = parseFloat(value)
         if(!Number.isNaN(parsedValue)){
           handleChange(index , 'm2' , value)
         }else{
@@ -723,7 +723,7 @@ const calculateBalance = () => {
       clss:""
     },
     {
-      label:"UNITPRICE",
+      label:"UNIT PRICE",
       clss:""
     },
     {
@@ -1300,7 +1300,7 @@ const calculateBalance = () => {
           <td className=" px-[10px] py-2">
             <input
               type="number"
-              value={item.m2 === 0 ? '' : item.m2}
+              value={item.m2 === 0 || item.m2 === undefined ? '' : item.m2.toFixed(2)}
               onChange={(e) => handleChange(index , 'm2' , e.target.value)}
               onBlur={(e) => handleM2(e.target.value, index)}
               onKeyDown={(e) => handleM2Key(e, index , item.m2.toString())}
@@ -1438,7 +1438,7 @@ const calculateBalance = () => {
       </div>
        <div className="flex mt-[20px] justify-between">
     {
-      !enableNote ? (
+      enableNote === true ? (
        <div className="rounded-md">
         <h1 className="rounded-t-md text-white bg-insomnia-primary py-1 font-bold px-[24px]">NOTE</h1>
       <div className="py-1 px-[24px] bg-white rounded-b-md">
@@ -1464,7 +1464,7 @@ const calculateBalance = () => {
           <>
           <button className={`bg-[#00BCD4] hover:bg-[#036080] text-dark-lg-color h-[35px] px-2 font-bold text-[20px] w-[120px] rounded-md`} onClick={()=>handleImageSelection(ref1,'img1' as keyof quoteImage)}>Artwork 1</button>
           <button className={`bg-[#00BCD4] hover:bg-[#036080] text-dark-lg-color h-[35px] px-2 font-bold text-[20px] w-[120px] rounded-md`} onClick={()=>handleImageSelection(ref2,'img2' as keyof quoteImage)}>Artwork 2</button>
-          <button className={`bg-[#00BCD4] hover:bg-[#036080] text-dark-lg-color h-[35px] px-2 font-bold text-[20px] w-[120px] rounded-md`} onClick={converting}>{pending ? "Loading..." : "CONVERT" }</button>
+          <button className={`bg-[#00BCD4] hover:bg-[#036080] text-dark-lg-color h-[35px] px-2 font-bold text-[20px] w-[120px] rounded-md`} onClick={converting}>CONVERT</button>
           </>
         )
       }

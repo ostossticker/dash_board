@@ -641,7 +641,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
       clss:""
     },
     {
-      label:"UNITPRICE",
+      label:"UNIT PRICE",
       clss:""
     },
     {
@@ -1336,7 +1336,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
       </div>
       <div className="flex mt-[20px] justify-between">
        {
-        !enableNote ? (
+        enableNote === true ? (
           <div className="rounded-md">
               <h1 className="rounded-t-md text-white bg-insomnia-primary py-1 font-bold px-[24px]">NOTE</h1>
             <div className="py-1 px-[24px] bg-white rounded-b-md">
@@ -1362,7 +1362,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
           <>
             <button className={`bg-[#00BCD4] hover:bg-[#036080] text-dark-lg-color h-[35px] px-2 font-bold text-[20px] w-[120px] rounded-md`} onClick={()=>handleImageSelection(ref1,'img1' as keyof quoteImage)}>Artwork 1</button>
             <button className={`bg-[#00BCD4] hover:bg-[#036080] text-dark-lg-color h-[35px] px-2 font-bold text-[20px] w-[120px] rounded-md`} onClick={()=>handleImageSelection(ref2,'img2' as keyof quoteImage)}>Artwork 2</button>
-            <button className={`bg-[#00BCD4] hover:bg-[#036080] text-dark-lg-color h-[35px] px-2 font-bold text-[20px] w-[120px] rounded-md`} onClick={converting}>{pending ? "Loading..." : "CONVERT" }</button>
+            <button className={`bg-[#00BCD4] hover:bg-[#036080] text-dark-lg-color h-[35px] px-2 font-bold text-[20px] w-[120px] rounded-md`} onClick={converting}>CONVERT</button>
           </>
         )
       }

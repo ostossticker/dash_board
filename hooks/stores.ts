@@ -97,7 +97,7 @@ type toggleVal = {
 }
 
 const useToggle = create<toggleVal>((set)=>({
-    enableNote:true,
+    enableNote:false,
     passingId:'',
     notification:false,
     edit:false,

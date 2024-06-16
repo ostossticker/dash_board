@@ -167,7 +167,7 @@ const PurTable = () => {
       textAlign:""   
     },
     {
-      label:"INVOICE NO",
+      label:"INVOICE#",
       textAlign:"text-start pl-[50px]"
     },
     {

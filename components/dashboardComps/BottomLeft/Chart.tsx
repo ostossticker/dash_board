@@ -156,7 +156,7 @@ const Charts = () => {
                 fontSize:'10px'
               }
             },
-          }
+          },
         },
         dataLabels: {
             enabled: true,

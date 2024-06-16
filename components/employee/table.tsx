@@ -223,7 +223,7 @@ const scrollToSelectedIndex = () => {
       textAlign:"text-start"
     },
     {
-      label:"PHONE NUMBER",
+      label:"PHONE#",
       textAlign:"text-end"
     },
     {

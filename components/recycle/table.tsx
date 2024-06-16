@@ -396,10 +396,10 @@ const Rectable = () => {
                                                             <td className={placeholderClass}></td>
                                                             <td className={placeholderClass}>
                                                                 <div className='flex justify-center items-center gap-1'>
-                                                                    <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[10px] xl:text-[15px]`}>
+                                                                    <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[10px] xl:text-[15px] invisible`}>
                                                                             <ImLoop2 />     
                                                                     </button>
-                                                                    <button className={`${darkMode ? "text-red-400 " : "text-red-700" } p-1 lg:text-[14px] xl:text-[20px]`}>
+                                                                    <button className={`${darkMode ? "text-red-400 " : "text-red-700" } p-1 lg:text-[14px] xl:text-[20px] invisible`}>
                                                                         <PiTrashLight/>
                                                                     </button>
                                                                 </div>
@@ -501,10 +501,10 @@ const Rectable = () => {
                                                                 <td className={placeholderClass}></td>
                                                                 <td className={placeholderClass}>
                                                                 <div className='flex justify-center items-center gap-1'>
-                                                                    <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[10px] xl:text-[15px]`}>
+                                                                    <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[10px] xl:text-[15px] invisible`}>
                                                                             <ImLoop2 />     
                                                                     </button>
-                                                                    <button className={`${darkMode ? "text-red-400 " : "text-red-700" } p-1 lg:text-[14px] xl:text-[20px]`}>
+                                                                    <button className={`${darkMode ? "text-red-400 " : "text-red-700" } p-1 lg:text-[14px] xl:text-[20px] invisible`}>
                                                                         <PiTrashLight/>
                                                                     </button>
                                                                 </div>
@@ -600,10 +600,10 @@ const Rectable = () => {
                                                                     <td className={placeholderClass}></td>
                                                                     <td className={placeholderClass}>
                                                                     <div className='flex justify-center items-center gap-1'>
-                                                                    <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[10px] xl:text-[15px]`}>
+                                                                    <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[10px] xl:text-[15px] invisible`}>
                                                                             <ImLoop2 />     
                                                                     </button>
-                                                                    <button className={`${darkMode ? "text-red-400 " : "text-red-700" } p-1 lg:text-[14px] xl:text-[20px]`}>
+                                                                    <button className={`${darkMode ? "text-red-400 " : "text-red-700" } p-1 lg:text-[14px] xl:text-[20px] invisible`}>
                                                                         <PiTrashLight/>
                                                                     </button>
                                                                 </div>

@@ -11,7 +11,6 @@ type recentlyPropsf = {
   id:string;
   user:string;
   cust:string;
-  route:string;
   updatedAt:string
   paperNo:string;
   action:string;
@@ -77,10 +76,6 @@ useEffect(()=>{
       textAlign:"text-end pr-[120px] lg:pl-[10px] xl:pl-[30px]"
     },
     {
-      label:"ROUTE",
-      textAlign:"text-start pr-[80px]"
-    },
-    {
       label:"NO#",
       textAlign:"text-start pr-[50px]"
     },
@@ -132,7 +127,6 @@ useEffect(()=>{
                     <div className='pr-[5px]'>{!item.updatedAt ? '' : dateFormat(item.updatedAt)}</div>
                     <div>{item.updatedAt ? convertTime(item.updatedAt) : ''}</div>
                     </div></td>
-                    <td className={`${placeholderClass} text-start pr-[80px] lg:text-[9px] xl:text-[15px]`}>{item.route}</td>
                     <td className={`${placeholderClass} text-start pr-[50px] lg:text-[9px] xl:text-[15px]`}>{item.paperNo}</td>
                     <td className={`${placeholderClass} text-end lg:pr-[20px] xl:pr-[80px] lg:text-[9px] xl:text-[15px]`}>{item.action}</td>
                   </tr>
@@ -146,7 +140,6 @@ useEffect(()=>{
                     row.push(
                       <tr key={i * Date.now()} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} xl:text-[16px] lg:text-[11px]`}>
                         <td className={`${placeholderClass} invisible xl:text-[16px] lg:text-[11px]`}>-</td>
-                        <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>

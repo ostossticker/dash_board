@@ -82,11 +82,6 @@ const Bustop = ({val , func,onclick,suggesting,setFilter }:customerTopProps) => 
             )
           })
         }
-        <div className='flex justify-center items-center  rounded-[7px]'>
-            <button className='bg-insomnia-primary h-full rounded xl:w-[35px] lg:w-[26px]  flex justify-center items-center lg:text-[13px] xl:text-[16px]' onClick={onclick}>
-                <RiArrowGoBackFill color='white'/>
-            </button>
-        </div>
 
     </div>
   )
