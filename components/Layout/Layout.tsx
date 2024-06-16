@@ -11,11 +11,12 @@ type layoutProps = {
 
 const Layout = async ({children}:layoutProps) => {
   const session = await auth()
+
   return (
     <>
     {
       session === null ? ( 
-      <AuthLay>
+      <AuthLay session={session}>
         <div className='bg-white h-screen flex items-center p-10'>
           {children}
         </div>

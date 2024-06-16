@@ -15,12 +15,14 @@ import { logout } from '@/actions/logout'
 import {FaTelegramPlane} from 'react-icons/fa'
 import { url } from '@/lib/url'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 type profileProps = {
   toggleMode:boolean
 }
 
 const Profile = ({toggleMode} : profileProps) => {
+  const router = useRouter()
   const [hidden , setHidden] = useState<boolean>(false)
   const [image , setImage] = useState<string>('')
   const [name , setName] = useState<string>('')

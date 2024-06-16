@@ -50,9 +50,12 @@ type optionDrop = {
   id:string;
   busName:string;
 }
-
-type balance = {
-  balance:number
+type balanceStatus = {
+  id:string;
+  _sum:{
+    balance:number
+  }
+  invStatus:string;
 }
 
 const InvTable = () => {
@@ -67,6 +70,7 @@ const InvTable = () => {
   const [focus , setFocus] = useState<number | null>(0)
   const [selectedItemId, setSelectedItemId] = useState<string>("");
   const [test , setTest] = useState<optionDrop[]>([])
+  const [totalStatus , setTotalStatus] = useState<balanceStatus[]>([])
   const [passing , setPassing] = useState<string>('')
   const [cusComp , setCusComp] = useState<string>('')
   const [bus , setBus] = useState<string>('')
@@ -99,6 +103,11 @@ const InvTable = () => {
     setTest(data)
 }
 
+ const fetchdatas1 = async () =>{
+  const {data} = await axios.get(`${url}/api/paymentStatus?email=${user.id}&name=${user.name}`)
+  setTotalStatus(data)
+ }
+
   useEffect(()=>{
     if(!val.filter || !val.filter1 || !val.status){
         setPage(currentPage)
@@ -112,6 +121,8 @@ const InvTable = () => {
     if(val.filter1 !== ""){
       fetchDatas(val.filter1)
     }
+
+    fetchdatas1()
      /// fix this part it need loop 4 times
   },[take , currentPage , user , val , pending ])
 
@@ -381,7 +392,7 @@ const InvTable = () => {
             </div>
             <div className='flex justify-center py-1 items-center lg:h-[28px] xl:h-9 border border-input-primary rounded-[7px] px-1'>
                 <div className='relative'>
-                    <input type="date" className={`lg:w-[120px] xl:w-[150px] px-2 py-1 lg:text-[12px] xl:text-md block appearance-none  bg-transparent ${darkMode ? "text-white dark" : `${val.fromDate === "" ? 'text-input-primary' : 'light'}`}`} name='fromDate' value={val.fromDate} onChange={handleChange}/>
+                    <input type="date" className={`lg:w-[120px] xl:w-[150px] px-2 py-1 lg:text-[12px] xl:text-md block appearance-none outline-none bg-transparent ${darkMode ? "text-white dark" : `${val.fromDate === "" ? 'text-input-primary' : 'light'}`}`} name='fromDate' value={val.fromDate} onChange={handleChange}/>
                     <label  className={`absolute top-0 lg:text-[15px] xl:text-md ${darkMode ? "bg-dark-box-color" : "bg-white"} p-4 -z-1 transform text-input-primary scale-75 -translate-y-4 z-0 px-1 py-0 duration-300 origin-0`}>
                                 From Date
                             </label>
@@ -390,7 +401,7 @@ const InvTable = () => {
                 <button className=' h-full mx-1 rounded lg:w-[20px] xl:w-[27px] lg:text-[10px] xl:text-sm flex justify-center items-center text-input-primary'>To</button>
                 
                 <div className='relative'>
-                    <input type="date" className={`lg:w-[120px] xl:w-[150px] px-2 py-1 lg:text-[12px] xl:text-md block appearance-none bg-transparent ${darkMode ? "text-white dark" : `${val.toDate === "" ? 'text-input-primary' : 'light'}`}`} name='toDate' value={val.toDate} onChange={handleChange}/>
+                    <input type="date" className={`lg:w-[120px] xl:w-[150px] px-2 py-1 lg:text-[12px] xl:text-md block appearance-none outline-none bg-transparent ${darkMode ? "text-white dark" : `${val.toDate === "" ? 'text-input-primary' : 'light'}`}`} name='toDate' value={val.toDate} onChange={handleChange}/>
                     <label  className={`absolute top-0 lg:text-[15px] xl:text-md ${darkMode ? "bg-dark-box-color" : "bg-white"} p-4 -z-1 transform text-input-primary scale-75 -translate-y-4 z-0 px-1 py-0 duration-300 origin-0`}>
                                 To Date
                             </label>
@@ -600,11 +611,29 @@ const InvTable = () => {
         
         <Modal typeSelect='caution' id='invtable' handlingAction={()=>handleDelete(passing , cusComp , bus , invStatus , invCusPhone1)} CautionText={'Deletion'}/>
     </div>
-    <div className='flex justify-end'>
+    <div className='flex justify-end gap-4'>
     
     {
         switching !== 'ungroup' ? (
-            <div className='bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>${totalValue.toFixed(2)}</div>
+          <>
+              {
+                totalStatus.map((item,id)=>{
+                  return(
+                    <div key={item.id} className='bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>
+                    <p>
+                      {item.invStatus === 'unpay' ? "unpaid" : item.invStatus}: ${item._sum.balance.toFixed(2)}
+                    </p>
+                    </div>
+                  )
+                })
+              }
+              <div className='bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>       
+              <p>
+              Total Sale: ${totalValue.toFixed(2)}  
+              </p>
+            </div>
+          </>
+           
         ) : (
              <div className='bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>${totalValue.toFixed(2)}</div>       
         )

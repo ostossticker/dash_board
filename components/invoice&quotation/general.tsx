@@ -311,7 +311,7 @@ const General = ({
   
           if (field === 'description') {
             updatedCalculation[field] = products.find(item => item.id === selectedItemId)?.prodItemName || ''
-            updatedCalculation.unitPrice = `$${parseFloat(products.find(item => item.id === selectedItemId)?.prodUnitPrice || '0').toFixed(2)}`
+            updatedCalculation.unitPrice = `$${parseFloat(products.find(item => item.id === selectedItemId)?.prodUnitPrice || '').toFixed(2)}`
             handleChange(index , 'unitPrice' , updatedCalculation.unitPrice)
           }
   
@@ -663,10 +663,6 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
       validation = "sorry this field is required"
       toast.error(validation)
       setPending(false)
-    }else if(!validateEmail(cusEmail)){
-      validation = "sorry this field is required"
-      toast.error(validation)
-      setPending(false)
     }else{
         try{
       const data = await addGeneral({
@@ -754,10 +750,6 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
       validation = 'sorry this field is required'
       toast.error(validation)
       setPending(false)
-    }else if(!validateEmail(cusEmail)){
-      validation = "sorry this field is required"
-      toast.error(validation)
-      setPending(false)
     }else{
       try{
         const data = await addQtGen({
@@ -835,10 +827,6 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
     setPending(true)
     let validation = ''
     if(!cusName || !cusPhone){
-      validation = "sorry this field is required"
-      toast.error(validation)
-      setPending(false)
-    }else if(!validateEmail(cusEmail)){
       validation = "sorry this field is required"
       toast.error(validation)
       setPending(false)
@@ -930,10 +918,6 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
     }
 
     if(!cusName || !cusPhone){
-      validation = "sorry this field is required"
-      toast.error(validation)
-      setPending(false)
-    }else if(!validateEmail(cusEmail)){
       validation = "sorry this field is required"
       toast.error(validation)
       setPending(false)
@@ -1224,7 +1208,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               type="text"
               value={item.quantity === "" ? '' : item.quantity}
               onChange={(e) => handleChange(index, 'quantity', e.target.value)}
-              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border px-2 py-1 bg-transparent border-input-primary rounded-md`}
+              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border px-2 py-1 bg-transparent border-input-primary rounded-md text-center`}
             />
             <div className="relative w-[100px]">
             {
@@ -1244,7 +1228,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               onChange={(e) => handleChange(index, 'unitPrice', e.target.value)}
               onBlur={(e) => handleUnitPriceBlur(e.target.value, index)}
               onKeyDown={(e) => handleUnitPriceKeyDown(e, e.currentTarget.value, index)}
-              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border px-2 py-1 bg-transparent border-input-primary rounded-md`}
+              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border px-2 py-1 bg-transparent border-input-primary rounded-md text-center`}
             />
           </td>
           <td className="px-[10px] py-2">
@@ -1254,7 +1238,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               onBlur={(e) => handleTotalBlur(index, e.target.value)}
               onKeyDown={(e) => handleTotalKeyDown(e, index, item.total)}
               onChange={(e) => handleTotalChange(index, e.target.value)}
-              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border px-2 py-1 bg-transparent border-input-primary rounded-md`}
+              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border px-2 py-1 bg-transparent border-input-primary rounded-md text-center`}
             />
           </td>
           <td className=" px-[10px] py-2">

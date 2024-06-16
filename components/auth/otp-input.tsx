@@ -4,10 +4,11 @@ import React, { useEffect, useRef, useState } from 'react'
 type otpIndexProps = {
     otp:string[];
     setOtp:React.Dispatch<React.SetStateAction<string[]>>;
+    handleEvent:(e:React.KeyboardEvent<HTMLInputElement>)=>void
 }
 
 let currentOTPIndex:number = 0
-const OtpInput = ({otp , setOtp} :otpIndexProps) => {
+const OtpInput = ({otp , setOtp , handleEvent} :otpIndexProps) => {
   const [activeOTPIndex , setActiveOTPIndex] = useState<number>(0)
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -58,7 +59,7 @@ const OtpInput = ({otp , setOtp} :otpIndexProps) => {
                         focus:border-gray-700 focus:text-gray-700
                          text-gray-400 transition'
                          onChange={handleChange}
-                         onKeyDown={(e)=>handleKeyDown(e,index)}
+                         onKeyDown={(e)=>{handleKeyDown(e,index) , handleEvent(e)}}
                          onPaste={handlePaste}
                          value={otp[index]}
                     />

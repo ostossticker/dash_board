@@ -115,6 +115,7 @@ type createProps = {
 }
 
 const Create = () => {
+    const [isError , setIsError] = useState<boolean>(false)
     const { pending , setPending , bgModal ,edit , passingId} = useToggle()
     const user = useCurrentUser()
     const ref1 = useRef<HTMLInputElement>(null)
@@ -400,14 +401,16 @@ const Create = () => {
             formData.append("Rec1",image.Rec1)
         }
     
-        if(!busName || !busEmail || !busType){
-          validation= "sorry this field is required"
+        if(!busName || !busPhone1 || !busType){
+          validation= "sorry business name , phone number and business type is required"
           toast.error(validation)
-          setPending(false)
+          setPending(true)
+          setIsError(true)
         }else if(!validateEmail(busEmail)){
             validation="Invalid Email"
             toast.error(validation)
-            setPending(false)
+            setPending(true)
+            setIsError(true)
         }else{
            addBus({
             busName:busName,
@@ -450,15 +453,18 @@ const Create = () => {
             })
             if(data?.error){
               toast.error(data.error)
-              setPending(false)
+              setPending(true)
+              setIsError(true)
             }
             if(data?.success){
               toast.success(data.success)
               setPending(false)
+              setIsError(false)
             }
           }).catch(()=>{
             toast.error("something went wrong")
-            setPending(false)
+            setPending(true)
+            setIsError(true)
           })
         }
     }
@@ -486,10 +492,11 @@ const Create = () => {
             formData.append("Rec1",image.Rec1)
         }
     
-        if(!busName || !busEmail || !busType){
-          validation= "sorry this field is required"
+        if(!busName || !busPhone1 || !busType){
+          validation= "sorry business name , phone number and business type is required"
           toast.error(validation)
-          setPending(false)
+          setPending(true)
+           setIsError(true)
         }else{
            editBusiness({
             id:passingId,
@@ -521,15 +528,18 @@ const Create = () => {
             });
             if(data?.error){
               toast.error(data.error)
-              setPending(false)
+              setPending(true)
+              setIsError(true)
             }
             if(data?.success){
               toast.success(data.success)
               setPending(false)
+              setIsError(false)
             }
           }).catch(()=>{
             toast.error("something went wrong")
-            setPending(false)
+            setPending(true)
+              setIsError(true)
           })
         }
     }
@@ -560,7 +570,7 @@ const Create = () => {
                 </div>
             </div>
             <div className='flex justify-center items-center gap-5 mt-[158px]'>
-                <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.busName !== "" || val.busType !== "" ? "text-white shadowHover bg-mainLightBlue" : "bg-slate-300 "}  w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
+                <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.busName !== "" || val.busType !== "" ? "text-white shadowHover bg-mainLightBlue" : "bg-slate-300 "}  w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
                 <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-insomnia-primary w-[185px] rounded-md`} onClick={()=>closeModal('my_modal_5')}>Cancel</button>
             </div>
            </>
@@ -582,7 +592,7 @@ const Create = () => {
                 
             </div>
             <div className='flex justify-center items-center gap-5 mt-[20px]'>
-                <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.busName  !== "" || val.busType !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300 "} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
+                <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.busName  !== "" || val.busType !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300 "} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
                 <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-insomnia-primary w-[185px] rounded-md`} onClick={()=>closeModal('my_modal_5')}>Cancel</button>
             </div>
             </>
@@ -618,7 +628,7 @@ const Create = () => {
                 </div>
             </div>
             <div className='flex justify-center items-center gap-5 mt-[88px]'>
-                <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.busName  !== "" || val.busType !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
+                <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.busName  !== "" || val.busType !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
                 <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-insomnia-primary w-[185px] rounded-md`} onClick={()=>closeModal('my_modal_5')}>Cancel</button>
             </div>
             </>

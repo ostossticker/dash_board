@@ -86,6 +86,7 @@ type createdProps = {
 
 const Create = () => {
   const fileInput = useRef<HTMLInputElement>(null);
+  const [isError , setIsError] = useState<boolean>(false)
   const { pending , setPending  ,edit , passingId} = useToggle()
   const user = useCurrentUser()
 
@@ -245,10 +246,11 @@ const Create = () => {
     if(image){
       formData.append('image',image)
     }
-    if(!empName || !empPhone){
-      validation = "name and phone number is required"
+    if(!empName || !empPhone || !empGender || !empOcc){
+      validation = "name , phone number , gender , occupation is required"
       toast.error(validation)
-      setPending(false)
+      setPending(true)
+      setIsError(true)
     }else{
       editEmployee({
         id:passingId,
@@ -267,15 +269,18 @@ const Create = () => {
         setImage(undefined)
         if(data?.error){
           toast.error(data.error)
-          setPending(false)
+          setPending(true)
+          setIsError(true)
         }
         if(data?.success){
           toast.success(data.success)
           setPending(false)
+          setIsError(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
-        setPending(false)
+        setPending(true)
+        setIsError(true)
       })
     }
   }
@@ -291,10 +296,11 @@ const Create = () => {
     if(image){
       formData.append('image',image)
     }
-    if(!empName || !empPhone){
-      validation = "name and phone is required!"
+    if(!empName || !empPhone || !empGender || !empOcc){
+      validation = "name , phone number , gender , occupation is required"
       toast.error(validation)
-      setPending(false)
+      setPending(true)
+      setIsError(true)
     }else{
       addEmployee({
         empName:empName,
@@ -323,15 +329,18 @@ const Create = () => {
         }))
         if(data?.error){
           toast.error(data.error)
-          setPending(false)
+          setPending(true)
+          setIsError(true)
         }
         if(data?.success){
           toast.success(data.success)
           setPending(false)
+          setIsError(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
-        setPending(false)
+        setPending(true)
+          setIsError(true)
       })
     }
   }
@@ -367,7 +376,7 @@ const Create = () => {
           </label>
     </div>
     <div className='flex justify-center items-center gap-5'>
-    <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.empName  !== "" || val.empPhone !== '' ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? <span className='loading loading-spinner text-default'></span> : <p>Save</p>}</button>
+    <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.empName  !== "" || val.empPhone !== '' ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
       <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-insomnia-primary w-[185px] rounded-md`} onClick={()=>closeModal('my_modal_5')}>Cancel</button>
     </div>
     <input type="file" className="hidden" ref={fileInput}  onChange={handleImageChange} />

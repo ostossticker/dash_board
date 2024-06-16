@@ -904,7 +904,6 @@ const Createinv = () => {
                                                         })
 
                                                     }
-                                               
                                         </ul>
                                     )
                                 }
@@ -912,36 +911,36 @@ const Createinv = () => {
                                 </>
                             ) : item.type === "discount" ? (
                                     <input 
-                                    type="text" className={`block pl-2 p-1 w-full text-md appearance-none focus:outline-none bg-transparent ${darkMode ? "text-dark-lg-color" : ""}`}
-                                    value={discount}
-                                    placeholder='$0.00'
-                                    onChange={handleDiscountChange}
-                                    onBlur={handleDiscountBlur}
+                                        type="text" className={`block pl-2 p-1 w-full text-md appearance-none focus:outline-none bg-transparent ${darkMode ? "text-dark-lg-color" : ""}`}
+                                        value={discount}
+                                        placeholder='$0.00'
+                                        onChange={handleDiscountChange}
+                                        onBlur={handleDiscountBlur}
                                     />
                             ) : (
                                 <>
-                                <input 
-                                type="text" 
-                                className={`block pl-2 p-1 w-full text-md appearance-none focus:outline-none  bg-transparent ${darkMode ? "text-dark-lg-color" : ""}`}
-                                placeholder=''
-                                required
-                                list='business'
-                                name={item.name}
-                                value={val.invBus}
-                                onChange={handleChangeVal}
-                                onClick={fetchallBus}
-                                onKeyDown={(event)=>handleKeyDown(event, "invBus")}
-                                onFocus={()=>setFocus(prev=>({
-                                    ...prev,
-                                    check3:true
-                                  }))}
-                                  autoComplete='off'
-                                  onBlur={()=>setTimeout(() => {
-                                    setFocus(prev=>({
-                                      ...prev,
-                                      check3:false
-                                    }))
-                                  }, 150)}
+                                <input
+                                    type="text" 
+                                    className={`block pl-2 p-1 w-full text-md appearance-none focus:outline-none  bg-transparent ${darkMode ? "text-dark-lg-color" : ""}`}
+                                    placeholder=''
+                                    required
+                                    list='business'
+                                    name={item.name}
+                                    value={val.invBus}
+                                    onChange={handleChangeVal}
+                                    onClick={fetchallBus}
+                                    onKeyDown={(event)=>handleKeyDown(event, "invBus")}
+                                    onFocus={()=>setFocus(prev=>({
+                                        ...prev,
+                                        check3:true
+                                    }))}
+                                    autoComplete='off'
+                                    onBlur={()=>setTimeout(() => {
+                                        setFocus(prev=>({
+                                        ...prev,
+                                        check3:false
+                                        }))
+                                    }, 150)}
                                 />
                                 <div className='relative'>
                                     {
@@ -965,8 +964,7 @@ const Createinv = () => {
                                             </ul>
                                         )
                                     }
-                                </div>
-                                
+                                </div> 
                                 </>
                             )
                            }

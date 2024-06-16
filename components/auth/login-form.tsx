@@ -1,7 +1,7 @@
 "use client"
 import CardWrapper from './card-wrapper'
 import { loginFunc } from '@/actions/Login'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import OtpInput from './otp-input'
@@ -38,7 +38,8 @@ const LoginForm = () => {
         ...val,[name]:value
     })
  }
- const handleSubmit = async () =>{
+ const handleSubmit = () =>{
+   
     setPending(true)
     setSuccess("")
     setError("")
@@ -52,7 +53,7 @@ const LoginForm = () => {
     }
 
     const {email , password } = val
- 
+    console.log(email , password)
     if(!password){
         validation.password = "password is required!"
     }else if(password.length < 4){
@@ -68,6 +69,7 @@ const LoginForm = () => {
             if(data?.success){
                 setSuccess(data.success)
                 setPending(false) 
+                router.push('/dashboard')
             }
             if(data?.twoFactor){
                 setShowTwoFactor(true);
@@ -77,20 +79,17 @@ const LoginForm = () => {
         .catch(()=>{
             setError("something went wrong")
             setPending(false)
-            setTimeout(() => {
-                router.push('/auth/login')
-            }, 200);
         })
     }
     setErrors(validation)
     setPending(false)
-
-    if(errors){
-        setTimeout(() => {
-            router.push('/auth/login')
-        }, 200);
-    }
  }
+
+  const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) =>{
+    if(e.key === 'Enter'){
+        handleSubmit()
+    }
+  }
 
   return (
     <CardWrapper
@@ -105,7 +104,7 @@ const LoginForm = () => {
 
 
                     <label className='text-gray-500 text-sm'>Two Factor Code</label>
-                    <OtpInput otp={otp} setOtp={setOtp}/>
+                    <OtpInput otp={otp} setOtp={setOtp} handleEvent={handleKeyDown}/>
                     {urlError && <span className='bg-red-300 text-red-700 rounded-sm text-center'>{urlError}</span>}
                     {error && <span className='bg-red-300 text-red-700 rounded-sm text-center'>{error}</span>}
                     {success && <span className='bg-green-300 text-green-700 rounded-sm text-center'>{success}</span>}
@@ -134,6 +133,7 @@ const LoginForm = () => {
                     placeholder='Johndoe@example.com' 
                     value={val.email} 
                     onChange={handleChange} 
+                    onKeyDown={handleKeyDown}
                     name='email' className='px-4 py-2 border-b-[1px] w-[300px] border-gray-500 outline-none'/>
                     {errors && <span className='bg-red-300 text-red-700 rounded-sm text-center'>{errors.email}</span>}
                     <label className='text-gray-500 text-sm'>Password</label>
@@ -142,6 +142,7 @@ const LoginForm = () => {
                     placeholder='*********' 
                     value={val.password} 
                     onChange={handleChange} 
+                    onKeyDown={handleKeyDown}
                     name='password' 
                     className='px-4 py-2 border-b-[1px] border-gray-500 w-[300px] outline-none'/>
                     {errors && <span className='bg-red-300 text-red-700 rounded-sm text-center'>{errors.password}</span>}

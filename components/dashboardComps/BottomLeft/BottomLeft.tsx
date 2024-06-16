@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import Table from './Table'
 import Charts from './Chart'
@@ -8,6 +9,7 @@ const BottomLeft = () => {
   return (
     <div className='lg:col-span-3 col-span-6 '>
       <div className='grid grid-cols-4 xl:gap-10 lg:gap-4'>
+        
       <Charts/>
 
         <DailySummaries/>

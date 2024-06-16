@@ -23,14 +23,13 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
         <html lang="en">
-              <body className={inter.className}>
-                <Layout>
+          <body className={inter.className}>
+              <Layout>
                 {children}
-                </Layout>
-                <ToastContainer position="top-center" autoClose={500} draggable/>
-                </body>
-            </html>
+              </Layout>
+            <ToastContainer position="top-center" autoClose={500} draggable/>
+          </body>
+        </html>
     </SessionProvider>
-    
   );
 }

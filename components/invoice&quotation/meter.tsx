@@ -472,6 +472,8 @@ const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index?: num
 
         if (field === 'description') {
           updatedCalculation[field] = products.find(item => item.id === selectedItemId)?.prodItemName || '';
+          updatedCalculation.unitPrice = `$${parseFloat(products.find(item => item.id === selectedItemId)?.prodUnitPrice || '').toFixed(2)}`
+          handleChange(index , 'unitPrice' , updatedCalculation.unitPrice)
         }
 
         updatedCalculations[index] = updatedCalculation;
@@ -836,10 +838,6 @@ const calculateBalance = () => {
       validation = "sorry this field is required"
       toast.error(validation)
       setPending(false)
-    }else if(!validateEmail(cusEmail)){
-      validation = "sorry this field is required"
-      toast.error(validation)
-      setPending(false)
     }else{
       try {
         const data = await editMeter({
@@ -927,10 +925,6 @@ const calculateBalance = () => {
       validation = "sorry this field is required"
       toast.error(validation)
       setPending(false)
-    }else if(!validateEmail(cusEmail)){
-      validation = "sorry this field is required"
-      toast.error(validation)
-      setPending(false)
     }else{
       try{
         const data = await editQtMeter({
@@ -1011,10 +1005,6 @@ const calculateBalance = () => {
     let validation = ''
     if(!cusName || !cusPhone){
       validation = "sorry this field is required"
-      toast.error(validation)
-      setPending(false)
-    }else if(!validateEmail(cusEmail)){
-      validation = 'Invalid Email'
       toast.error(validation)
       setPending(false)
     }else{
@@ -1100,10 +1090,6 @@ const calculateBalance = () => {
 
     if(!cusName || !cusPhone){
       validation = 'sorry this field is required'
-      toast.error(validation)
-      setPending(false)
-    }else if(!validateEmail(cusEmail)){
-      validation = 'Invalid Email'
       toast.error(validation)
       setPending(false)
     }else{

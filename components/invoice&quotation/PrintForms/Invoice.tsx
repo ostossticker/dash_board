@@ -223,7 +223,7 @@ const Invprint = ({
                                             {routerSwitch === 'invoice' ? 'INVOICE' : routerSwitch === 'delivery' ? 'DELIVERY NOTE' : ''}
                                         </h1>
                                     ) : (
-                                        <Image src={!busLogo ? '/n5LOGO.png' : busLogo} 
+                                        <Image src={!busLogo ? '/white.png' : busLogo} 
                                         alt='#' 
                                         width={520} 
                                         height={520} 
@@ -519,7 +519,7 @@ const Invprint = ({
                         </div>
                         <div className='flex justify-between px-[5px] pt-[8px]  '>
                             <div>
-                                    <Image src={!abaLogo ? '/bocchi.jpg' : abaLogo} 
+                                    <Image src={!abaLogo ? '/white.png' : abaLogo} 
                                     width={700} 
                                     height={700} 
                                     alt='#' className={`${bankInfo === false ? "" : "invisible"} mx-auto ${!isNaN(discount) && discount !== 0 ? "w-[100px]" : "w-[120px]" }  h-auto`}/>
@@ -534,14 +534,14 @@ const Invprint = ({
                                             </div> 
                                 <div className='flex justify-end pt-[22px]'>
                                     <div className='text-end pr-[40px]'>
-                                        <Image src='/signature.png' width={500} height={500} alt='#' className={`invisible mx-auto w-[auto]  ${!isNaN(discount) && discount !== 0 ? "h-[20px]" : "h-[30px]" }`}/>
+                                        <Image src='/white.png' width={500} height={500} alt='#' className={`invisible mx-auto w-[auto]  ${!isNaN(discount) && discount !== 0 ? "h-[20px]" : "h-[30px]" }`}/>
                                         {/*****************origin 50x50***************/}
                                             <p className='text-[10px] text-center' style={{fontFamily:"khmerContent"}}>ហត្ថលេខាអ្នកទិញ</p>
                                             <p className='text-[10px]'>customer signature</p>
                                     </div>
                                     <div className='text-center'>
                                             {/*****************origin 50x50***************/}
-                                            <Image src={!sigLogo ? '/signature.png' : sigLogo} width={500} height={500} alt='#' className={`mx-auto w-[auto]  ${!isNaN(discount) && discount !== 0 ? "h-[20px]" : "h-[30px]" } ${signature === true ? "invisible" : ""}`}/>
+                                            <Image src={!sigLogo ? '/white.png' : sigLogo} width={500} height={500} alt='#' className={`mx-auto w-[auto]  ${!isNaN(discount) && discount !== 0 ? "h-[20px]" : "h-[30px]" } ${signature === true ? "invisible" : ""}`}/>
                                                 <p className='text-[10px] text-center' style={{fontFamily:"khmerContent"}}>
                                                     ហត្ថលេខាអ្នកលក់
                                                 </p>

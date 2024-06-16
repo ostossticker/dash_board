@@ -232,7 +232,7 @@ const Qtprint = ({
                                     logo === true ? (
                                         <h1 className='font-semibold text-[43px] leading-[10px] mb-[40px]'>Quotation</h1>
                                     ) : (
-                                        <Image src={!busLogo ? '/n5LOGO.png' : busLogo} 
+                                        <Image src={!busLogo ? '/white.png' : busLogo} 
                                         alt='#' 
                                         width={520} 
                                         height={520} 
@@ -647,7 +647,7 @@ const Qtprint = ({
                                 <div className='flex justify-end items-center'>
                                 <div>
                                     <div className='h-[50px] border-b-[1px] flex justify-center'>
-                                    <Image src={!sigLogo ? '/signature.png' : sigLogo} alt='#'
+                                    <Image src={!sigLogo ? '/white.png' : sigLogo} alt='#'
                                         width={520}
                                         height={520}
                                         className={`${signature === true ? "invisible" : ""} w-[auto] h-[45px]`}

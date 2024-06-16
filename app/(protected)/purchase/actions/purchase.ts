@@ -2,8 +2,6 @@
 
 import { prisma } from "@/lib/db/prisma";
 import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { writeFile } from "fs/promises";
-import path, { join } from "path";
 
 type purchaseProps = {
     id?:string;

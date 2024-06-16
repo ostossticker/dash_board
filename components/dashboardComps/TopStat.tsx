@@ -264,9 +264,9 @@ const TopStat = () => {
                             <p className={`${darkMode? "text-dark-md-color" : "text-[#c3c9da]"} lg:text-[8px] xl:text-[15px]`}>{item.status}</p>
                             {
                                 item.label === 'Invoices' ? (
-                                    <CountUp duration={1} className={`${darkMode ? "text-dark-lg-color" : "text-[#1a3158]"} lg:text-[15px] xl:text-[25px] font-semibold`} end={item.percentage} />
+                                    <CountUp duration={1} className={`${darkMode ? "text-dark-lg-color" : "text-[#1a3158]"} lg:text-[18px] xl:text-[25px] font-bold`} end={item.percentage} />
                                 ) : (
-                                    <CountUp prefix='$' duration={1} className={`${darkMode ? "text-dark-lg-color" : "text-[#1a3158]"} lg:text-[15px] xl:text-[25px] font-semibold`} decimals={2} end={item.percentage} />
+                                    <CountUp prefix='$' duration={1} className={`${darkMode ? "text-dark-lg-color" : "text-[#1a3158]"} lg:text-[18px] xl:text-[25px] font-bold`} decimals={2} end={item.percentage} />
                                 )
                             }
                             <div className='flex items-center text-[15px]'>

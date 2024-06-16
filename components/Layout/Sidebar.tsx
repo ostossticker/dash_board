@@ -358,7 +358,7 @@ const Sidebar = ({children}:layoutProps) => {
                                   ${subItem.class} 
                                   ${isOpen || isHover ? "xl:pl-[30px] lg:pl-[20px] pr-2.5" : "px-2.5 "} xl:py-2 lg:py-1 text-[#b1b8ce] 
                                   ${links === subItem.link ? "active" : ""}`} onClick={()=>{handle(subItem.link),setPrint(false),setPrinting(''),onCancel()}}>
-                                    <subItem.icon className={`min-w-max ${links === subItem.link ? 'text-white':`group-hover:text-white text-[#b1b8ce]`} xl:text-[23px] lg:text-[18px]`}  />
+                                    <subItem.icon className={`min-w-max ${links === subItem.link ? 'text-white':`group-hover:text-white text-[#b1b8ce]`} xl:text-[23px] lg:text-[20px]`}  />
                                     <p className='group-hover:text-white lg:text-[12px] xl:text-[15px]'>{subItem.name}</p>
                                   </div>
                                 )

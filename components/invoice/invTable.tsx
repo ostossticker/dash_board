@@ -30,6 +30,7 @@ type arr = {
   createdAt:string;
   updatedAt:string;
   balance:string;
+  invDate:string;
 }
 
 type optionDrop = {
@@ -47,6 +48,7 @@ const InvTable = () => {
   const [paperNo , setPaperno] = useState<string>('') 
   const [currentPage , setCurrentPage] = useState<number>(1)
   const [focus , setFocus] = useState<number | null>(0)
+  const [switched , setSwitched] = useState<boolean>(false)
   const [selectedItemId, setSelectedItemId] = useState<string>("");
   const [cus , setCus] = useState<string>('')
   const [take , setTake] = useState<number>(15)
@@ -354,7 +356,7 @@ const filteredUsers = anagramFilter
             </div>
             <div className='flex justify-center py-1 items-center lg:h-[28px] xl:h-9 border border-input-primary rounded-[7px] px-1'>
                 <div className='relative'>
-                    <input type="date" className={`lg:w-[120px] xl:w-[150px] px-2 py-1 lg:text-[12px] xl:text-md block appearance-none  bg-transparent ${darkMode ? "text-white dark" : `${val.fromDate === "" ? 'text-input-primary' : 'light'}`}`} name='fromDate' value={val.fromDate} onChange={handleChange}/>
+                    <input type="date" className={`lg:w-[120px] xl:w-[150px] px-2 py-1 lg:text-[12px] xl:text-md block appearance-none outline-none bg-transparent ${darkMode ? "text-white dark" : `${val.fromDate === "" ? 'text-input-primary' : 'light'}`}`} name='fromDate' value={val.fromDate} onChange={handleChange}/>
                     <label  className={`absolute top-0 lg:text-[15px] xl:text-md ${darkMode ? "bg-dark-box-color" : "bg-white"} p-4 -z-1 transform text-input-primary scale-75 -translate-y-4 z-0 px-1 py-0 duration-300 origin-0`}>
                                 From Date
                             </label>
@@ -363,12 +365,25 @@ const filteredUsers = anagramFilter
                 <button className=' h-full mx-1 rounded lg:w-[20px] xl:w-[27px] lg:text-[10px] xl:text-sm flex justify-center items-center text-input-primary'>To</button>
                 
                 <div className='relative'>
-                    <input type="date" className={`lg:w-[120px] xl:w-[150px] px-2 py-1 lg:text-[12px] xl:text-md block appearance-none bg-transparent ${darkMode ? "text-white dark" : `${val.toDate === "" ? 'text-input-primary' : 'light'}`}`} name='toDate' value={val.toDate} onChange={handleChange}/>
+                    <input type="date" className={`lg:w-[120px] xl:w-[150px] px-2 py-1 lg:text-[12px] xl:text-md block appearance-none outline-none bg-transparent ${darkMode ? "text-white dark" : `${val.toDate === "" ? 'text-input-primary' : 'light'}`}`} name='toDate' value={val.toDate} onChange={handleChange}/>
                     <label  className={`absolute top-0 lg:text-[15px] xl:text-md ${darkMode ? "bg-dark-box-color" : "bg-white"} p-4 -z-1 transform text-input-primary scale-75 -translate-y-4 z-0 px-1 py-0 duration-300 origin-0`}>
                                 To Date
                             </label>
                 </div>
             </div>
+            <button className='bg-insomnia-primary h-full px-2 p-1 rounded lg:text-[15px] xl:text-md' onClick={()=>setSwitched(!switched)}>
+                  {
+                    !switched ? (
+                      <div className='text-white'>
+                          Created Date
+                      </div>
+                    ) : (
+                      <div className='text-white'>
+                          Off
+                      </div>
+                    )
+                  }
+            </button>
             </div>
             <div className='flex gap-3'>
             <div className='flex justify-center items-center rounded-[7px]'>
@@ -431,10 +446,22 @@ const filteredUsers = anagramFilter
                       </div>
                       </td>
                     <td className={`${placeholderClass} text-end lg:text-[9px] xl:text-[13px]`}>${parseFloat(item.balance).toFixed(2)}</td>
-                    <td className={`${placeholderClass}`}><div className='flex justify-end items-center'>
-                    <div className='pr-[5px]'>{!item.createdAt ? '' : dateFormat(item.createdAt)}</div>
-                    <div>{item.createdAt ? convertTime(item.createdAt) : ''}</div>
-                    </div></td>
+                    <td className={`${placeholderClass}`}>
+                      {
+                        !switched ? (
+                          <div className='flex justify-end items-center'>
+                            <div className='pr-[5px]'>
+                            {item.invDate ? dateFormat(item.invDate) : ''}
+                            </div>
+                          </div>
+                        ) : (
+                          <div className='flex justify-end items-center'>
+                          <div className='pr-[5px]'>{!item.createdAt ? '' : dateFormat(item.createdAt)}</div>
+                          <div>{item.createdAt ? convertTime(item.createdAt) : ''}</div>
+                          </div>
+                        )
+                      }
+                    </td>
                     <td className={placeholderClass}><div className='flex justify-end items-center'>
                     <div className='pr-[5px]'>{!item.updatedAt ? '' : dateFormat(item.updatedAt)}</div><div>{item.updatedAt ? convertTime(item.updatedAt) : ''}</div></div></td>
                     <td className={placeholderClass}>

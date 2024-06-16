@@ -7,7 +7,7 @@
  /****** home is discard *************/
 
  export const publicRoutes = [
-    "/auth/login"
+    
   ];
   
   /**

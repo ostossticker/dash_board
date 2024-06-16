@@ -20,18 +20,19 @@ type modalProps = {
 }
 
 const Modal = ({handlingAction , bigModal ,contentWarning ,bgCenter ,CautionText,children,title,bgLeft ,bgRight,editLabel,id,showCancel,typeSelect,restoring}:modalProps) => {
-  const { darkMode ,pending,edit, setModal ,bgModal} =useToggle()
+  const { darkMode ,pending,edit, setModal , setPending ,bgModal} =useToggle()
 
   const closeModal = () => {
     const modal = document.getElementById(id as string) as HTMLDialogElement | null;
     if (modal) {
       modal.close();
+      setPending(false)
     }
   };
 
   useEffect(()=>{
     const modal = document.getElementById(id as string) as HTMLDialogElement | null;
-    if (modal) {
+    if (modal && pending === false) {
       modal.close();
     }
   },[pending])

@@ -97,7 +97,7 @@ type toggleVal = {
 }
 
 const useToggle = create<toggleVal>((set)=>({
-    enableNote:false,
+    enableNote:true,
     passingId:'',
     notification:false,
     edit:false,
@@ -306,7 +306,6 @@ const useToggle = create<toggleVal>((set)=>({
             telegram:!state.telegram
         }))
     },
-
     /////pdf
     pdf:'',
     setPdf:(newString)=>{

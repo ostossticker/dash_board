@@ -269,7 +269,7 @@ const PrintForm = ({
                                         </ResponsiveElement>
                                     ) : (
                                         <ResponsiveElement width={'auto'} height={94}>
-                                            <Image src={!busLogo ? '/n5LOGO.png' : busLogo} alt='#' width={0} height={0} sizes="100vw"/>
+                                            <Image src={!busLogo ? '/white.png' : busLogo} alt='#' width={0} height={0} sizes="100vw"/>
                                         </ResponsiveElement>
                                     )
                                 }
@@ -678,7 +678,7 @@ const PrintForm = ({
                                 <div>
                                 <ResponsiveElement width={'auto'} height={130} className={`${bankInfo === false ? "" : "invisible"} w-full`}>
                                 <Image
-                                    src={!abaLogo ? '/bocchi.jpg' : abaLogo}
+                                    src={!abaLogo ? '/white.png' : abaLogo}
                                     alt='#'
                                     width={0}
                                     height={0}
@@ -700,7 +700,7 @@ const PrintForm = ({
                                                     <div>
                                                             <div className='flex justify-center invisible'>
                                                             <ResponsiveElement width={'auto'} height={55}>
-                                                                <Image src={!sigLogo ? '/signature.png' : sigLogo} alt='#'
+                                                                <Image src={!sigLogo ? '/white.png' : sigLogo} alt='#'
                                                                     width={0}
                                                                     height={0}
                                                                     sizes="100vw"
@@ -721,7 +721,7 @@ const PrintForm = ({
                                                             {/*****************origin 50x50***************/}
                                                             <div className='flex justify-center'>
                                                             <ResponsiveElement width={'auto'} height={55} className={`${signature === true ? "invisible" : ""}`}>
-                                                                <Image src={!sigLogo ? '/signature.png' : sigLogo} alt='#'
+                                                                <Image src={!sigLogo ? '/white.png' : sigLogo} alt='#'
                                                                     width={0}
                                                                     height={0}
                                                                     sizes="100vw"

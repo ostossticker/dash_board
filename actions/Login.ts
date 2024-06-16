@@ -14,6 +14,8 @@ import { error } from "console"
 
 export async function loginFunc (name:string , email:string , phoneNumber:string, password:string,code?:string){
     
+    console.log(name , email , phoneNumber , password,code)
+
     const checkNumber = (num:string): boolean =>{
       const nums = /^\d+\.\d+$/; 
       return nums.test(num) 

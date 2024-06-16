@@ -1,11 +1,15 @@
 "use client"
+import { usePathname, useRouter } from 'next/navigation'
 import React , {useEffect , useState} from 'react'
 
 type authLay ={
     children:React.ReactNode
+    session:any
 }
 
-const AuthLay = ({children}:authLay) => {
+const AuthLay = ({children,session}:authLay) => {
+  const router = useRouter()
+  const pathname = usePathname()
   const [backgroundIndex, setBackgroundIndex] = useState<number>(0);
   const backgrounds: string[] = [
     '/background1.png',
@@ -28,9 +32,24 @@ const AuthLay = ({children}:authLay) => {
     backgroundRepeat: 'no-repeat',
     transition: 'background-image 2s ease-in-out',
   };
+
+  if(!session && !['/auth/login' , '/auth/register' , '/auth/errror' , '/auth/reset' , '/auth/new-password' , '/auth/new-verification'].includes(pathname)){
+    router.push('/auth/login')
+  }
+
   return (
     <div className='h-screen flex  justify-end bg-white bg-contain' style={backgroundStyle}>
-        {children}
+        {
+          !session && !['/auth/login' , '/auth/register' , '/auth/errror' , '/auth/reset' , '/auth/new-password' , '/auth/new-verification'].includes(pathname) ? (
+            <>
+            Logout!
+            </>
+          ) : (
+            <>
+            {children}
+            </>
+          )
+        }
     </div>
   )
 }

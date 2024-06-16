@@ -313,7 +313,7 @@ const scrollToSelectedIndex = () => {
 
   return (
     <div className={`${darkMode ? "bg-dark-box-color" : "bg-white"} mt-[20px] shadow-md rounded-lg px-[30px] ${isOpen || isHover ? "py-[8px]" : "py-[10px]"}`}>
-      {pending.toString()}
+
       <div className='flex py-3 justify-between'>
         <div className='flex gap-3'>
             <div>

@@ -300,7 +300,7 @@ const Rectable = () => {
                         <div>
                             <div className='flex justify-center py-1 items-center lg:h-[28px] xl:h-9 border border-input-primary rounded-[7px] px-1'>
                             <div className='relative'>
-                            <input name='createdAt' value={val.createdAt} onChange={handleChange} type="date" className={`lg:w-[120px] xl:w-[150px] px-2 py-1 lg:text-[12px] xl:text-md block appearance-none  bg-transparent ${darkMode ? "text-white dark" : "light"}`} 
+                            <input name='createdAt' value={val.createdAt} onChange={handleChange} type="date" className={`lg:w-[120px] xl:w-[150px] px-2 py-1 lg:text-[12px] xl:text-md block appearance-none outline-none  bg-transparent ${darkMode ? "text-white dark" : "light"}`} 
                             />
                             <label  className={`absolute top-0 lg:text-[15px] xl:text-md ${darkMode ? "bg-dark-box-color" : "bg-white"} p-4 -z-1 transform text-input-primary scale-75 -translate-y-4 z-0 px-1 py-0 duration-300 origin-0`}>
                                 From Date
@@ -310,7 +310,7 @@ const Rectable = () => {
                             <button className=' h-full mx-1 rounded w-[30px] text-sm flex justify-center items-center text-input-primary'>To</button>
                             
                             <div className='relative'>
-                                <input name='deletedAt' value={val.deletedAt} onChange={handleChange} type="date" className={`lg:w-[120px] xl:w-[150px] px-2 py-1 lg:text-[12px] xl:text-md block appearance-none bg-transparent ${darkMode ? "text-white dark" : "light"}`} 
+                                <input name='deletedAt' value={val.deletedAt} onChange={handleChange} type="date" className={`lg:w-[120px] xl:w-[150px] px-2 py-1 lg:text-[12px] xl:text-md block appearance-none outline-none bg-transparent ${darkMode ? "text-white dark" : "light"}`} 
                                 />
                                 <label  className={`absolute top-0 lg:text-[15px] xl:text-md ${darkMode ? "bg-dark-box-color" : "bg-white"} p-4 -z-1 transform text-input-primary scale-75 -translate-y-4 z-0 px-1 py-0 duration-300 origin-0`}>
                                     To Date

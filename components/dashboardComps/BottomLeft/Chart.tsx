@@ -382,10 +382,10 @@ const Charts = () => {
            
         </div>
         <div className='hidden absolute'>
-            <div ref={printableComponent} className=' bg-white h-[520px]'>
+            <div ref={printableComponent} className=' bg-white h-[482px]'>
                     <div className='text-end text-[20px] pr-[10px] mb-[15px]'>
                         <h1 className='text-[23px] font-bold leading-8'>REPORT SALE FROM YEAR {testVal}</h1>
-                        <p>{textContent.startMonth} to {textContent.endMonth}</p>
+                        <p>{textContent.startMonth && textContent.endMonth ? textContent.endMonth : textContent.startMonth && !textContent.endMonth ? textContent.startMonth : textContent.endMonth && !textContent.startMonth ? textContent.endMonth : textContent.startMonth}</p>
                     </div>
                 <div className='flex justify-center'>
                 <table className='border-[1px] border-black'>
@@ -445,7 +445,7 @@ const Charts = () => {
                 <div ref={printableChart} className='bg-white h-[520px]'>
                 <div className='text-end text-[20px] pr-[10px] pt-[20px]'>
                         <h1 className='text-[23px] font-bold leading-8'>REPORT SALE FROM {startYear} TO {endYear}</h1>
-                        <p>{textContent.startMonth} to {textContent.endMonth}</p>
+                        <p>{textContent.startMonth && textContent.endMonth ? textContent.endMonth : textContent.startMonth && !textContent.endMonth ? textContent.startMonth : textContent.endMonth && !textContent.startMonth ? textContent.endMonth : textContent.startMonth}</p>
                 </div>
                 <Chart  type="bar" options={options1} series={seriesData} height={"250px"} width={"750px"}/>
                 </div>

@@ -104,6 +104,7 @@ const Create = () => {
 
   const prods:createProps = data?.editProduct || ''
   const [suggest , setSuggest] = useState<optionDrop[]>([])
+  const [isError , setIsError] = useState<boolean>(false)
   const [val , setVal] = useState<prodProps>({
     prodItemName:'',
     prodUnitPrice:'', 
@@ -254,10 +255,11 @@ const Create = () => {
 
     const {prodItemName , prodUnitPrice , prodBus , prodSince , prodBustype} = val
 
-    if(!prodItemName || !prodBus){
-      validation= "sorry this field is required"
+    if(!prodItemName || !prodBus || !text){
+      validation= "product item name , product unitprice , product business , product since is required!"
       toast.error(validation)
-      setPending(false)
+      setPending(true)
+          setIsError(true)
     }else{
        addProduct({
         prodItemName:prodItemName,
@@ -276,14 +278,18 @@ const Create = () => {
         })
         if(data?.error){
           toast.error(data.error)
-          
+          setPending(true)
+          setIsError(true)
         }
         if(data?.success){
           toast.success(data.success)
           setPending(false)
+          setIsError(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
+        setPending(true)
+          setIsError(true)
       })
     }
   }
@@ -295,10 +301,11 @@ const Create = () => {
 
     const {prodItemName , prodUnitPrice , prodBus , prodSince , prodBustype} = val
 
-    if(!prodItemName || !prodBus){
-      validation= "sorry this field is required"
+    if(!prodItemName || !prodBus || !text){
+      validation= "product item name , product unitprice , product business , product since is required!"
       toast.error(validation)
-      setPending(false)
+      setPending(true)
+          setIsError(true)
     }else{
        editProduct({
         id:passingId,
@@ -311,15 +318,18 @@ const Create = () => {
       }).then((data)=>{
         if(data?.error){
           toast.error(data.error)
-          setPending(false)
+          setPending(true)
+          setIsError(true)
         }
         if(data?.success){
           toast.success(data.success)
           setPending(false)
+          setIsError(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
-        setPending(false)
+        setPending(true)
+          setIsError(true)
       })
     }
   }
@@ -409,7 +419,7 @@ const Create = () => {
           </div>
           <input className='hidden' type="text" name='prodBustype' value={val.prodBustype} onChange={handleChange}/>
     <div className='flex justify-center items-center gap-5'>
-    <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.prodItemName  !== "" || val.prodBus !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? <span className='loading loading-spinner text-default'></span> : <p>Save</p>}</button>
+    <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.prodItemName  !== "" || val.prodBus !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
       <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>closeModal('my_modal_5')}>Cancel</button>
     </div>
     </>

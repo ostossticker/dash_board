@@ -127,6 +127,12 @@ const RegisterForm = () => {
         await TestApi(data,arrays)
      }
 
+     const handleKeydown = (e:React.KeyboardEvent<HTMLInputElement>) =>{
+        if(e.key === "ENTER"){
+            handleSubmit()
+        }
+     }
+
   return (
     <>
     <CardWrapper
@@ -136,23 +142,23 @@ const RegisterForm = () => {
     >
         <div className='flex flex-col gap-y-2'>
             <label className='text-gray-500 text-sm'>Username &quot;optional</label>
-            <input type="text" placeholder='username' name='username' value={val.username} onChange={handleChange} 
+            <input type="text" placeholder='username' name='username' value={val.username} onKeyDown={handleKeydown} onChange={handleChange} 
             className='px-4 py-2 border-b-[1px] w-[300px] border-gray-500 outline-none'/>
             {errors && <span className='bg-red-300 text-red-700'>{errors.username}</span>}
             <label className='text-gray-500 text-sm'>Phone Number &quot;optional</label>
-            <input type="text" placeholder='phone number' name='phoneNumber' value={val.phoneNumber} onChange={handleChange} 
+            <input type="text" placeholder='phone number' name='phoneNumber' value={val.phoneNumber} onKeyDown={handleKeydown} onChange={handleChange} 
             className='px-4 py-2 border-b-[1px] w-[300px] border-gray-500 outline-none'/>
             {errors && <span className='bg-red-300 text-red-700'>{errors.phoneNumber}</span>}
             <label className='text-gray-500 text-sm'>Email &quot;optional</label>
-            <input type="email" placeholder='email' name='email' value={val.email} onChange={handleChange} 
+            <input type="email" placeholder='email' name='email' value={val.email} onKeyDown={handleKeydown} onChange={handleChange} 
             className='px-4 py-2 border-b-[1px] w-[300px] border-gray-500 outline-none'/>
             {errors && <span className='bg-red-300 text-red-700'>{errors.email}</span>}
             <label className='text-gray-500 text-sm'>Password</label>
-            <input type="password" placeholder='password' value={val.cpassword} onChange={handleChange} name='cpassword' 
+            <input type="password" placeholder='password' value={val.cpassword} onKeyDown={handleKeydown} onChange={handleChange} name='cpassword' 
             className='px-4 py-2 border-b-[1px] w-[300px] border-gray-500 outline-none'/>
             {errors && <span className='bg-red-300 text-red-700'>{errors.cpassword}</span>}
             <label className='text-gray-500 text-sm'>Confirm Password</label>
-            <input type="password" name="password" value={val.password} onChange={handleChange} placeholder='confirm password' 
+            <input type="password" name="password" value={val.password} onKeyDown={handleKeydown} onChange={handleChange} placeholder='confirm password' 
             className='px-4 py-2 border-b-[1px] w-[300px] border-gray-500 outline-none'/>
             {errors && <span className='bg-red-300 text-red-700'>{errors.password}</span>}
             {error && <span className='bg-red-300 text-red-700 rounded-sm text-center'>{error}</span>}
