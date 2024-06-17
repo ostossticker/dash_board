@@ -87,7 +87,7 @@ type createdProps = {
 const Create = () => {
   const fileInput = useRef<HTMLInputElement>(null);
   const [isError , setIsError] = useState<boolean>(false)
-  const { pending , setPending  ,edit , passingId} = useToggle()
+  const { pending , setPending , setModalisopen  ,edit , passingId , isModal} = useToggle()
   const user = useCurrentUser()
 
   const {data , error} = useSWR(`${url}/api/employee/${passingId}?email=${user?.id}`,fetchData)
@@ -123,7 +123,15 @@ const Create = () => {
       memberSince:edit ? emps.memberSince : new Date().toISOString().split('T')[0],
       oldImg:edit ? emps.empCard: ''
     }))
-  },[edit ,emps])
+
+    if(isModal === true && edit === false){
+      setVal(prev=>({
+        ...prev,
+        memberSince:new Date().toISOString().split('T')[0]
+      }))
+    }
+
+  },[edit ,emps , isModal])
 
   const left = useMemo(()=>[
     {
@@ -236,7 +244,7 @@ const Create = () => {
   };
   
   const onUpdate = () => {
-    const {empName , empAddr , empAssc , oldImg , empGender , empId , empNational ,empOcc , empPhone , empTelegram} = val
+    const {empName , empAddr , empAssc , oldImg , empGender , memberSince , empId , empNational ,empOcc , empPhone , empTelegram} = val
     setPending(true)
 
     let validation = ''
@@ -263,7 +271,8 @@ const Create = () => {
         empNational:empNational,
         empOcc:empOcc,
         empTelegram:empTelegram,
-        oldImg:oldImg
+        oldImg:oldImg,
+        memberSince
       },formData)
       .then((data)=>{
         setImage(undefined)
@@ -276,6 +285,7 @@ const Create = () => {
           toast.success(data.success)
           setPending(false)
           setIsError(false)
+          setModalisopen(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
@@ -286,7 +296,7 @@ const Create = () => {
   }
 
   const onSave = async() => {
-    const {empName , empAddr , empAssc , empGender , empId , empNational ,empOcc , empPhone , empTelegram} = val
+    const {empName , empAddr , empAssc , empGender , memberSince , empId , empNational ,empOcc , empPhone , empTelegram} = val
     setPending(true)
 
     let validation = ''
@@ -311,7 +321,8 @@ const Create = () => {
         empId:empId,
         empNational:empNational,
         empOcc:empOcc,
-        empTelegram:empTelegram
+        empTelegram:empTelegram,
+        memberSince
       },formData)
       .then((data)=>{
         setImage(undefined)
@@ -336,6 +347,7 @@ const Create = () => {
           toast.success(data.success)
           setPending(false)
           setIsError(false)
+          setModalisopen(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
@@ -377,7 +389,7 @@ const Create = () => {
     </div>
     <div className='flex justify-center items-center gap-5'>
     <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.empName  !== "" || val.empPhone !== '' ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
-      <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-insomnia-primary w-[185px] rounded-md`} onClick={()=>closeModal('my_modal_5')}>Cancel</button>
+      <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-insomnia-primary w-[185px] rounded-md`} onClick={()=>{closeModal('my_modal_5') , setModalisopen(false)}}>Cancel</button>
     </div>
     <input type="file" className="hidden" ref={fileInput}  onChange={handleImageChange} />
     <input type="text" value={val.oldImg === '' ? 'empty' : val.oldImg} className='hidden'/>

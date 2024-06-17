@@ -47,7 +47,7 @@ type invoiceProps = {
  discount?:number;
  total?:number;
  balance?:number;
- customerId:string
+ customerId:string;
 }
 
 function isArrValid(item: arr): boolean {
@@ -113,7 +113,9 @@ export const addGeneral = async ({
         return {error:"sorry this not work"}
     }
 
-    const creatcustomer = await prisma.customer.update({
+    let creatcustomer
+   if(cusName1 !== 'General Customer'){
+    creatcustomer = await prisma.customer.update({
         where:{
             id:customerId
         },
@@ -125,6 +127,7 @@ export const addGeneral = async ({
             cusAddr
         }
     })
+   }
 
     const datas = await prisma.invoice.create({
         data:{
@@ -141,6 +144,7 @@ export const addGeneral = async ({
             toggleAddress,
             toggleSignature,
             /////// toggle stuff
+            invCusPhone:cusName1 === 'General Customer' ? invCusPhone1 : null, 
             invNo,
             invPo,
             mode,
@@ -161,7 +165,7 @@ export const addGeneral = async ({
             customerId
         }
     })
-    if(datas && creatcustomer){
+    if(datas || creatcustomer){
         return {success:"updated! invoice" , id: datas.id}
     }
 }
@@ -223,18 +227,21 @@ export const editGeneral = async ({
         return {error:"sorry u cant save this invoice without adding some item"}
     }
 
-    const creatcustomer = await prisma.customer.update({
-        where:{
-            id:customerId
-        },
-        data:{
-            cusName:cusName1,
-            cusPhone1:invCusPhone1,
-            cusEmail,
-            cusComp,
-            cusAddr
-        }
-    })
+    let creatcustomer;
+    if(cusName1 !== "General Customer"){
+         creatcustomer = await prisma.customer.update({
+            where:{
+                id:customerId
+            },
+            data:{
+                cusName:cusName1,
+                cusPhone1:invCusPhone1,
+                cusEmail,
+                cusComp,
+                cusAddr
+            }
+        })
+    }
 
     const datas = await prisma.invoice.update({
         where:{
@@ -249,6 +256,7 @@ export const editGeneral = async ({
             toggleAddr,
             togglePo,
             ///////-----///////
+            invCusPhone:cusName1 === 'General Customer' ? invCusPhone1 : null,
             toggleLogo,
             toggleBankInfo,
             toggleAddress,
@@ -273,7 +281,7 @@ export const editGeneral = async ({
             customerId
         }
     })
-    if(datas && creatcustomer){
+    if(datas || creatcustomer){
         return {success:"updated! invoice" , id: datas.id}
     }
 }

@@ -86,7 +86,7 @@ type optionDrop = {
 }
 
 const Create = () => {
-  const { pending , setPending  ,edit , passingId} = useToggle()
+  const { pending , setPending  ,edit , passingId , isModal , setModalisopen} = useToggle()
   const [suggest , setSuggest] = useState<optionDrop[]>([])
   const [isError , setIsError] = useState<boolean>(false)
   const user = useCurrentUser()
@@ -132,7 +132,15 @@ const Create = () => {
       oldImg1: edit ? pur.image2:''
     });
     setText(pur.purDes)
-  },[passingId, edit, pur]);
+
+    if(isModal === true && !edit){
+      setVal(prev=>({
+        ...prev,
+        purSince:new Date().toISOString().split('T')[0]
+      }))
+    }
+
+  },[passingId, edit, pur,isModal]);
 
     const fetchDatas = async (newString:string) =>{
       const {data} = await axios.get(`${url}/api/businesss?email=${user.id}&name=${user.name}&filter=${newString}`)
@@ -372,6 +380,7 @@ const Create = () => {
           toast.success(data.success)
           setPending(false)
           setIsError(false)
+          setModalisopen(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
@@ -430,6 +439,7 @@ const Create = () => {
           toast.success(data.success)
           setPending(false)
           setIsError(false)
+          setModalisopen(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
@@ -541,7 +551,7 @@ const Create = () => {
           </div>
     <div className='flex justify-center items-center gap-5'>
     <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.purName  !== "" || val.purPrice !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
-      <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>closeModal('my_modal_5')}>Cancel</button>
+      <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>{closeModal('my_modal_5') , setModalisopen(false)}}>Cancel</button>
     </div>
     <input type="file" className="hidden" ref={fileInput1} name="image" onChange={(e) => handleImageChange(e, 'image')} />
     <input type="file" className="hidden" ref={fileInput2} name="image1" onChange={(e) => handleImageChange(e, 'image1')} />

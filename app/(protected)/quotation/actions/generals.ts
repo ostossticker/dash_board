@@ -189,19 +189,21 @@ export const addQtGen = async({
     if(items?.length === 0){
         return {error:"sorry u cant save this invoice without adding some item"}
     }
-
-    const creatcustomer = await prisma.customer.update({
-        where:{
-            id:customerId
-        },
-        data:{
-            cusName:cusName2,
-            cusPhone1:cusPhone2,
-            cusEmail,
-            cusComp,
-            cusAddr
-        }
-    })
+    let creatcustomer
+    if(cusName2 === 'General Customer'){
+        creatcustomer = await prisma.customer.update({
+            where:{
+                id:customerId
+            },
+            data:{
+                cusName:cusName2,
+                cusPhone1:cusPhone2,
+                cusEmail,
+                cusComp,
+                cusAddr
+            }
+        })
+    }
 
     const datas = await prisma.quotation.create({
         data:{
@@ -218,6 +220,7 @@ export const addQtGen = async({
             staffName,
             staffPhone,
             staffTelegram,
+            invCusPhone:cusName2 === 'General Customer' ? cusPhone2 : null,
             qtNo,
             qtTitle,
             qtDate,
@@ -332,18 +335,21 @@ export const editQtGen = async ({
     if(items?.length === 0){
         return {error:"sorry u cant save this invoice without adding some item"}
     }
-    const creatcustomer = await prisma.customer.update({
-        where:{
-            id:customerId
-        },
-        data:{
-            cusName:cusName2,
-            cusPhone1:cusPhone2,
-            cusEmail,
-            cusComp,
-            cusAddr
-        }
-    })
+    let creatcustomer;
+    if(cusName2 === 'General Customer'){
+        creatcustomer = await prisma.customer.update({
+            where:{
+                id:customerId
+            },
+            data:{
+                cusName:cusName2,
+                cusPhone1:cusPhone2,
+                cusEmail,
+                cusComp,
+                cusAddr
+            }
+        })
+    }
     const datas = await prisma.quotation.update({
         where:{
             id
@@ -362,6 +368,7 @@ export const editQtGen = async ({
             staffName,
             staffPhone,
             staffTelegram,
+            invCusPhone:cusName2 === 'General Customer' ? cusPhone2 : null,
             qtNo,
             qtTitle,
             qtDate,

@@ -162,7 +162,7 @@ const CreateQt = () => {
                     setVal({
                         cusName: edit ? data.customer.cusName : '',
                         cusComp: edit ? data.customer.cusComp : '',
-                        cusPhone: edit ? data.customer.cusPhone1 : '',
+                        cusPhone: edit ? data.customer.cusName === 'General Customer' ? data.invCusPhone : data.customer.cusPhone1 : '',
                         cusEmail: edit ? data.customer.cusEmail : '',
                         cusAddr: edit ? data.customer.cusAddr : '',
                         staffName: edit ? data.staffName : '',

@@ -68,7 +68,7 @@ type optionDrop = {
 }
 
 const Create = () => {
-  const { pending , setPending  ,edit , passingId} = useToggle()
+  const { pending , setPending , setModalisopen ,isModal ,edit , passingId} = useToggle()
   const [suggest , setSuggest] = useState<optionDrop[]>([])
   const user = useCurrentUser()
   const [focus , setFocus] = useState<number | null>(0)
@@ -102,7 +102,13 @@ const Create = () => {
       cusAddr:edit ? cus.cusAddr :'',
       cusWebsite:edit ? cus.cusWebsite : '',
     })
-},[passingId,edit,cus])
+    if(isModal === true && !edit){
+      setVal(prev=>({
+        ...prev,
+        cusMember:new Date().toISOString().split('T')[0]
+      }))
+    }
+},[passingId,edit,cus, isModal])
 
 
   const fetchDatas = async (newString:string) =>{
@@ -283,6 +289,7 @@ const scrollToSelectedIndex = () => {
         if(data?.success){
           toast.success(data.success)
           setPending(false)
+          setModalisopen(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
@@ -324,6 +331,7 @@ const scrollToSelectedIndex = () => {
         if(data?.success){
           toast.success(data.success)
           setPending(false)
+          setModalisopen(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
@@ -405,7 +413,7 @@ const scrollToSelectedIndex = () => {
     </div>
     <div className='flex justify-center items-center gap-5 mt-[20px]'>
       <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.cusName  !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? <span className='loading loading-spinner text-default'></span> : <p>Save</p>}</button>
-      <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>closeModal('my_modal_5')}>Cancel</button>
+      <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>{closeModal('my_modal_5') , setModalisopen(false) }}>Cancel</button>
     </div>
     </>
   )

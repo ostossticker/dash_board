@@ -26,6 +26,7 @@ type arr = {
   invTitle:string;
   customer:{
     cusName:string;
+    cusPhone1:string;
   }
   invBus:string;
   invStatus:string;
@@ -350,7 +351,7 @@ const filteredUsers = anagramFilter
             <div>
                 <div className="xl:p-1 relative border-[1px] border-input-primary rounded-md w-[200px]">
                 <select value={val.status} onChange={handleSelectChange} className={`block px-2 py-1 w-full lg:text-[12px] xl:text-md appearance-none focus:outline-none bg-transparent ${darkMode ? "text-dark-lg-color" : `${val.status === "" ? 'text-input-primary' : ''}`}`} >
-                                        <option value="" >All</option>
+                                        <option value="">All</option>
                                         <option value="paid">paid</option>
                                         <option value="unpay">unpaid</option>
                                         <option value="partial">partial</option>

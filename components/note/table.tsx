@@ -37,9 +37,11 @@ const NoteTable = () => {
     const [currentPage , setCurrentPage] = useState(1)
     const [take , setTake] = useState<number>(15)
     const [print , setPrint] = useState({
+        no:'',
         title:'',
         text:'',
-        noteDate:''
+        createdAt:'',
+        updatedAt:''
     })
     const [val , setVal] = useState({
         filter:'',
@@ -190,140 +192,145 @@ const NoteTable = () => {
             </div>
             </div>
         </div>
-        <table className='w-full mt-[10px]'>
-            <thead>
-              <tr>
-                {
-                  thead?.map((item,i)=>{
-                    return(
-                      <th key={item.label}  className={`${item.textAlign} ${i === 0 ? 'rounded-tl-md' : ''} ${i === 4 ? 'rounded-tr-md !pr-[50px]' : ''} xl:text-[16px] lg:text-[10px] xl:leading-7  text-white bg-thead-primary`}>{item.label}</th>
-                    )
-                  })
-                }
-              </tr>
-            </thead>
-            <tbody>
-              {
-                note?.map((item,i)=>{
-                  return(
-                  <tr key={item.id} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} xl:text-[16px] lg:text-[11px] hover:bg-[#F9FAFB]`}>
-                    <td className={placeholderClass}>{(page - 1) * take + i + 1}</td>
-                    <td className={`${placeholderClass} text-start`}>{item.title}</td>
-                    <td className={`${placeholderClass}`}><div className='flex justify-end items-center'>
-                    <div className='pr-[5px]'>{!item.createdAt ? '' : dateFormat(item.createdAt)}</div>
-                    <div>{item.createdAt ? convertTime(item.createdAt) : ''}</div>
-                    </div></td>
-                    <td className={placeholderClass}><div className='flex justify-end items-center'>
-                    <div className='pr-[5px]'>{!item.updatedAt ? '' : dateFormat(item.updatedAt)}</div><div>{item.updatedAt ? convertTime(item.updatedAt) : ''}</div></div>
-                    </td>
-                    <td className={placeholderClass}>
-                        <div className='flex justify-end mr-[50px] items-center gap-1'>
-                        <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
-                            setPrint({
-                                title:item.title,
-                                text:item.text,
-                                noteDate:item.noteDate
-                            })
-                            setPopup(true)
-                        }}>
-                                <PiEyeLight />
-                            </button> 
-                        <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
-                          openModal('my_modal_5')
-                          onEdit()
-                          setPassingId(item.id)
-                        }}>
-                           <PiPencilSimpleLineLight />
-                        </button>
-                        <button className={`${darkMode ? "text-red-400 " : "text-red-700" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
-                          openModal('note')
-                          setPassing(item.id)
-                        }}>
-                            <PiTrashLight/>
-                        </button>
-                        </div>
-                    </td>
-                  </tr>
-                  )
-                })
-              }
-              {
-                (()=>{
-                  let row = []
-                  for(let i = take; i > note.length; i--){
-                    row.push(
-                      <tr key={crypto.randomUUID()} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} xl:text-[16px] lg:text-[11px]`}>
-                        <td className={placeholderClass}><div className='invisible'>-</div></td>
-                        <td className={placeholderClass}></td>
-                        <td className={placeholderClass}></td>
-                        <td className={placeholderClass}></td>
-                        <td className={placeholderClass}>
-                        <div className='flex justify-end items-center gap-1 invisible'>
-                        
-                        <button className={`${darkMode ? "text-blue-400" : "text-blue-700" } p-1 lg:text-[14px] xl:text-[20px]`}>
-                           <PiPencilSimpleLineLight />
-                        </button>
-                        <button className={`${darkMode ? "text-red-400 " : "text-red-700  "}p-1 lg:text-[14px] xl:text-[20px]`}>
-                            <PiTrashLight />
-                        </button>
+        {
+          popup === false && (
+              <>
+              <table className='w-full mt-[10px]'>
+              <thead>
+                <tr>
+                  {
+                    thead?.map((item,i)=>{
+                      return(
+                        <th key={item.label}  className={`${item.textAlign} ${i === 0 ? 'rounded-tl-md' : ''} ${i === 4 ? 'rounded-tr-md !pr-[50px]' : ''} xl:text-[16px] lg:text-[10px] xl:leading-7  text-white bg-thead-primary`}>{item.label}</th>
+                      )
+                    })
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                  {
+                    note?.map((item,i)=>{
+                      return(
+                      <tr key={item.id} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} xl:text-[16px] lg:text-[11px] hover:bg-[#F9FAFB]`}>
+                        <td className={placeholderClass}>{(page - 1) * take + i + 1}</td>
+                        <td className={`${placeholderClass} text-start`}>{item.title}</td>
+                        <td className={`${placeholderClass}`}><div className='flex justify-end items-center'>
+                        <div className='pr-[5px]'>{!item.createdAt ? '' : dateFormat(item.createdAt)}</div>
+                        <div>{item.createdAt ? convertTime(item.createdAt) : ''}</div>
                         </div></td>
+                        <td className={placeholderClass}><div className='flex justify-end items-center'>
+                        <div className='pr-[5px]'>{!item.updatedAt ? '' : dateFormat(item.updatedAt)}</div><div>{item.updatedAt ? convertTime(item.updatedAt) : ''}</div></div>
+                        </td>
+                        <td className={placeholderClass}>
+                            <div className='flex justify-end mr-[50px] items-center gap-1'>
+                            <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
+                                setPrint({
+                                    no:`${(page - 1) * take + i + 1}`,
+                                    title:item.title,
+                                    text:item.text,
+                                    createdAt:item.noteDate,
+                                    updatedAt:item.updatedAt
+                                })
+                                setPopup(true)
+                            }}>
+                                    <PiEyeLight />
+                                </button> 
+                            <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
+                              openModal('my_modal_5')
+                              onEdit()
+                              setPassingId(item.id)
+                            }}>
+                              <PiPencilSimpleLineLight />
+                            </button>
+                            <button className={`${darkMode ? "text-red-400 " : "text-red-700" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
+                              openModal('note')
+                              setPassing(item.id)
+                            }}>
+                                <PiTrashLight/>
+                            </button>
+                            </div>
+                        </td>
                       </tr>
                       )
+                    })
+                  }
+                  {
+                    (()=>{
+                      let row = []
+                      for(let i = take; i > note.length; i--){
+                        row.push(
+                          <tr key={crypto.randomUUID()} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} xl:text-[16px] lg:text-[11px]`}>
+                            <td className={placeholderClass}><div className='invisible'>-</div></td>
+                            <td className={placeholderClass}></td>
+                            <td className={placeholderClass}></td>
+                            <td className={placeholderClass}></td>
+                            <td className={placeholderClass}>
+                            <div className='flex justify-end items-center gap-1 invisible'>
+                            
+                            <button className={`${darkMode ? "text-blue-400" : "text-blue-700" } p-1 lg:text-[14px] xl:text-[20px]`}>
+                              <PiPencilSimpleLineLight />
+                            </button>
+                            <button className={`${darkMode ? "text-red-400 " : "text-red-700  "}p-1 lg:text-[14px] xl:text-[20px]`}>
+                                <PiTrashLight />
+                            </button>
+                            </div></td>
+                          </tr>
+                          )
+                        }
+                        return row;
+                      })()
                     }
-                    return row;
-                  })()
-                }
-            </tbody>
-        </table>
-         {/****************** */}
-         <div className='flex justify-start pb-[14px] gap-4'>
-          
-          <div className='flex justify-center px-[5px] xl:rounded-md lg:rounded-sm items-center mt-[16px] bg-thead-primary xl:h-[30px] lg:h-[20px] text-white'>
-          <select value={take} className='bg-transparent outline-none xl:text-[16px] lg:text-[10px]' onChange={(e:React.ChangeEvent<HTMLSelectElement>)=>setTake(Number(e.target.value))}>
-                  <option value="15" className='text-black'>15</option>
-                  <option value="20" className='text-black'>20</option>
-                  <option value="30" className='text-black'>30</option>
-                  <option value="40" className='text-black'>45</option>
-                  <option value="50" className='text-black'>50</option>
-                  <option value="100" className='text-black'>100</option>
-            </select><MdOutlineArrowDropDown/>
+                </tbody>
+            </table>
+                {/****************** */}
+              <div className='flex justify-start pb-[14px] gap-4'>
+                
+              <div className='flex justify-center px-[5px] xl:rounded-md lg:rounded-sm items-center mt-[16px] bg-thead-primary xl:h-[30px] lg:h-[20px] text-white'>
+              <select value={take} className='bg-transparent outline-none xl:text-[16px] lg:text-[10px]' onChange={(e:React.ChangeEvent<HTMLSelectElement>)=>setTake(Number(e.target.value))}>
+                      <option value="15" className='text-black'>15</option>
+                      <option value="20" className='text-black'>20</option>
+                      <option value="30" className='text-black'>30</option>
+                      <option value="40" className='text-black'>45</option>
+                      <option value="50" className='text-black'>50</option>
+                      <option value="100" className='text-black'>100</option>
+                </select><MdOutlineArrowDropDown/>
+                  </div>
+                <div className='flex mt-[16px]'>
+                  <button className={classes} onClick={() => loadPage(1)} disabled={page === 1}>{"<<"}</button>
+                  <button className={classes} onClick={() => loadPage(page - 1)} disabled={page === 1}>{"<"}</button>
+                  {renderPageNumbers().map((pageNumber) => (
+                      <button key={pageNumber}  
+                      className={classes}
+                      onClick={() => loadPage(pageNumber)}
+                      disabled={page === pageNumber}
+                      >
+                        {pageNumber}
+                      </button>
+                  ))}
+                  <button className={classes}  onClick={() => loadPage(page + 1)}
+                disabled={page === totalPages}>{">"}</button>
+                  <button className={classes} onClick={() => loadPage(totalPages)} disabled={page === totalPages}>{">>"}</button>
+                </div>
+                
               </div>
-            <div className='flex mt-[16px]'>
-              <button className={classes} onClick={() => loadPage(1)} disabled={page === 1}>{"<<"}</button>
-              <button className={classes} onClick={() => loadPage(page - 1)} disabled={page === 1}>{"<"}</button>
-              {renderPageNumbers().map((pageNumber) => (
-                  <button key={pageNumber}  
-                  className={classes}
-                  onClick={() => loadPage(pageNumber)}
-                  disabled={page === pageNumber}
-                  >
-                    {pageNumber}
-                  </button>
-              ))}
-              <button className={classes}  onClick={() => loadPage(page + 1)}
-            disabled={page === totalPages}>{">"}</button>
-              <button className={classes} onClick={() => loadPage(totalPages)} disabled={page === totalPages}>{">>"}</button>
-            </div>
-            
-          </div>
-          {/****************** */}
-          <Modal typeSelect='caution' id='note' handlingAction={()=>handleDelete(passing)} CautionText={'Deletion'}/>
-          
-    </div>
-    {
+              {/****************** */}
+              </>
+          )
+        }
+        
+         
+          {
           popup === true && (
-            <ResponsiveElement height={'auto'} width={430} className='bg-white p-4 rounded-lg mt-5'>
-            <div className='bg-white rounded-md p-4'>
-              <div className='flex justify-between items-center w-full'>
-              <h1 className=' text-thead-primary font-semibold'>Note</h1>
-              <h1 className='font-semibold'>Title: {print.title}</h1>
-              <div className='flex gap-2 items-center'>
-              <p className='font-semibold'>Date: {dateFormat(print.noteDate)}</p>
-                <span onClick={()=>setPopup(false)} className="text-[20px] text-insomnia-primary font-semibold cursor-pointer">x</span>
-              </div>
+            <div className='bg-white rounded-md  mt-5'>
+              <div className='flex justify-between items-center w-full bg-thead-primary rounded-t-md px-5 py-1'>
+              <div className='font-semibold text-white flex gap-4'><p>NO.</p><p>{print.no}</p></div>
+              <div className='font-semibold text-white flex gap-4'><p>TITLE.</p><p>{print.title}</p></div>
+              <div className='font-semibold text-white flex gap-4'><p>CREATED AT.</p><p>{dateFormat(print.createdAt)}</p></div>
+              <div className='font-semibold text-white flex gap-4'><p>UPDATED AT.</p><div className='flex gap-2'><p>{dateFormat(print.updatedAt)}</p><p>{convertTime(print.updatedAt)}</p></div></div>
               </div>
            
-            <textarea className="notes outline-none w-full mt-2"
+            <textarea className="notes outline-none w-full mt-2 px-[20px]"
+              rows={15}
               ref={textareaRef}
               style={{
                   minHeight: MIN_TEXTAREA_HEIGHT,
@@ -332,10 +339,18 @@ const NoteTable = () => {
               value={print.text} >
 
               </textarea>
+
+              <div className='flex justify-end items-center'>
+                <button className={`px-4 py-1 text-white duration-200 ease-in-out `}>SAVE</button>
+                <button onClick={()=>setPopup(false)} className='px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-insomnia-primary w-[185px] rounded-md'>CANCEL</button>
+              </div>
             </div>
-            </ResponsiveElement>
           )
         }
+          <Modal typeSelect='caution' id='note' handlingAction={()=>handleDelete(passing)} CautionText={'Deletion'}/>
+          
+    </div>
+    
     </>
   )
 }

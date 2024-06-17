@@ -82,7 +82,7 @@ type optionDrop = {
 }
 
 const Create = () => {
-  const { pending , setPending  ,edit , passingId} = useToggle()
+  const { pending , setPending  ,edit , passingId , setModalisopen , isModal} = useToggle()
   const user = useCurrentUser()
 
   const    MIN_TEXTAREA_HEIGHT = 32;
@@ -122,7 +122,15 @@ const Create = () => {
       prodBustype: edit ? prods.prodBusType : ''
     });
     setText(edit ? prods.proditemDes : '')
-  },[passingId, edit, prods]);
+
+    if(isModal === true && !edit){
+      setVal(prev=>({
+        ...prev,
+        prodSince:new Date().toISOString().split('T')[0],
+      }))
+    }
+    
+  },[passingId,isModal, edit, prods]);
 
 
     const fetchDatas = async (newString:string) =>{
@@ -146,7 +154,8 @@ const Create = () => {
           // Enter key
           setVal(prev=>({
             ...prev,
-            prodBus:suggest.find(item => item.id === selectedItemId)?.busName || ""
+            prodBus:suggest.find(item => item.id === selectedItemId)?.busName || "",
+            prodBustype:suggest.find(item => item.id === selectedItemId)?.busType || ""
           }));
           setFocus(null)
         }
@@ -225,7 +234,12 @@ const Create = () => {
       ...val,
       [name]: newValue,
     });
+    
     if(name === 'prodBus' && value  !== ""){
+      setVal(prev=>({
+        ...prev,
+        prodBustype:suggest.find(item => item.busName === value)?.busType || ""
+      }))
       setFocus(1)
     }else{
       fetchDatas('')
@@ -269,13 +283,14 @@ const Create = () => {
         proditemDes:text,
         prodBusType: prodBustype
       }).then((data)=>{
-        setVal({
+        setVal(prev=>({
+          ...prev,
           prodItemName:'',
           prodUnitPrice:'',
           prodBus:'',
-          prodSince:'',
           prodBustype:''
-        })
+        }))
+        setText('')
         if(data?.error){
           toast.error(data.error)
           setPending(true)

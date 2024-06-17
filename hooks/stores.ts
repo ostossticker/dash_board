@@ -94,6 +94,10 @@ type toggleVal = {
     ///pdf 
     pdf:string,
     setPdf:(newString:string)=>void;
+
+    ////show button create 
+    isModal:boolean,
+    setModalisopen:(newState:boolean)=>void
 }
 
 const useToggle = create<toggleVal>((set)=>({
@@ -311,6 +315,14 @@ const useToggle = create<toggleVal>((set)=>({
     setPdf:(newString)=>{
         set({
             pdf:newString
+        })
+    },
+
+    ////isModal
+    isModal:false ,
+    setModalisopen:(newState)=>{
+        set({
+            isModal:newState
         })
     }
 }))

@@ -30,6 +30,7 @@ type arr = {
   invNo:string;
   cusName1:string;
   cusComp:string;
+  invCusPhone:string;
   customer:{
     cusName:string;
     cusComp:string;
@@ -72,6 +73,7 @@ const InvTable = () => {
   const [test , setTest] = useState<optionDrop[]>([])
   const [totalStatus , setTotalStatus] = useState<balanceStatus[]>([])
   const [passing , setPassing] = useState<string>('')
+  const [invCusPhone , setInvCusPhone] = useState<string>('')
   const [cusComp , setCusComp] = useState<string>('')
   const [bus , setBus] = useState<string>('')
   const [invStatus , setInvStatus] = useState<string>('')
@@ -238,10 +240,10 @@ const InvTable = () => {
 
   if(error) return <div>Error fetching data</div>
 
-  const handleDelete = async (id:string , cusComp:string ,invBus:string ,invStatus:string , invCusPhone1:string) =>{
+  const handleDelete = async (id:string , cusComp:string ,invBus:string ,invStatus:string , invCusPhone1:string, invCusPhone:string) =>{
     setPending(true)
     if(switching === 'group'){
-        await deletePaymentAll(id , cusComp , invBus , invStatus , invCusPhone1)
+        await deletePaymentAll(id , cusComp , invBus , invStatus , invCusPhone1 ,invCusPhone)
         .then((data)=>{
         if(data?.success){
             toast.success(data.success)
@@ -498,7 +500,9 @@ const InvTable = () => {
                     </div>
                     </td>
                     <td className={`${placeholderClass} text-end`}>
-                        {switching === 'ungroup' ? item.customer.cusPhone1 : item.invCusPhone1}
+                          {
+                            switching === 'ungroup' ? item.customer.cusName === 'General Customer' ? item.invCusPhone : item.invCusPhone1 : item.cusName1 === 'General Customer' ? item.invCusPhone : item.invCusPhone1
+                          }
                     </td>
                     <td className={`${placeholderClass} text-end`}>${item._sum && item._sum.balance !== undefined && parseFloat(item._sum.balance).toFixed(2)} {item.balance !== undefined && parseFloat(item.balance).toFixed(2)}</td>
                     <td className={placeholderClass}>
@@ -509,7 +513,7 @@ const InvTable = () => {
                             setIcon(true)
                             setVal(prev=>({
                                 ...prev,
-                                filter:item.cusName1,
+                                filter:item.cusName1 === 'General Customer' ? item.invCusPhone : item.cusName1,
                                 filter1:item.invBus,
                                 status:item.invStatus
                             }))
@@ -530,6 +534,7 @@ const InvTable = () => {
                                 setBus(item.invBus)
                                 setInvStatus(item.invStatus)
                                 setCusPhone1(item.invCusPhone1)
+                                setInvCusPhone(item.invCusPhone)
                             }else{
                                 setPassing(item.id)
                             }
@@ -609,7 +614,7 @@ const InvTable = () => {
           </div>
         {/****************** */}
         
-        <Modal typeSelect='caution' id='invtable' handlingAction={()=>handleDelete(passing , cusComp , bus , invStatus , invCusPhone1)} CautionText={'Deletion'}/>
+        <Modal typeSelect='caution' id='invtable' handlingAction={()=>handleDelete(passing , cusComp , bus , invStatus , invCusPhone1 , invCusPhone)} CautionText={'Deletion'}/>
     </div>
     <div className='flex justify-end gap-4'>
     

@@ -1,12 +1,9 @@
 "use server"
 import { prisma } from "@/lib/db/prisma"
 
-export const deletePaymentAll = async(cusName:string , cusComp:string ,invBus:string, invStatus:string , invCusPhone1:string ) =>{
+export const deletePaymentAll = async(cusName:string , cusComp:string ,invBus:string, invStatus:string , invCusPhone1:string ,invCusPhone:string) =>{
     try {
         const now = new Date()
-        if (!cusName || !cusComp || !invBus || !invStatus || !invCusPhone1) {
-            throw new Error("Invalid parameters");
-        }
 
         await prisma.invoice.updateMany({
             where: {
@@ -20,6 +17,9 @@ export const deletePaymentAll = async(cusName:string , cusComp:string ,invBus:st
                 },
                 invStatus:{
                     contains:invStatus
+                },
+                invCusPhone:{
+                    contains:invCusPhone
                 }
             },
             data:{
