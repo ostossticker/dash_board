@@ -98,6 +98,10 @@ type toggleVal = {
     ////show button create 
     isModal:boolean,
     setModalisopen:(newState:boolean)=>void
+    
+    ////noteswitch
+    noteSwitch:boolean;
+    setNoteSwitch:(newstate:boolean)=>void;
 }
 
 const useToggle = create<toggleVal>((set)=>({
@@ -324,7 +328,16 @@ const useToggle = create<toggleVal>((set)=>({
         set({
             isModal:newState
         })
+    },
+
+    ////
+    noteSwitch:false,
+    setNoteSwitch:(newstate)=>{
+        set({
+            noteSwitch:newstate
+        })
     }
+
 }))
 
 export default useToggle

@@ -1,7 +1,7 @@
 "use client"
 import useToggle from '@/hooks/stores';
 import { useCurrentUser } from '@/hooks/use-current-user';
-import { areAnagrams, fetchData, openModal } from '@/lib/functions';
+import { fetchData, openModal } from '@/lib/functions';
 import React, { useEffect, useMemo, useState } from 'react'
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { PiTrashLight , PiPencilSimpleLineLight , PiEyeLight } from "react-icons/pi";
@@ -9,7 +9,6 @@ import useSWR, { mutate } from 'swr';
 import Modal from '../ui/modal/modal';
 import { deleteBusiness } from '@/app/(protected)/bussiness/action/business';
 import { toast } from 'react-toastify';
-import Bustop from './top';
 import { useRouter } from 'next/navigation';
 import { url } from '@/lib/url';
 import { useCurrentRole } from '@/hooks/use-current-role';
@@ -43,7 +42,7 @@ type displayProps = {
 
 
 const BusTable = () => {
-  const { isOpen , isHover ,darkMode , pending,setPending,onEdit,setPassingId} = useToggle()
+  const { isOpen , isHover ,darkMode , pending,setPending,onEdit ,setPassingId} = useToggle()
   const vall = typeof window !== 'undefined' ? localStorage.getItem("businessCheck") : null
   const user = useCurrentUser()                                            
   const router = useRouter()
@@ -54,7 +53,6 @@ const BusTable = () => {
   const [bustick , setBusTick] = useState<string>(vall || '')
   const [take , setTake] = useState<number>(15)
   const [filter , setFilter] = useState<string>('')
-  const [suggesting , setSuggest] = useState<Option[]>([])
   const [display , setDisplay] = useState<displayProps>({
     abaQr:'',
     signature:'',
@@ -62,7 +60,7 @@ const BusTable = () => {
     Rec1:''
   })
   const [passing , setPassing] = useState<string>('')
-  const {data , error} = useSWR(`${url}/api/businesstable?email=${user.id}&page=${page}&take=${take}&filter=${filter}&name=${user.name}`,fetchData)
+  const {data , error} = useSWR(`${url}/api/businesstable?email=${user.id}&name=${user.name}&page=${page}&take=${take}&filter=${filter}`,fetchData)
 
   const bus:businessProps[] = data?.buses || []
   const totalPages: number = data?.pagination.totalPages || 0;       
@@ -72,22 +70,17 @@ const BusTable = () => {
     setCurrentPage(newPage);
   }
 
-  const handleFilterChange = (e:React.ChangeEvent<HTMLInputElement>,options:Option[],setSuggests:React.Dispatch<React.SetStateAction<Option[]>>)=>{
-    const value = e.target.value
-    setFilter(value)
-    const filteredOptions = options.filter(op=>areAnagrams(op.busName,value.trim()))
-    setSuggests(filteredOptions)
-  }
-
   useEffect(()=>{
     if(!filter){
       setPage(currentPage)
       mutate(`${url}/api/businesstable?email=${user.id}&name=${user.name}&page=${currentPage}&take=${take}&filter=${filter}`)
+      console.log(bus)
     }
     if(filter !== ''){
       setPage(1)
       mutate(`${url}/api/businesstable?email=${user.id}&name=${user.name}&page=1&take=${take}&filter=${filter}`)
     }
+
   },[filter , take , currentPage , user , pending])
 
 
@@ -166,13 +159,22 @@ const BusTable = () => {
 
   return (
     <div className={`${darkMode ? "bg-dark-box-color" : "bg-white"} mt-[20px] shadow-md rounded-lg px-[30px] ${isOpen || isHover ? "py-[8px]" : "py-[10px]"}`}>
-        <Bustop
-        val={filter} 
-        setFilter={setFilter}
-        func={(e)=>handleFilterChange(e,bus,setSuggest)}
-        suggesting={suggesting}
-        onclick={()=>setFilter('')}
-        />
+        <div className='py-3'>
+        <div className="xl:p-1 relative border-[1px] border-input-primary rounded-md w-[200px]">
+                <input 
+                type="text" 
+                className={`block px-2 py-1 w-full lg:text-[12px] xl:text-md appearance-none focus:outline-none bg-transparent ${darkMode ? "text-dark-lg-color" : ""}`} 
+                value={filter} 
+                onChange={(e)=>setFilter(e.target.value)}
+                placeholder='Search'
+                autoComplete='off'
+                />
+                <label  className={`absolute top-0 lg:text-[15px] xl:text-md ${darkMode ? "bg-dark-box-color" : "bg-white"} p-4 -z-1 transform text-input-primary scale-75 -translate-y-4 z-0 px-1 py-0 duration-300 origin-0`}>
+                    FILTER
+                  </label>
+              </div>
+        </div>
+
         <table className='w-full mt-[10px]'>
             <thead>
               <tr>
@@ -192,7 +194,7 @@ const BusTable = () => {
                   <tr key={item.id} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} xl:text-[16px] lg:text-[11px] hover:bg-[#F9FAFB]`}>
                     <td className={`${placeholderClass} text-center`}>{(page - 1) * take + i + 1}</td>
                     <td className={`${placeholderClass} text-start pl-[30px]`}>{item.busName}</td>
-                    <td className={`${placeholderClass} text-start`}>{item.busDes}</td>
+                    <td className={`${placeholderClass} text-start`}>{item.busDes.length > 44 ? <input value={item.busDes} className='outline-none w-[400px]'/> : item.busDes}</td>
                     <td className={`${placeholderClass} text-start`}>{item.busEmail}</td>
                     <td className={`${placeholderClass}`}>
                         <div className='flex justify-end items-center gap-1 pr-[20px]'>

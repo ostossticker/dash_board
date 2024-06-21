@@ -37,6 +37,13 @@ type optionDrop = {
     abaQr:string;
     signature:string;
     busDes:string;
+    busAddr:string;
+    busEmail:string;
+    busTelegram:string;
+    busPhone1:string;
+    busBankDes:string;
+    busInvEng:string;
+    busInvkh:string;
 }
 
 type cusDrop = {
@@ -1016,6 +1023,13 @@ const Createinv = () => {
                             togglePhone={toggle.cusPhone}
                             toggleAddr={toggle.cusAddr}
                             toggleEmail={toggle.cusEmail}
+                            busAddr={item.busAddr}
+                            busEmail={item.busEmail}
+                            busTelegram={item.busTelegram}
+                            bankdes={item.busBankDes}
+                            busPhone={item.busPhone1}
+                            busEng={item.busInvEng}
+                            busKh={item.busInvkh}
                             togglePo={toggle.invPo}
                             mode={mode}
                             invStatus={val.invStatus} 
@@ -1052,6 +1066,13 @@ const Createinv = () => {
                             togglePhone={toggle.cusPhone}
                             busDes={item.busDes}
                             toggleAddr={toggle.cusAddr}
+                            busEng={item.busInvEng}
+                            busKh={item.busInvkh}
+                            busAddr={item.busAddr}
+                            busEmail={item.busEmail}
+                            bankdes={item.busBankDes}
+                            busTelegram={item.busTelegram}
+                            busPhone={item.busPhone1}
                             mode={mode}
                             toggleEmail={toggle.cusEmail}
                             togglePo={toggle.invPo}

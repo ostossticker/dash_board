@@ -39,6 +39,7 @@ type invFormProps = {
     busTelegram?:string;
     busPhone?:string;
     busType?:string;
+    busPayTerm?:string;
     /// grand totals
     grandTotal?:string;
     ////Toggle 
@@ -52,6 +53,10 @@ type invFormProps = {
     busLogo?:string;
     sigLogo?:string;
     ///picture
+    /////staff info
+    staffName:string;
+    staffPhone:string;
+    
     oldImg?:string;
     oldImg1?:string;
     img1?:string
@@ -72,7 +77,10 @@ const QuotationForm = ({
     invNo,
     invDate, 
     cusName ,
+    busPayTerm,
     cusComp , 
+    staffName,
+    staffPhone,
     cusPhone , 
     cusEmail , 
     cusAddr,
@@ -82,17 +90,13 @@ const QuotationForm = ({
     oldImg1,
     img1,
     img2,
-    busDes
+    busDes,
+    busAddr,
+    busEmail,
+    busPhone,
+    busTelegram
 }:invFormProps) => {
     const {logo , address , signature , employee} = useToggle()
-    const [val , setVal] = useState({
-        staffName:'wdad',
-        staffPhone:'dwada',
-        busAddr:'dwadad',
-        busEmail:'dwada',
-        busTel:'dwadadad',
-        busTelegram:''
-    })
     const generals = useMemo(()=>[
         {
             label:"No.",
@@ -150,40 +154,40 @@ const QuotationForm = ({
         {
             id:'qtForm1',
             label:"Name:",
-            val:"dawdawdada",
-            clss:`${employee === true || val.staffName === "" ? "!hidden" : ""}`
+            val:staffName,
+            clss:`${employee === true || staffName === "" ? "!hidden" : ""}`
         },
         {
             id:'qtForm2',
             label:"Tel:",
-            val:"dawdawdada",
-            clss:`${employee === true || val.staffPhone === "" ? "!hidden" : ""}`
+            val:staffPhone,
+            clss:`${employee === true || staffPhone === "" ? "!hidden" : ""}`
         },
         {
             id:'qtForm3',
             label:"Add:",
-            val:"dawdawdada",
-            clss:`${address === true || val.busAddr === "" ? "!hidden" : ""}`
+            val:busAddr,
+            clss:`${address === true || busAddr === "" ? "!hidden" : ""}`
         },
         {
             id:'qtForm4',
             label:"Email:",
-            val:"dawdawdada",
-            clss:`${address === true || val.busEmail === "" ? "!hidden" : ""}`
+            val:busEmail,
+            clss:`${address === true || busEmail === "" ? "!hidden" : ""}`
         },
         {
             id:'qtForm5',
             label:"Tel:",
-            val:"dawdawdada",
-            clss:`${address === true || val.busTel === "" ? "!hidden" : ""}`
+            val:busPhone,
+            clss:`${address === true || busPhone === "" ? "!hidden" : ""}`
         },
         {
             id:'qtForm6',
             label:"Telegram",
-            val:"dawdawda",
-            clss:`${address === true || val.busTelegram === "" ? "!hidden" : ""}`
+            val:busTelegram,
+            clss:`${address === true || busTelegram === "" ? "!hidden" : ""}`
         }
-    ],[val,employee,address])
+    ],[employee, address, staffName , staffPhone , busAddr , busEmail , busPhone , busTelegram])
     const cusInfo = useMemo(()=>[
         {
             id:"formCus1",
@@ -300,17 +304,17 @@ const QuotationForm = ({
                             <div className='col-span-1'>
                                 {
                                     logo === false && (
-                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={17} className='font-bold'>
+                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={16} className='font-bold'>
                                         <h1 >QUOTATION</h1>
                                         </ResponsiveElement>
                                     )
                                 }
-                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} className='font-bold'>
+                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} className='font-bold'>
                                     <p>No. {invNo}</p>
                                 </ResponsiveElement>
                             </div>
     
-                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} className='text-end font-bold  flex flex-col col-span-1 justify-end'>
+                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} className='text-end font-bold  flex flex-col col-span-1 justify-end'>
                                     <p >
                                         Date. {dateFormat(invDate === undefined ? '' : invDate)}
                                     </p>
@@ -324,10 +328,10 @@ const QuotationForm = ({
                                     for(let i = 5; i > (test2?.length || 0); i--){
                                         row.push(
                                             <div key={crypto.randomUUID()} className={`flex pl-[5px] justify-start items-center invisible`} style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
                                                     <p>mp</p>
                                                 </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
                                                     <p>ddd</p>
                                                 </ResponsiveElement>
                                             </div>
@@ -339,11 +343,11 @@ const QuotationForm = ({
                                 {
                                     cusInfo.map((item)=>{
                                         return(
-                                            <div key={item.id} className={`${item.class} ${!item.val ? "hidden" : "flex"} pl-[5px] justify-start items-center gap-1`} style={{fontFamily:"khmerContent"}}>
+                                            <div key={item.id} className={`${item.class} ${!item.val ? "hidden" : "flex"} pl-[5px] justify-start items-start w-[300px] gap-1`} style={{fontFamily:"khmerContent"}}>
                                                 <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
                                                     <p>{item.label}</p>
                                                 </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
                                                     <p>{item.val}</p>
                                                 </ResponsiveElement>
                                             </div>
@@ -357,18 +361,18 @@ const QuotationForm = ({
                                     employee === true && (
                                         <>
                                         <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
                                                     <p>ddd</p>
                                                 </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
                                                     <p>ddd</p>
                                                 </ResponsiveElement>
                                         </div>
                                         <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
                                                     <p>ddd</p>
                                                 </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
                                                     <p>ddd</p>
                                                 </ResponsiveElement>
                                         </div>
@@ -379,26 +383,26 @@ const QuotationForm = ({
                                     address === true && (
                                         <>
                                         <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
                                                     <p>ddd</p>
                                                 </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
                                                     <p>ddd</p>
                                                 </ResponsiveElement>
                                         </div>
                                         <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
                                                     <p>ddd</p>
                                                 </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
                                                     <p>ddd</p>
                                                 </ResponsiveElement>
                                         </div>
                                         <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
                                                     <p>ddd</p>
                                                 </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
                                                     <p>ddd</p>
                                                 </ResponsiveElement>
                                         </div>
@@ -409,11 +413,11 @@ const QuotationForm = ({
                                     let row = []
                                     for(let i = 5; i > (test3?.length || 0); i--){
                                         row.push(
-                                            <div key={crypto.randomUUID()} className={`flex pl-[5px] justify-start items-center invisible`} style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8}>
+                                            <div key={crypto.randomUUID()} className={`flex pl-[5px] justify-end items-center invisible`} style={{fontFamily:"khmerContent"}}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
                                                     <p>mp</p>
                                                 </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
                                                     <p>ddd</p>
                                                 </ResponsiveElement>
                                             </div>
@@ -425,13 +429,15 @@ const QuotationForm = ({
                                 {
                                     busInfo.map((item)=>{
                                         return(
-                                            <div key={item.id} className={`flex pl-[5px] justify-end ${item.clss} items-center gap-1`} style={{fontFamily:"khmerContent"}}>
+                                            <div className='flex justify-end' key={item.id}>
+                                            <div className={`flex pl-[5px] justify-end ${item.clss} items-start gap-1 w-[240px]`} style={{fontFamily:"khmerContent"}}>
                                                 <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
                                                     <p>{item.label}</p>
                                                 </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} className='text-end'>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} className='text-end pt-[1px]'>
                                                     <p>{item.val}</p>
                                                 </ResponsiveElement>
+                                            </div>
                                             </div>
                                         )
                                     })
@@ -506,7 +512,7 @@ const QuotationForm = ({
                                             {
                                             meters.map((item)=>{
                                                     return(
-                                                            <ResponsiveElement key={crypto.randomUUID()} width={'auto'} height={'auto'} fontSize={8.3} className={`bg-mainBlue text-white font-bold ${item.class}`}>
+                                                            <ResponsiveElement key={crypto.randomUUID()} width={'auto'} height={'auto'} fontSize={7.3} className={`bg-mainBlue text-white font-bold ${item.class}`}>
                                                                 <th>{item.label} </th>
                                                             </ResponsiveElement>
                                                     )
@@ -521,7 +527,7 @@ const QuotationForm = ({
                                             {
                                                 generals.map((item)=>{
                                                     return(
-                                                            <ResponsiveElement key={crypto.randomUUID()} width={'auto'} height={'auto'} fontSize={8.3} className={`bg-mainBlue text-white font-bold ${item.class}`}>
+                                                            <ResponsiveElement key={crypto.randomUUID()} width={'auto'} height={'auto'} fontSize={7.3} className={`bg-mainBlue text-white font-bold ${item.class}`}>
                                                                 <th>{item.label} </th>
                                                             </ResponsiveElement>
                                                     )
@@ -553,7 +559,7 @@ const QuotationForm = ({
                                                         </ResponsiveElement>
                                                         <ResponsiveElement width={150} height={'auto'} fontSize={7} py={1} className='text-start 2xl:!text-[16px]' style={{fontFamily:"khmerContent"}}>
                                                             <td>
-                                                                {item.description}
+                                                                {!item.description ? "" : item.description.length < 44 ? item.description : <input className='outline-none' value={item.description}/>}
                                                             </td>
                                                         </ResponsiveElement>
                                                         <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px] border-l-[1px] border-black'>
@@ -605,7 +611,7 @@ const QuotationForm = ({
                                                         </ResponsiveElement>
                                                         <ResponsiveElement width={240} height={'auto'} fontSize={7} py={1} className='text-start '>
                                                             <td>
-                                                            {item.description}
+                                                            {!item.description ? "" : item.description.length < 44 ? item.description : <input value={item.description} className='w-[320px] outline-none'/>}
                                                             </td>
                                                         </ResponsiveElement>
                                                         <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='text-center border-l-[1px] border-black'>
@@ -760,22 +766,19 @@ const QuotationForm = ({
                                 <ResponsiveElement width={'auto'} height={'auto'} fontSize={5.8} className='font-bold'>
                                 <p >Note: Payment term:</p>
                                 </ResponsiveElement>
-                                <ResponsiveElement width={250} height={'auto'} fontSize={4.7} >
-                                    <p >
-                                    Deposite 50% and full payment after finished the project
-                                    we are looking forward to hearing from you. and we hope to
-                                    have a good collaboration with you in the nearest future
-                                    Thanks for your time and consideration of our company
-                                    </p>
+                                <ResponsiveElement className='outline-none resize-none overflow-hidden' width={200} height={'auto'} fontSize={4.7} >
+                                    <textarea rows={4} value={busPayTerm}>
+
+                                    </textarea>
                                     </ResponsiveElement>
                                 </td>
                             
-                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={9} className='text-end font-bold'>
+                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8} className='text-end font-bold'>
                                 <td className='text-end'>Total:</td>
                                 </ResponsiveElement>
                                 
                                 <td >
-                                    <ResponsiveElement width={'auto'} height={'auto'} fontSize={8} className='text-white text-end   bg-mainBlue font-bold border-x-[1px] border-b-[1px] border-black pr-2 xl:h-[15px] 2xl:h-[20px]'>
+                                    <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} className='text-white text-end   bg-mainBlue font-bold border-x-[1px] border-b-[1px] border-black pr-2 xl:h-[15px] 2xl:h-[20px]'>
                                     <div >${grandTotal}</div>
                                     </ResponsiveElement>
                                 </td>

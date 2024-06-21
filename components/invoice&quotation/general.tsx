@@ -67,7 +67,12 @@ type generalProps = {
   toggleName?:boolean;
   toggleComp?:boolean;
   togglePhone?:boolean;
-
+  ///business 
+  busAddr?:string;
+  busEmail?:string;
+  busTelegram?:string;
+  busPhone?:string;
+  busPayTerm?:string;
   ////router push
   routerPush?:string;
   generalItems:Calculation[];
@@ -85,6 +90,10 @@ type generalProps = {
   busDes?:string;
   ////mode
   mode?:string
+  ////bankdes
+  bankdes?:string;
+  busEng?:string;
+  busKh?:string;
 }
 
 type prodProps ={
@@ -120,6 +129,10 @@ const General = ({
   cusName,
   cusComp,
   cusPhone , 
+  busAddr,
+  busEmail,
+  busPhone,
+  busTelegram,
   abaName , 
   mode,
   abaNumber ,
@@ -139,7 +152,11 @@ const General = ({
   abaQr,
   sigLogo,
   busDes,
-  customerId
+  busPayTerm,
+  customerId,
+  bankdes,
+  busKh,
+  busEng
 }:generalProps) => {
   const user = useCurrentUser()
   const [selectedItemId, setSelectedItemId] = useState<string>("");
@@ -1451,14 +1468,21 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               des={des}
               toggleComp={toggleComp}
               toggleName={toggleName}
+              staffName={staffName || ''}
+              staffPhone={staffPhone || ''}
               togglePhone={togglePhone}
               img1={image.img1 ? URL.createObjectURL(image.img1) : ''}
               img2={image.img2 ? URL.createObjectURL(image.img2) : ''}
               toggleAddr={toggleAddr}
               toggleEmail={toggleEmail}
               busType={busType}
-              busDes={busDes}
+              busDes={bankdes}
               items={calculations}
+              busAddr={busAddr}
+              busPayTerm={busPayTerm}
+              busEmail={busEmail}
+              busTelegram={busTelegram}
+              busPhone={busPhone}
               oldImg1={oldImg1}
               oldImg={oldImg}
               busLogo={busLogo}
@@ -1485,10 +1509,17 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               img1={image.img1 ? URL.createObjectURL(image.img1) : ''}
               img2={image.img2 ? URL.createObjectURL(image.img2) : ''}
               oldImg1={oldImg1}
+              staffName={staffName || ''}
+              staffPhone={staffPhone || ''}
               oldImg={oldImg}
               busType={busType}
               busLogo={busLogo}
-              busDes={busDes}
+              busDes={bankdes}
+              busAddr={busAddr}
+              busEmail={busEmail}
+              busPayTerm={busPayTerm}
+              busPhone={busPhone}
+              busTelegram={busTelegram}
               sigLogo={sigLogo}
               items={calculations}
               invNo={invNo}
@@ -1552,10 +1583,17 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               busDes={busDes}
               abaNumber={abaNumber}
               invNo={invNo}
+              busAddr={busAddr}
+              busEmail={busEmail}
+              bankdes={bankdes}
+              busTelegram={busTelegram}
+              busPhone={busPhone}
               busLogo={busLogo}
               abaLogo={abaQr}
               sigLogo={sigLogo}
               cusName={cusName}
+              busEng={busEng}
+              busKh={busKh}
               cusComp={cusComp}
               cusPhone={cusPhone}
               cusEmail={cusEmail}
@@ -1580,6 +1618,13 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
                 busLogo={busLogo}
                 abaLogo={abaQr}
                 sigLogo={sigLogo}
+                busInvEng={busEng}
+                busInvkh={busKh}
+                busAddr={busAddr}
+                busEmail={busEmail}
+                bankdes={bankdes}
+                busTelegram={busTelegram}
+                busPhone={busPhone}
                 invNo={invNo}
                 cusName={cusName}
                 busDes={busDes}

@@ -105,6 +105,15 @@ const Create = () => {
     if(isModal === true && !edit){
       setVal(prev=>({
         ...prev,
+        cusName:'',
+        cusTelegram:'',
+        cusBus:'',
+        cusPhone1:'',
+        cusPhone2:'',
+        cusComp:'',
+        cusEmail:'',
+        cusAddr:'',
+        cusWebsite:'',
         cusMember:new Date().toISOString().split('T')[0]
       }))
     }

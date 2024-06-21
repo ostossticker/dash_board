@@ -128,14 +128,21 @@ const Create = () => {
       purSince: edit ? pur.purSince : new Date().toISOString().split('T')[0],
       purInvN: edit ? pur.purInvN : '',
       purSupp: edit ? pur.purSupp : '',
-      oldImg: edit ? pur.image1 : '',
-      oldImg1: edit ? pur.image2:''
+      oldImg: edit ? !pur.image1 ? '' : pur.image1 : '',
+      oldImg1: edit ? !pur.image2 ? '' : pur.image2 :''
     });
     setText(pur.purDes)
 
     if(isModal === true && !edit){
       setVal(prev=>({
         ...prev,
+        purName:'',
+        purPrice:'',
+        purBus:'',
+        purInvN:'',
+        purSupp:'',
+        oldImg:'',
+        oldImg1:'',
         purSince:new Date().toISOString().split('T')[0]
       }))
     }
@@ -256,29 +263,33 @@ const Create = () => {
       label:'Unit Price',
       type:'text',
       name:'purPrice',
-      val:val.purPrice
+      val:val.purPrice,
+      oldimg:''
     },
     {
       label:'Purchase Date',
       type:'date',
       name:'purSince',
-      val:val.purSince
+      val:val.purSince,
+      oldimg:''
     },
     {
       label:'Image 1',
       type:'button',
       name:'image',
       func:()=>handleImageSelection(fileInput1, 'image' as keyof imgUploadProps),
-      val:image.image
+      val:image.image,
+      oldimg:val.oldImg
     },
     {
       label:'Image 2',
       type:'button',
       name:'image1',
       func:()=>handleImageSelection(fileInput2, 'image1' as keyof imgUploadProps),
-      val:image.image1
+      val:image.image1,
+      oldimg:val.oldImg1
     }
-  ],[val.purPrice , val.purSince , image.image , image.image1])
+  ],[val.purPrice , val.purSince , image.image , image.image1 , val.oldImg1 , val.oldImg])
 
   const formatValueWithDollarSign = (value: number): string => {
     return `$${value.toFixed(2)}`;
@@ -513,7 +524,7 @@ const Create = () => {
               {item.label === 'Image 1' || item.label === 'Image 2' ? (
                 <div className='flex justify-center my-3 px-[5px] pt-1 pb-3'>
                   <label
-                    className={`${item.val !== undefined ? 'bg-mainLightBlue  shadowHover' : "bg-slate-300 "} cursor-pointer duration-200 ease-in-out px-3 w-full py-1 my-[2px] font-bold text-center text-white rounded-lg`}
+                    className={`${item.val !== undefined || item.oldimg !== '' ? 'bg-mainLightBlue  shadowHover' : "bg-slate-300 "} cursor-pointer duration-200 ease-in-out px-3 w-full py-1 my-[2px] font-bold text-center text-white rounded-lg`}
                     onClick={item.func}
                   >
                     {item.label}

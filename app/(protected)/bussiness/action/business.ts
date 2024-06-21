@@ -161,8 +161,6 @@ export const addBus = async ({
         return {error:"this business name is already exist!"}
     }else if(!busName){
         return {error:"sorry business name is required!"}
-    }else if (!busType){
-        return {error:"sorry business type is required!"}
     }else if (!busPhone1){
         return {error:"phone number 1 is required!"}
     }
@@ -170,7 +168,7 @@ export const addBus = async ({
         data:{
             busName,
             busEmail,
-            busType,
+            busType:busType === '' ? 'general' : busType,
             busAddr,
             busPhone1,
             busPhone2,

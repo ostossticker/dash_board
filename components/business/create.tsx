@@ -63,9 +63,8 @@ import useSWR from 'swr';
           <select className='w-full text-[13px] outline-none shadow-sm border-full solid 
           border-[1px] rounded-md border-slate-200 focus:border-mainLightBlue  h-[30px] px-1 bg-[#F8F8F8]
           ' name={name} value={value} onChange={funcChange}>
-              <option value="empty">none</option>
-              <option value="meter">m2</option>
-              <option value="general">general</option>
+              <option value="general">General</option>
+              <option value="meter">M2</option>
           </select>
          
          </>
@@ -116,7 +115,7 @@ type createProps = {
 
 const Create = () => {
     const [isError , setIsError] = useState<boolean>(false)
-    const { pending , setPending , bgModal ,edit , passingId} = useToggle()
+    const { pending , setPending , isModal , bgModal ,edit , setModalisopen , passingId} = useToggle()
     const user = useCurrentUser()
     const ref1 = useRef<HTMLInputElement>(null)
     const ref2 = useRef<HTMLInputElement>(null)
@@ -164,12 +163,12 @@ const Create = () => {
             busPhone2:edit ? buses.busPhone2 : '',
             busTelegram:edit ? buses.busTelegram : '',
             busType:edit ? buses.busType : '',
-            oldImg:edit ? buses.abaQr : '',
-            oldImg1:edit ? buses.signature : '',
-            oldImg2:edit ? buses.busLogo : '',
-            oldImg3:edit ? buses.Rec1 : '',
+            oldImg:edit ? !buses.abaQr ? '' : buses.abaQr : '',
+            oldImg1:edit ? !buses.signature ? '' : buses.signature : '',
+            oldImg2:edit ? !buses.busLogo ? '' : buses.busLogo : '',
+            oldImg3:edit ? !buses.Rec1 ? '' : buses.Rec1 : '',
         })
-      },[passingId, edit, buses]);
+      },[passingId, edit, buses ]);
 
     const [image , setImage] = useState<busImgProps>({
         abaQr:undefined,
@@ -280,35 +279,62 @@ const Create = () => {
             type:"button",
             name:"abaQr",
             func:()=>handleImageSelection(ref1,'abaQr' as keyof busImgProps),
-            val:image.abaQr
+            val:image.abaQr,
+            oldImg:val.oldImg
         },
         {
             label:"Signature",
             type:"button",
             name:"signature",
             func:()=>handleImageSelection(ref2,'signature' as keyof busImgProps),
-            val:image.signature
+            val:image.signature,
+            oldImg:val.oldImg1
         },
         {
             label:"Business Logo",
             type:"button",
             name:"busLogo",
             func:()=>handleImageSelection(ref3,'busLogo' as keyof busImgProps),
-            val:image.busLogo
+            val:image.busLogo,
+            oldImg:val.oldImg2
         },
         {
             label:"Receipt Logo",
             type:"button",
             name:"Rec1",
             func:()=>handleImageSelection(ref4,'Rec1' as keyof busImgProps),
-            val:image.Rec1
+            val:image.Rec1,
+            oldImg:val.oldImg3
         },
 
-    ],[image.abaQr,image.busLogo,image.signature , image.Rec1])
+    ],[image.abaQr,image.busLogo,image.signature , image.Rec1 , val.oldImg , val.oldImg1 , val.oldImg2 , val.oldImg3])
 
     useEffect(()=>{
-        console.log(val)
-    })
+        if(isModal === true){
+            setVal(prev=>({
+                ...prev,
+                busName:'',
+                busAddr:'',
+                busBankDes:'',
+                busBankName:'',
+                busBankNumber:'',
+                busDes:'',
+                busEmail:'',
+                busInvEng:'',
+                busInvkh:'',
+                busPayTerm:'',
+                busPhone1:'',
+                busPhone2:'',
+                busTelegram:'',
+                busType:'',
+                
+                oldImg:'',
+                oldImg1:'',
+                oldImg2:'',
+                oldImg3:''
+            }))
+        }
+    },[isModal])
 
     const handleBusChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
         const {name , value} = e.target
@@ -401,8 +427,8 @@ const Create = () => {
             formData.append("Rec1",image.Rec1)
         }
     
-        if(!busName || !busPhone1 || !busType){
-          validation= "sorry business name , phone number and business type is required"
+        if(!busName || !busPhone1 ){
+          validation= "sorry business name , phone number is required"
           toast.error(validation)
           setPending(true)
           setIsError(true)
@@ -460,6 +486,7 @@ const Create = () => {
               toast.success(data.success)
               setPending(false)
               setIsError(false)
+              setModalisopen(false)
             }
           }).catch(()=>{
             toast.error("something went wrong")
@@ -535,6 +562,7 @@ const Create = () => {
               toast.success(data.success)
               setPending(false)
               setIsError(false)
+              setModalisopen(false)
             }
           }).catch(()=>{
             toast.error("something went wrong")
@@ -546,6 +574,7 @@ const Create = () => {
 
   return (
     <>
+
     {
         bgModal === "bgLeft" && (
            <>
@@ -616,7 +645,7 @@ const Create = () => {
                         Payright.map((item)=>{
                             return(
                                 <div className='flex justify-center pb-3 w-[184px] mx-[11px]' key={item.label}>
-                                    <label className={`${item.val !== undefined ? 'bg-mainLightBlue  shadowHover' : "bg-slate-300 "} cursor-pointer duration-200 ease-in-out px-3 w-full py-1 my-[2px] font-bold text-center text-white rounded-lg`} onClick={item.func}>
+                                    <label className={`${item.val !== undefined || item.oldImg !== '' ? 'bg-mainLightBlue  shadowHover' : "bg-slate-300 "} cursor-pointer duration-200 ease-in-out px-3 w-full py-1 my-[2px] font-bold text-center text-white rounded-lg`} onClick={item.func}>
                                         {item.label} <br />
                                          {item.label === "Business Logo" && "170px x 80px"} 
                                          {item.label === 'Receipt Logo' && "160px x 70px"}
@@ -629,7 +658,7 @@ const Create = () => {
             </div>
             <div className='flex justify-center items-center gap-5 mt-[88px]'>
                 <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.busName  !== "" || val.busType !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
-                <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-insomnia-primary w-[185px] rounded-md`} onClick={()=>closeModal('my_modal_5')}>Cancel</button>
+                <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-insomnia-primary w-[185px] rounded-md`} onClick={()=>{closeModal('my_modal_5') , setModalisopen(false)}}>Cancel</button>
             </div>
             </>
         )
@@ -638,10 +667,10 @@ const Create = () => {
     <input type="file" ref={ref2} className='hidden' name='signature' onChange={(e)=>handleImageChange(e,'signature')}/>
     <input type="file" ref={ref3} className='hidden' name='busLogo' onChange={(e)=>handleImageChange(e,'busLogo')}/>
     <input type="file" ref={ref4} className='hidden' name='Rec1' onChange={(e)=>handleImageChange(e,'Rec1')}/>
-    <input type="text" className='hidden' value={val.oldImg === '' ? 'empty' : val.oldImg}/>
-    <input type="text" className='hidden' value={val.oldImg1 === '' ? 'empty' : val.oldImg1}/>
-    <input type="text" className='hidden' value={val.oldImg2 === '' ? 'empty' : val.oldImg2}/>
-    <input type="text" className='hidden' value={val.oldImg3 === '' ? 'empty' : val.oldImg3}/>
+    <input className='hidden' type="text" value={val.oldImg === '' ? 'empty' : val.oldImg}/>
+    <input className='hidden' type="text" value={val.oldImg1 === '' ? 'empty' : val.oldImg1}/>
+    <input className='hidden' type="text" value={val.oldImg2 === '' ? 'empty' : val.oldImg2}/>
+    <input className='hidden' type="text" value={val.oldImg3 === '' ? 'empty' : val.oldImg3}/>
     </>
   )
 }

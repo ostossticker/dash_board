@@ -889,7 +889,7 @@ const Option = ({
     </div>
 
 
-    <div className='hidden'>
+    <div className='show'>
     {
       printing === 'invoice' && (
         <div ref={printableComponent}>
@@ -898,7 +898,7 @@ const Option = ({
       )
     }
     </div>
-    <div className='hidden'>
+    <div className='show'>
     {
       printing === 'quotation' && (
         <div ref={printableComponent1}>

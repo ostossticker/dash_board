@@ -74,6 +74,8 @@ const InvTable = () => {
     if(pathname === '/invoice/table'){
       setIcon(false)
       setSwitch('invoice')
+      setPrint(false)
+      setPrinting('')
     }
   },[])
 

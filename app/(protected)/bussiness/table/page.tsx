@@ -1,6 +1,7 @@
 import Create from "@/components/business/create"
 import BusTable from "@/components/business/table"
 import Top from "@/components/ui/table/Top"
+import React from 'react'
 
 const page = () => {
 

@@ -1,5 +1,5 @@
 "use client"
-import { deleteNote } from '@/app/(protected)/note/action/note'
+import { addNote, deleteNote, udpateNote } from '@/app/(protected)/note/action/note'
 import useToggle from '@/hooks/stores'
 import { useCurrentRole } from '@/hooks/use-current-role'
 import { useCurrentUser } from '@/hooks/use-current-user'
@@ -8,12 +8,12 @@ import { convertTime, dateFormat, fetchData, openModal } from '@/lib/functions'
 import { url } from '@/lib/url'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { PiTrashLight , PiEyeLight , PiPencilSimpleLineLight } from "react-icons/pi";
+import { PiTrashLight , PiPencilSimpleLineLight } from "react-icons/pi";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import Modal from '../ui/modal/modal';
 import { toast } from 'react-toastify'
 import useSWR, { mutate } from 'swr'
-import ResponsiveElement from '../invoice&quotation/ResComp'
+import axios from 'axios'
 
 type noteProps = {
     id:string;
@@ -25,14 +25,13 @@ type noteProps = {
 }
 
 const NoteTable = () => {
-    const { isOpen , isHover ,darkMode , pending,setPending,onEdit,setPassingId} = useToggle()
+    const { isOpen , isHover ,darkMode , noteSwitch ,edit , setNoteSwitch, passingId, isModal , setModalisopen, pending,setPending,onEdit,setPassingId} = useToggle()
     const user = useCurrentUser()
     const role = useCurrentRole()
     const    MIN_TEXTAREA_HEIGHT = 32;
     const textareaRef = useRef<any>(null);
     const noteCheck = useNote()
     const router = useRouter()
-    const [popup , setPopup] = useState<boolean>(false)
     const [page , setPage] = useState<number>(1)
     const [currentPage , setCurrentPage] = useState(1)
     const [take , setTake] = useState<number>(15)
@@ -67,6 +66,36 @@ const NoteTable = () => {
         setPage(newPage)
         setCurrentPage(newPage)
     }
+
+    useEffect(()=>{
+      setNoteSwitch(false)
+    },[])
+
+    const fetchSingle = async () =>{
+      const {data} = await axios.get(`${url}/api/note/${passingId}?email=${user?.id}`)
+      
+      setPrint(prev=>({
+        ...prev,
+        title:edit ? data.editNote.title : '',
+        createdAt:edit ? data.editNote.noteDate : new Date().toISOString().split('T')[0],
+        text:edit ? data.editNote.text : '',
+        updatedAt:edit ? data.editNote.updatedAt : ''
+      }))
+    }
+
+    useEffect(()=>{
+      fetchSingle()
+      if(isModal === true && !edit){
+        setPrint(prev=>({
+          ...prev,
+          no:'',
+          title:'',
+          text:'',
+          createdAt:new Date().toISOString().split('T')[0]
+        }))
+      }
+    },[passingId , edit , isModal])
+
     useEffect(()=>{
         if(!val.filter || !val.fromDate || !val.toDate){
             setPage(currentPage)
@@ -77,6 +106,11 @@ const NoteTable = () => {
             mutate(`${url}/api/note?email=${user.id}&page=1&take=${take}&fitler=${val.filter}&fromDate=${val.fromDate}&toDate=${val.toDate}`)
         }
     },[val , take , currentPage , user , pending])
+
+    const handleChanges = (e:React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLInputElement>) =>{
+      const {name , value} = e.target
+      setPrint({...print,[name]:value})
+    }
 
     const renderPageNumbers = () =>{
         const maxPagesToShow = 3;
@@ -134,6 +168,83 @@ const NoteTable = () => {
             setPending(false)
         })
     }
+
+    const onSave = async() =>{
+      setPending(true)
+  
+      let validation = ''
+  
+      const {title , text , createdAt} = print
+  
+      if(!title){
+        validation= "sorry this field is required"
+        toast.error(validation)
+        setPending(false)
+      }else{
+         addNote({
+          title,
+          text,
+          noteDate:createdAt
+        }).then((data)=>{
+          setPrint(prev=>({
+            ...prev,
+            title:'',
+            text:'',
+            createdAt:'',
+            updatedAt:''
+          }))
+          if(data?.error){
+            toast.error(data.error)
+            setPending(false)
+          }
+          if(data?.success){
+            toast.success(data.success)
+            setPending(false)
+            setModalisopen(false)
+            setNoteSwitch(false)
+          }
+        }).catch(()=>{
+          toast.error("something went wrong")
+          setPending(false)
+        })
+      }
+    }
+  
+    const onUpdate = async() =>{
+      setPending(true)
+  
+      let validation = ''
+  
+      const {title , text , createdAt} = print
+  
+      if(!title){
+        validation= "sorry title is required"
+        toast.error(validation)
+        setPending(false)
+      }else{
+         udpateNote({
+          id:passingId,
+          title,
+          text,
+          noteDate:createdAt
+        }).then((data)=>{
+          if(data?.error){
+            toast.error(data.error)
+            setPending(false)
+          }
+          if(data?.success){
+            toast.success(data.success)
+            setPending(false)
+            setModalisopen(false)
+            setNoteSwitch(false)
+          }
+        }).catch(()=>{
+          toast.error("something went wrong")
+          setPending(false)
+        })
+      }
+    }
+
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
         const {name , value} = e.target
         setVal({
@@ -193,7 +304,7 @@ const NoteTable = () => {
             </div>
         </div>
         {
-          popup === false && (
+          noteSwitch === false && (
               <>
               <table className='w-full mt-[10px]'>
               <thead>
@@ -224,24 +335,16 @@ const NoteTable = () => {
                         <td className={placeholderClass}>
                             <div className='flex justify-end mr-[50px] items-center gap-1'>
                             <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
-                                setPrint({
-                                    no:`${(page - 1) * take + i + 1}`,
-                                    title:item.title,
-                                    text:item.text,
-                                    createdAt:item.noteDate,
-                                    updatedAt:item.updatedAt
-                                })
-                                setPopup(true)
+                                onEdit()
+                                setNoteSwitch(true)
+                                setPassingId(item.id)
+                                setPrint(prev=>({
+                                  ...prev,
+                                  no:`${(page - 1) * take + i + 1}`
+                                }))
                             }}>
-                                    <PiEyeLight />
+                                    <PiPencilSimpleLineLight />
                                 </button> 
-                            <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
-                              openModal('my_modal_5')
-                              onEdit()
-                              setPassingId(item.id)
-                            }}>
-                              <PiPencilSimpleLineLight />
-                            </button>
                             <button className={`${darkMode ? "text-red-400 " : "text-red-700" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
                               openModal('note')
                               setPassing(item.id)
@@ -320,14 +423,22 @@ const NoteTable = () => {
         
          
           {
-          popup === true && (
+          noteSwitch === true && (
             <div className='bg-white rounded-md  mt-5'>
               <div className='flex justify-between items-center w-full bg-thead-primary rounded-t-md px-5 py-1'>
               <div className='font-semibold text-white flex gap-4'><p>NO.</p><p>{print.no}</p></div>
-              <div className='font-semibold text-white flex gap-4'><p>TITLE.</p><p>{print.title}</p></div>
-              <div className='font-semibold text-white flex gap-4'><p>CREATED AT.</p><p>{dateFormat(print.createdAt)}</p></div>
-              <div className='font-semibold text-white flex gap-4'><p>UPDATED AT.</p><div className='flex gap-2'><p>{dateFormat(print.updatedAt)}</p><p>{convertTime(print.updatedAt)}</p></div></div>
+              <div className='font-semibold text-white flex gap-4'><p>TITLE.</p><input type="text" value={print.title} className='bg-transparent outline-none' name='title' onChange={handleChanges}/></div>
+              <div className='font-semibold text-white flex gap-4'><p>CREATED AT.</p><input type="date" className='outline-none bg-transparent' name='createdAt' value={print.createdAt} onChange={handleChanges}/></div>
+              
+              {
+                edit && (
+                  <div className='font-semibold text-white flex gap-4'><p>UPDATED AT.</p>
+                    <div className='flex gap-2'><p>{dateFormat(print.updatedAt)}</p><p>{convertTime(print.updatedAt)}</p></div>
+                  </div>
+                )
+              }
               </div>
+             
            
             <textarea className="notes outline-none w-full mt-2 px-[20px]"
               rows={15}
@@ -336,13 +447,13 @@ const NoteTable = () => {
                   minHeight: MIN_TEXTAREA_HEIGHT,
                   resize: "none"
               }}
-              value={print.text} >
+              value={print.text} name='text' onChange={handleChanges}>
 
               </textarea>
 
-              <div className='flex justify-end items-center'>
-                <button className={`px-4 py-1 text-white duration-200 ease-in-out `}>SAVE</button>
-                <button onClick={()=>setPopup(false)} className='px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-insomnia-primary w-[185px] rounded-md'>CANCEL</button>
+              <div className='flex justify-end items-center gap-5'>
+                  <button className={`px-4 py-1 text-white duration-200 ease-in-out ${print.title  !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? <span className='loading loading-spinner text-default'></span> : <p>Save</p>}</button>
+                  <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>{setNoteSwitch(false) , setModalisopen(false)}}>Cancel</button>
               </div>
             </div>
           )

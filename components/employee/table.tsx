@@ -43,7 +43,7 @@ type Option1 = {
 }
 
 const EmpTable = () => {
-  const { isOpen , isHover ,darkMode , pending , setPending , onEdit , setPassingId} = useToggle()
+  const { isOpen , isHover ,darkMode , pending , isModal , setPending , onEdit , setPassingId} = useToggle()
   const user = useCurrentUser();
   const role = useCurrentRole()
   const router = useRouter()

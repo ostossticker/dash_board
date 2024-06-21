@@ -10,7 +10,7 @@ import useSWR, { mutate } from 'swr';
 import Modal from '../ui/modal/modal';
 import axios from 'axios';
 import { url } from '@/lib/url';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { softDelete } from '@/app/(protected)/quotation/actions/meters';
 import { useCurrentRole } from '@/hooks/use-current-role';
 import { useQuotation } from '@/hooks/usedatas';
@@ -53,6 +53,7 @@ const QtTable = () => {
   const [switched , setSwitched] = useState<boolean>(false)
   const [selectedItemId, setSelectedItemId] = useState<string>("");
   const [take , setTake] = useState<number>(15)
+  const pathname = usePathname()
   const [paperNo , setPaperno] = useState<string>('')
   const [test , setTest] = useState<Option[]>([])
   const [passing , setPassing] = useState<string>('')
@@ -73,6 +74,13 @@ const QtTable = () => {
     setPage(newPage);
     setCurrentPage(newPage);
   }
+
+  useEffect(()=>{
+    if(pathname === '/quotation/table'){
+      setPrint(false)
+      setPrinting('')
+    }
+  },[])
 
   const ulRef = useRef<HTMLUListElement>(null);
 

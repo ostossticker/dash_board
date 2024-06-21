@@ -46,6 +46,17 @@ type meterProps = {
     sigLogo?:string;
     ///busDes
     busDes?:string;
+    //// ur infomation
+    busAddr?:string;
+    busEmail?:string;
+    busTelegram?:string;
+    busPhone?:string;
+    ///busDes
+    bankdes?:string;
+    ////
+    busInvEng?:string;
+    busInvkh?:string;
+
 }
 
 
@@ -76,17 +87,16 @@ const Invprint = ({
     busLogo,
     abaLogo,
     sigLogo,
-    busDes
+    busDes,
+    busAddr,
+    busEmail,
+    busPhone,
+    busTelegram,
+    bankdes,
+    busInvEng,
+    busInvkh
 }:meterProps) => {
     const {logo , address , signature , bankInfo , routerSwitch} = useToggle()
-    const [val , setVal] = useState({
-        staffName:'wdad',
-        staffPhone:'dwada',
-        busAddr:'dwadad',
-        busEmail:'dwada',
-        busTel:'dwadadad',
-        busTelegram:'jjlkjk'
-    })
     const meters = useMemo(()=>[
         {
             label:"No.",
@@ -145,28 +155,28 @@ const Invprint = ({
         {
             id:"printBus1",
             label:"Add:",
-            val:"dawdadwadada",
-            clss:`${address === true || val.busAddr === "" ? "!hidden" : ""}`
+            val:busAddr,
+            clss:`${address === true || busAddr === "" ? "!hidden" : ""}`
         },
         {
             id:"printBus2",
             label:"Email:",
-            val:val.busEmail,
-            clss:`${address === true || val.busEmail === "" ? "!hidden" : ""}`
+            val:busEmail,
+            clss:`${address === true || busEmail === "" ? "!hidden" : ""}`
         },
         {
             id:"printBus3",
             label:"Tel:",
-            val:"2131231",
-            clss:`${address === true || val.busTel === "" ? "!hidden" : ""}`
+            val:busPhone,
+            clss:`${address === true || busPhone === "" ? "!hidden" : ""}`
         },
         {
             id:"printBus4",
             label:"Telegram",
-            val:"#231313",
-            clss:`${address === true || val.busTelegram === "" ? "!hidden" : ""}`
+            val:busTelegram,
+            clss:`${address === true || busTelegram === "" ? "!hidden" : ""}`
         }
-    ],[val , address])
+    ],[address])
     const cusInfo = useMemo(()=>[
         {
             id:'cusInvForm1',
@@ -243,14 +253,14 @@ const Invprint = ({
                             <div className='col-span-1'>
                                 {
                                     logo === false && (
-                                        <h1 className='font-bold text-[28px]'>{routerSwitch === 'invoice' ? 'INVOICE' : routerSwitch === 'delivery' ? 'DELIVERY NOTE' : ''}</h1>
+                                        <h1 className='font-bold text-[26px]'>{routerSwitch === 'invoice' ? 'INVOICE' : routerSwitch === 'delivery' ? 'DELIVERY NOTE' : ''}</h1>
                                     )
                                 }
-                                <p className='text-[13px] font-bold'>
+                                <p className='text-[10px] font-bold'>
                                  No. {invNo}
                                 </p>
                             </div>
-                            <p className='text-[13px] text-end font-bold flex flex-col col-span-1 justify-end'>
+                            <p className='text-[10px] text-end font-bold flex flex-col col-span-1 justify-end'>
                                 Date. {dateFormat(invDate === undefined ? '' : invDate)}
                             </p>
                         </div>
@@ -260,9 +270,9 @@ const Invprint = ({
                                     let row = []
                                     for(let i = 6; i > (test2?.length || 0); i--){
                                         row.push(
-                                            <div key={crypto.randomUUID()} className={`flex pl-[5px] justify-start items-center invisible`} style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[10.6px]'>mp</p>
-                                                    <p className='text-[10px]'>ddd</p>
+                                            <div key={crypto.randomUUID()} className={`flex pl-[5px] py-[1px] justify-start items-center invisible`} style={{fontFamily:"khmerContent"}}>
+                                                    <p className='text-[9px]'>mp</p>
+                                                    <p className='text-[9px]'>ddd</p>
                                             </div>
                                         )
                                     }
@@ -272,9 +282,9 @@ const Invprint = ({
                                 {
                                     cusInfo.map((item)=>{
                                         return(
-                                            <div key={item.id} className={`pl-[5px] ${item.class} ${!item.val ? "hidden" : "flex"} items-center gap-1`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[10px]'>{item.label}</p>
-                                                <p className='text-[10px]'>{item.val}</p>
+                                            <div key={item.id} className={`pl-[5px] py-[1px] ${item.class} ${!item.val ? "hidden" : "flex"} w-[200px] items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                                <p className='text-[9px]'>{item.label}</p>
+                                                <p className='text-[9px]'>{item.val}</p>
                                             </div>
                                         )
                                     })
@@ -285,21 +295,21 @@ const Invprint = ({
                             {
                                     address === true && (
                                         <>
-                                        <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[10.6px]'>mp</p>
-                                                    <p className='text-[10px] text-end'>ddd</p>
+                                        <div className='invisible flex pl-[5px] py-[1px] justify-end' style={{fontFamily:"khmerContent"}}>
+                                                    <p className='text-[9.6px]'>mp</p>
+                                                    <p className='text-[9px] py-[1px] text-end'>ddd</p>
                                         </div>
-                                        <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[10.6px]'>mp</p>
-                                                    <p className='text-[10px] text-end'>ddd</p>
+                                        <div className='invisible flex pl-[5px] py-[1px] justify-end' style={{fontFamily:"khmerContent"}}>
+                                                    <p className='text-[9.6px]'>mp</p>
+                                                    <p className='text-[9px] text-end'>ddd</p>
                                         </div>
-                                        <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[10.6px]'>mp</p>
-                                                    <p className='text-[10px] text-end'>ddd</p>
+                                        <div className='invisible flex pl-[5px] py-[1px] justify-end' style={{fontFamily:"khmerContent"}}>
+                                                    <p className='text-[9.6px]'>mp</p>
+                                                    <p className='text-[9px] text-end'>ddd</p>
                                         </div>
-                                        <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[10.6px]'>mp</p>
-                                                    <p className='text-[10px] text-end'>ddd</p>
+                                        <div className='invisible flex pl-[5px] py-[1px] justify-end' style={{fontFamily:"khmerContent"}}>
+                                                    <p className='text-[9.6px]'>mp</p>
+                                                    <p className='text-[9px] text-end'>ddd</p>
                                         </div>
                                         </>
                                     )
@@ -308,9 +318,9 @@ const Invprint = ({
                                     let row = []
                                     for(let i = 4; i > (test3?.length || 0); i--){
                                         row.push(
-                                            <div key={crypto.randomUUID()} className={`flex pl-[5px] justify-start items-center invisible`} style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[10.6px]'>mp</p>
-                                                    <p className='text-[10px] text-end'>ddd</p>
+                                            <div key={crypto.randomUUID()} className={`flex pl-[5px] py-[1px] justify-start items-center invisible`} style={{fontFamily:"khmerContent"}}>
+                                                    <p className='text-[9.6px]'>mp</p>
+                                                    <p className='text-[9px] text-end'>ddd</p>
                                             </div>
                                         )
                                     }
@@ -320,9 +330,11 @@ const Invprint = ({
                                 {
                                     busInfo.map((item)=>{
                                         return(
-                                            <div key={item.id} className={`flex pl-[5px] justify-end ${item.clss} items-center gap-1`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[10.6px]'>{item.label}</p>
-                                                <p className='text-[10px] text-end'>{item.val}</p>
+                                            <div key={item.id} className='flex justify-end'>
+                                                <div  className={`flex pl-[5px] w-[150px] py-[1px] justify-end ${item.clss} items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                                    <p className='text-[9.6px]'>{item.label}</p>
+                                                    <p className='text-[9px] text-end'>{item.val}</p>
+                                                </div>
                                             </div>
                                         )
                                     })
@@ -339,7 +351,7 @@ const Invprint = ({
                                             {
                                                 meters.map((item)=>{
                                                     return(
-                                                                <th key={item.label}  className={`bg-mainBlue text-white font-bold ${item.class} text-[11px]`}>{item.label} </th>
+                                                                <th key={item.label}  className={`bg-mainBlue text-white font-bold ${item.class} text-[10px]`}>{item.label} </th>
                                                     )
                                                 })
                                             }
@@ -352,7 +364,7 @@ const Invprint = ({
                                             {
                                                 generals.map((item)=>{
                                                     return(
-                                                                <th key={item.label}  className={`bg-mainBlue text-white font-bold ${item.class} text-[11px]`}>{item.label} </th>
+                                                                <th key={item.label}  className={`bg-mainBlue text-white font-bold ${item.class} text-[10px]`}>{item.label} </th>
                                                     )
                                                 })
                                             }
@@ -371,25 +383,25 @@ const Invprint = ({
                                                     <tr 
                                                     key={item.id} 
                                                     >
-                                                            <td className='text-[10px] text-start pl-3 py-[2px]'>
+                                                            <td className='text-[9px] text-start pl-3 py-[2px]'>
                                                                 {i+1}
                                                             </td>
-                                                            <td className='text-[10px] text-start py-[2px] w-[170px]'>
-                                                                {item.description}
+                                                            <td className='text-[9px] text-start py-[2px]'>
+                                                                {!item.description ? "" : item.description.length < 44 ? item.description : <input className='outline-none' value={item.description}/>}
                                                             </td>
-                                                            <td className='text-[10px] py-[2px]'>
+                                                            <td className='text-[9px] py-[2px]'>
                                                                 <div className='flex justify-center items-center'>
                                                                 {item.sizeWidth === 0 ? "" : item.sizeWidth}
                                                                 <p className='px-[2px]'>{item.sizeHeight && item.sizeWidth ? "x" : ""}</p>
                                                                 {item.sizeHeight === 0 ? "" : item.sizeHeight}
                                                               </div> 
                                                             </td>
-                                                            <td className='text-[10px] text-center py-[2px]'>
+                                                            <td className='text-[9px] text-center py-[2px]'>
                                                                 {item.m2 === 0 ? "" : item.m2}
                                                             </td>
-                                                            <td className='text-[10px] text-center py-[2px]'>{item.quantity !== '' ? item.quantity : ""}</td>
-                                                            <td className='text-[10px] text-end py-[2px]'>{item.unitPrice} </td>
-                                                            <td className='text-[10px] text-end pr-3 py-[2px]'>{item.total}</td>
+                                                            <td className='text-[9px] text-center py-[2px]'>{item.quantity !== '' ? item.quantity : ""}</td>
+                                                            <td className='text-[9px] text-end py-[2px]'>{item.unitPrice} </td>
+                                                            <td className='text-[9px] text-end pr-3 py-[2px]'>{item.total}</td>
                                                     </tr>
                                                 )
                                             })
@@ -405,15 +417,15 @@ const Invprint = ({
                                                 return(
                                                     <tr 
                                                     key={item.id} >
-                                                            <td className='text-[10px] text-start pl-3 py-[2px]'>
+                                                            <td className='text-[9px] text-start pl-3 py-[2px]'>
                                                                 {i+1}
                                                             </td>
-                                                            <td className='text-[10px] text-start py-[2px] w-[170px]'>
-                                                                {item.description}
+                                                            <td className='text-[9px] text-start py-[2px] '>
+                                                                {!item.description ? "" : item.description.length < 44 ? item.description : <input className='w-[220px] outline-none' value={item.description}/>}
                                                             </td>
-                                                            <td className='text-[10px] text-end py-[2px]'>{item.quantity !== '' || item.quantity !== undefined  ? "" : item.quantity > 1 ? `${item.quantity}pcs` : `${item.quantity}pc`}</td>
-                                                            <td className='text-[10px] text-end py-[2px]'>{item.unitPrice} </td>
-                                                            <td className='text-[10px] text-end pr-3 py-[2px]'>{item.total}</td>
+                                                            <td className='text-[9px] text-end py-[2px]'>{item.quantity}</td>
+                                                            <td className='text-[9px] text-end py-[2px]'>{item.unitPrice} </td>
+                                                            <td className='text-[9px] text-end pr-3 py-[2px]'>{item.total}</td>
                                                     </tr>
                                                 )
                                             })
@@ -427,12 +439,12 @@ const Invprint = ({
                                         for(let i = 12; i > (items?.length || 0); i--){
                                             row.push(
                                                 <tr key={i}>
-                                                    <td className='text-[10px] py-[2px]'><div className='invisible'>No</div></td>
-                                                    <td className='text-[10px] py-[2px]'></td>
-                                                    <td className='text-[10px] py-[2px]'></td>
-                                                    <td className='text-[10px] py-[2px]'></td>
-                                                    <td className='text-[10px] py-[2px]'></td>
-                                                    <td className='text-[10px] py-[2px]'></td>
+                                                    <td className='text-[9px] py-[2px]'><div className='invisible'>No</div></td>
+                                                    <td className='text-[9px] py-[2px]'></td>
+                                                    <td className='text-[9px] py-[2px]'></td>
+                                                    <td className='text-[9px] py-[2px]'></td>
+                                                    <td className='text-[9px] py-[2px]'></td>
+                                                    <td className='text-[9px] py-[2px]'></td>
                                                 </tr>
                                             )
                                         }
@@ -444,13 +456,13 @@ const Invprint = ({
                         <div className='flex justify-between mt-[10px] px-[5px] pb-[4px]'>
                                 {
                                         bankInfo === true && (
-                                            <div className='text-start text-[10px]' style={{fontFamily:"khmerContent"}}>
-                                                    <div>
-                                                        <p>djawdjwakldwjaldkjakldjwakld</p>
-                                                        <p>wdadadadwadwadwadadwadwadwad</p>
-                                                        <p>dawdadadadaddadwadwadawdada</p>
-                                                        <p>dawdadadadadadadadwad</p>      
-                                                    </div> 
+                                            <div style={{fontFamily:"khmerContent"}}>
+                                                    <textarea rows={2} className='outline-none text-[9px] resize-none overflow-hidden text-start w-[200px] py-[1px]' value={busInvkh}>
+
+                                                    </textarea><br />
+                                                    <textarea rows={2} className='outline-none text-[9px] resize-none overflow-hidden text-start w-[200px] py-[1px]' value={busInvEng}>
+
+                                                    </textarea>
                                             </div>
                                         )
                                     }
@@ -459,15 +471,15 @@ const Invprint = ({
                                         <div className='flex'>
                                             <div>
                                             <Image 
-                                                className='w-[40px]'
+                                                className='w-[35px]'
                                                 width={80} 
                                                 height={80} 
                                                 alt='#' 
                                                 src="https://bankerjobs.asia/storage/files/kh/7/thumb-816x460-8bb28995e73226227d77d1c107b05228.png"
                                             />
                                             </div>
-                                                        <div className='text-[10px] pl-[10px]' style={{fontFamily:"khmerContent"}}>
-                                                            <p>ABA Bank Acount</p>
+                                                        <div className='text-[9px] pl-[10px]' style={{fontFamily:"khmerContent"}}>
+                                                            <p>{bankdes} Bank Acount</p>
                                                             <p>Account: {abaNumber}</p>
                                                             <p>Name: {abaName}</p>
                                                         </div>
@@ -479,38 +491,38 @@ const Invprint = ({
 
                                 <div>
                                     <div className='flex justify-end'>
-                                        <div className={`col-span-1 flex items-center justify-end ${!isNaN(discount) && discount !== 0 ? "text-[9px]" : "text-[10px]"} pr-[5px]`} style={{fontFamily:"khmerContent"}}>
+                                        <div className={`col-span-1 flex items-center justify-end ${!isNaN(discount) && discount !== 0 ? "text-[8px]" : "text-[9px]"} pr-[5px]`} style={{fontFamily:"khmerContent"}}>
                                         សរុប/Total
                                         </div>
-                                        <div className={`col-span-1 font-bold text-end px-[8px] pb-[1px] ${invStatus === "partial" || !Number.isNaN(discount) && discount !== 0 ? 'text-black' : 'text-white bg-mainBlue'} ${!isNaN(discount) && discount !== 0 ? "text-[10px]" : "text-[11px]"} w-[80px] h-[17px]`}>
+                                        <div className={`col-span-1 font-bold text-end px-[8px] pb-[1px] ${invStatus === "partial" || !Number.isNaN(discount) && discount !== 0 ? 'text-black' : 'text-white bg-mainBlue'} ${!isNaN(discount) && discount !== 0 ? "text-[9px]" : "text-[10px]"} w-[80px] h-[17px]`}>
                                         ${grandTotal}
                                         </div>
                                     </div>
                                     <div className='flex justify-end'>
-                                        <div className={`col-span-1 flex items-center justify-end ${!isNaN(discount) && discount !== 0 ? "text-[9px]" : "text-[10px]"} pr-[5px]`} style={{fontFamily:"khmerContent"}}>
+                                        <div className={`col-span-1 flex items-center justify-end ${!isNaN(discount) && discount !== 0 ? "text-[8px]" : "text-[9px]"} pr-[5px]`} style={{fontFamily:"khmerContent"}}>
                                         ប្រាក់កក់/Deposite
                                         </div>
-                                        <div className={`col-span-1 font-bold text-end px-[8px] pb-[1px]  ${!isNaN(discount) && discount !== 0 ? "text-[10px]" : "text-[11px]"} w-[80px] h-[17px] ${invStatus === "partial" || !Number.isNaN(discount) && discount !== 0 ? "text-black" : "text-white"}`}>
+                                        <div className={`col-span-1 font-bold text-end px-[8px] pb-[1px]  ${!isNaN(discount) && discount !== 0 ? "text-[9px]" : "text-[10px]"} w-[80px] h-[17px] ${invStatus === "partial" || !Number.isNaN(discount) && discount !== 0 ? "text-black" : "text-white"}`}>
                                         { invStatus !== 'partial' || isNaN(partial) || partial === parseFloat('0.00') ? '$0.00' : `$${partial.toFixed(2)}`}
                                         </div>
                                     </div>
                                     {
                                         !isNaN(discount) && discount !== 0 && (
                                                 <div className='flex justify-end'>
-                                                    <div className={`col-span-1 flex items-center justify-end ${!isNaN(discount) && discount !== 0 ? "text-[9px]" : "text-[10px]"} pr-[5px]`} style={{fontFamily:"khmerContent"}}>
+                                                    <div className={`col-span-1 flex items-center justify-end ${!isNaN(discount) && discount !== 0 ? "text-[8px]" : "text-[9px]"} pr-[5px]`} style={{fontFamily:"khmerContent"}}>
                                                     បញ្ចុះតម្លៃ/Discount
                                                     </div>
-                                                    <div className={`${!isNaN(discount) && discount !==0 ? "" : "hidden"} col-span-1 font-bold text-end px-[8px] pb-[1px]  ${!isNaN(discount) && discount !== 0 ? "text-[10px]" : "text-[11px]"} w-[80px] h-[17px]`}>
+                                                    <div className={`${!isNaN(discount) && discount !==0 ? "" : "hidden"} col-span-1 font-bold text-end px-[8px] pb-[1px]  ${!isNaN(discount) && discount !== 0 ? "text-[9px]" : "text-[10px]"} w-[80px] h-[17px]`}>
                                                     {isNaN(discount) || discount === parseFloat('0.00') ? '' : `$${discount.toFixed(2)}`}
                                                     </div>
                                                 </div>
                                         )
                                     }
                                     <div className='flex justify-end'>
-                                        <div className={`col-span-1 flex items-center justify-end ${!isNaN(discount) && discount !== 0 ? "text-[9px]" : "text-[10px]"} pr-[5px]`} style={{fontFamily:"khmerContent"}}>
+                                        <div className={`col-span-1 flex items-center justify-end ${!isNaN(discount) && discount !== 0 ? "text-[8px]" : "text-[9px]"} pr-[5px]`} style={{fontFamily:"khmerContent"}}>
                                         នៅខ្វះ/Balance
                                         </div>
-                                        <div className={`col-span-1 font-bold text-end px-[8px] pb-[1px]  ${!isNaN(discount) && discount !== 0 ? "text-[10px]" : "text-[11px]"} w-[80px] h-[17px] ${invStatus === "partial" || !Number.isNaN(discount) && discount !== 0 ? 'bg-mainBlue text-white' : 'text-white'}`}>
+                                        <div className={`col-span-1 font-bold text-end px-[8px] pb-[1px]  ${!isNaN(discount) && discount !== 0 ? "text-[9px]" : "text-[10px]"} w-[80px] h-[17px] ${invStatus === "partial" || !Number.isNaN(discount) && discount !== 0 ? 'bg-mainBlue text-white' : 'text-white'}`}>
                                         {balance === 'NaN'|| balance ===  '$0.00' ? '' : `$${balance}`}
                                         </div>
                                     </div>
@@ -522,16 +534,18 @@ const Invprint = ({
                                     <Image src={!abaLogo ? '/white.png' : abaLogo} 
                                     width={700} 
                                     height={700} 
-                                    alt='#' className={`${bankInfo === false ? "" : "invisible"} mx-auto ${!isNaN(discount) && discount !== 0 ? "w-[100px]" : "w-[120px]" }  h-auto`}/>
+                                    alt='#' className={`${bankInfo === false ? "" : "invisible"} mx-auto ${!isNaN(discount) && discount !== 0 ? "w-[80px]" : "w-[100px]" }  h-auto`}/>
                                 {/*******************original size 140 x 90******************/}
                             </div>
                             <div>
-                                            <div className={`text-end ${!isNaN(discount) && discount !== 0 ? "text-[9px]" : "text-[10px]"}  ${bankInfo === false ? "" : "invisible"}`} style={{fontFamily:"khmerContent"}}>
-                                                <p>djawdjwakldwjaldkjakldjwakld</p>
-                                                <p>wdadadadwadwadwadadwadwadwad</p>
-                                                <p>dawdadadadaddadwadwadawdada</p>
-                                                <p>dawdadadadadadadadwad</p>      
-                                            </div> 
+                                    <div className={` ${!isNaN(discount) && discount !== 0 ? "text-[8px]" : "text-[9px]"}  ${bankInfo === false ? "" : "invisible"}`} style={{fontFamily:"khmerContent"}}>
+                                        <textarea rows={2} className='outline-none resize-none overflow-hidden text-end w-[200px]' value={busInvkh}>
+
+                                        </textarea><br />
+                                        <textarea rows={2} className='outline-none resize-none overflow-hidden text-end w-[200px]' value={busInvEng}>
+
+                                        </textarea>
+                                    </div> 
                                 <div className='flex justify-end pt-[22px]'>
                                     <div className='text-end pr-[40px]'>
                                         <Image src='/white.png' width={500} height={500} alt='#' className={`invisible mx-auto w-[auto]  ${!isNaN(discount) && discount !== 0 ? "h-[20px]" : "h-[30px]" }`}/>

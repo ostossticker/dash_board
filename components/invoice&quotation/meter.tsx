@@ -15,9 +15,7 @@ import { addQtMeter, editQtMeter } from "@/app/(protected)/quotation/actions/met
 import axios from "axios";
 import { url } from "@/lib/url";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import Image from "next/image";
 import { recentlyActivity } from "@/app/(protected)/recently/action";
-import { validateEmail } from "@/lib/functions";
 
 interface Calculation {
   id:string;
@@ -62,6 +60,14 @@ type meterProps = {
   abaName?:string;
   abaNumber?:string
     ////toggleStuff
+
+    ///business 
+  busAddr?:string;
+  busEmail?:string;
+  busTelegram?:string;
+  busPhone?:string;
+  busPayTerm?:string;
+
     toggleEmail?:boolean;
     togglePo?:boolean;
     toggleAddr?:boolean;
@@ -86,6 +92,11 @@ type meterProps = {
     ////mode
     mode?:string,
     customerId:string;
+    ////bankdes
+    bankdes?:string;
+    ////bus
+    busKh?:string;
+    busEng?:string;
 }
 
 type prodProps ={
@@ -116,6 +127,7 @@ const Meters = ({meterItems,
   abaQr , 
   sigLogo, 
   staffTelegram,
+  busPayTerm,
   toggleEmail,
   toggleName , 
   toggleComp , 
@@ -124,6 +136,10 @@ const Meters = ({meterItems,
   staff, 
   toggleAddr , 
   togglePo ,
+  busEmail,
+  busAddr,
+  busPhone,
+  busTelegram,
   invStatus ,
   abaName , 
   abaNumber , 
@@ -139,6 +155,9 @@ const Meters = ({meterItems,
   invPo ,
   invTitle ,
   customerId,
+  bankdes,
+  busEng,
+  busKh,
   invDate}:meterProps) => {
   const router = useRouter()
   const {darkMode, 
@@ -1554,21 +1573,28 @@ const calculateBalance = () => {
               des={des}
               toggleName={toggleName}
               toggleComp={toggleComp}
+              staffName={staffName || ''}
+              staffPhone={staffPhone || ''}
               togglePhone={togglePhone}
               toggleAddr={toggleAddr}
               oldImg1={oldImg1}
               oldImg={oldImg}
+              busPayTerm={busPayTerm}
               img1={image.img1 ? URL.createObjectURL(image.img1) : ''}
               img2={image.img2 ? URL.createObjectURL(image.img2) : ''}
               toggleEmail={toggleEmail}
               busType={busType}
               items={calculations}
+              busAddr={busAddr}
+              busEmail={busEmail}
+              busTelegram={busTelegram}
+              busPhone={busPhone}
               busLogo={busLogo}
               sigLogo={sigLogo}
               invNo={invNo}
               cusName={cusName}
               cusComp={cusComp}
-              busDes={busDes}
+              busDes={bankdes}
               cusPhone={cusPhone}
               cusEmail={cusEmail}
               cusAddr={cusAddr}
@@ -1588,7 +1614,14 @@ const calculateBalance = () => {
               img1={image.img1 ? URL.createObjectURL(image.img1) : ''}
               img2={image.img2 ? URL.createObjectURL(image.img2) : ''}
               toggleEmail={toggleEmail}
-              busDes={busDes}
+              busDes={bankdes}
+              staffName={staffName || ''}
+              staffPhone={staffPhone || ''}
+              busAddr={busAddr}
+              busEmail={busEmail}
+              busPayTerm={busPayTerm}
+              busPhone={busPhone}
+              busTelegram={busTelegram}
               busLogo={busLogo}
               sigLogo={sigLogo}
               busType={busType}
@@ -1654,12 +1687,19 @@ const calculateBalance = () => {
               togglePo={togglePo}
               busType={busType}
               items={calculations}
+              busAddr={busAddr}
+              busEmail={busEmail}
+              busEng={busEng}
+              busKh={busKh}
+              busTelegram={busTelegram}
+              busPhone={busPhone}
               abaName={abaName}
               abaNumber={abaNumber}
               invNo={invNo}
               busDes={busDes}
               cusName={cusName}
               cusComp={cusComp}
+              bankdes={bankdes}
               cusPhone={cusPhone}
               cusEmail={cusEmail}
               busLogo={busLogo}
@@ -1687,7 +1727,14 @@ const calculateBalance = () => {
                 items={calculations}
                 abaName={abaName}
                 abaNumber={abaNumber}
+                busInvEng={busEng}
+                busInvkh={busKh}
                 busLogo={busLogo}
+                busAddr={busAddr}
+                busEmail={busEmail}
+                busPhone={busPhone}
+                busTelegram={busTelegram}
+                bankdes={bankdes}
                 abaLogo={abaQr}
                 sigLogo={sigLogo}
                 invNo={invNo}

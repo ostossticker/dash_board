@@ -121,12 +121,21 @@ const Create = () => {
       empPhone:edit ? emps.empPhone : '',
       empTelegram:edit ? emps.empTelegram : '',
       memberSince:edit ? emps.memberSince : new Date().toISOString().split('T')[0],
-      oldImg:edit ? emps.empCard: ''
+      oldImg:edit ? !emps.empCard ? '' : emps.empCard : ''
     }))
 
     if(isModal === true && edit === false){
       setVal(prev=>({
         ...prev,
+        empName:'',
+        empAddr:'',
+        empAssc:'',
+        empGender:'',
+        empId:'',
+        empNational:'',
+        empOcc:'',
+        empPhone:'',
+        empTelegram:'',
         memberSince:new Date().toISOString().split('T')[0]
       }))
     }
@@ -382,7 +391,7 @@ const Create = () => {
       </div>
     </div>
     <div className=" flex justify-center pb-[20px] mx-[10px]">
-          <label className={`${image !== undefined ? 'bg-mainLightBlue  shadowHover' : "bg-slate-300 "} cursor-pointer duration-200 ease-in-out px-3 w-full py-1 my-[2px] font-bold text-center text-white rounded-md`}
+          <label className={`${image !== undefined || val.oldImg !== '' ? 'bg-mainLightBlue  shadowHover' : "bg-slate-300 "} cursor-pointer duration-200 ease-in-out px-3 w-full py-1 my-[2px] font-bold text-center text-white rounded-md`}
                     onClick={()=>handleImageSelection(fileInput)}>
               Identity Card
           </label>

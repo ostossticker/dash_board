@@ -22,11 +22,12 @@ type topProps = {
   deliveryNote?:boolean
   invoice?:boolean;
   switchable?:boolean;
+  isNote?:boolean;
 }
 
-const Top = ({title,bgLeft,bgRight,bigModal, switchable, bgCenter,showButtonCreate,typeSelect,editlabel,showButtonForm,showCancel,modalChildren , deliveryNote , invoice ,topTitle,routing = ''}:topProps) => {
+const Top = ({title,bgLeft,bgRight,bigModal,isNote, switchable, bgCenter,showButtonCreate,typeSelect,editlabel,showButtonForm,showCancel,modalChildren , deliveryNote , invoice ,topTitle,routing = ''}:topProps) => {
     const router = useRouter()
-    const {darkMode,onCancel ,setModalisopen, setSwitch ,setValueNote , enableNote , setValueNoti, setPrinting, setPassingId , setQtid , setRec , routerSwitch , setPrint} = useToggle()
+    const {darkMode,onCancel ,setModalisopen, setSwitch ,setValueNote , setNoteSwitch , setValueNoti, setPrinting, setPassingId , setQtid , setRec , routerSwitch , setPrint} = useToggle()
     const openModal = () => {
       const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
       if (modal) {
@@ -88,6 +89,13 @@ const Top = ({title,bgLeft,bgRight,bigModal, switchable, bgCenter,showButtonCrea
             setModalisopen(true)
           }} className='font-bold text-white bg-thead-primary xl:px-3 lg:px-2 lg:my-1 xl:my-2 rounded-md xl:text-[15px] lg:text-[12px]'>
             Create 
+          </button>
+        )
+      }
+      {
+        isNote && (
+          <button onClick={()=>{setNoteSwitch(true) , setModalisopen(true), onCancel() }} className='font-bold text-white bg-thead-primary xl:px-3 lg:px-2 lg:my-1 xl:my-2 rounded-md xl:text-[15px] lg:text-[12px]'>
+            Create
           </button>
         )
       }

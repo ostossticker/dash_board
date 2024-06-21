@@ -41,6 +41,12 @@ type optionDrop = {
     busLogo:string;
     signature:string;
     busDes:string;
+    busAddr:string;
+    busEmail:string;
+    busTelegram:string;
+    busPhone1:string;
+    busBankDes:string;
+    busPayTerm:string;
 }
 
 type cusDrop = {
@@ -1205,7 +1211,12 @@ const CreateQt = () => {
                             toggleComp={toggle.cusComp}
                             togglePhone={toggle.cusPhone}
                             busLogo={item.busLogo}
-                            busDes={item.busDes}
+                            busAddr={item.busAddr}
+                            busEmail={item.busEmail}
+                            bankdes={item.busDes}
+                            busTelegram={item.busTelegram}
+                            busPayTerm={item.busPayTerm}
+                            busPhone={item.busPhone1}
                             sigLogo={item.signature}
                             oldImg1={val.oldImg2}
                             oldImg={val.oldImg1}
@@ -1232,10 +1243,16 @@ const CreateQt = () => {
                             form="quotation"
                             routerPush='quotation'
                             busLogo={item.busLogo}
+                            busAddr={item.busAddr}
+                            busEmail={item.busEmail}
+                            bankdes={item.busDes}
+                            busTelegram={item.busTelegram}
+                            busPhone={item.busPhone1}
                             sigLogo={item.signature}
                             staff={emp}
                             staffName={val.staffName}
                             staffPhone={val.staffPhone}
+                            busPayTerm={item.busPayTerm}
                             staffTelegram={val.staffTelegram}
                             toggleName={toggle.cusName}
                             toggleComp={toggle.cusComp}

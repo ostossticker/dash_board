@@ -126,6 +126,10 @@ const Create = () => {
     if(isModal === true && !edit){
       setVal(prev=>({
         ...prev,
+        prodItemName:'',
+        prodUnitPrice:'',
+        prodBus:'',
+        prodBustype:'',
         prodSince:new Date().toISOString().split('T')[0],
       }))
     }
@@ -300,6 +304,7 @@ const Create = () => {
           toast.success(data.success)
           setPending(false)
           setIsError(false)
+          setModalisopen(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
@@ -340,6 +345,7 @@ const Create = () => {
           toast.success(data.success)
           setPending(false)
           setIsError(false)
+          setModalisopen(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
@@ -435,7 +441,7 @@ const Create = () => {
           <input className='hidden' type="text" name='prodBustype' value={val.prodBustype} onChange={handleChange}/>
     <div className='flex justify-center items-center gap-5'>
     <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.prodItemName  !== "" || val.prodBus !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
-      <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>closeModal('my_modal_5')}>Cancel</button>
+      <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>{closeModal('my_modal_5') , setModalisopen(false)}}>Cancel</button>
     </div>
     </>
   )

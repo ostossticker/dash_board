@@ -50,6 +50,15 @@ type meterProps = {
     img2?:string
     ////busDes
     busDes?:string;
+    //// ur infomation
+    busAddr?:string;
+    busEmail?:string;
+    busTelegram?:string;
+    busPhone?:string;
+    busPayTerm?:string;
+    /////staff info
+    staffName:string;
+    staffPhone:string;
 }
 
 
@@ -76,17 +85,18 @@ const Qtprint = ({
     oldImg1,
     img1,
     img2,
-    busDes
+    busDes,
+    /////
+    busAddr,
+    busEmail,
+    busPayTerm,
+    busPhone,
+    busTelegram,
+    ////
+    staffName,
+    staffPhone
 }:meterProps) => {
     const {logo , address , signature , employee} = useToggle()
-    const [val , setVal] = useState({
-        staffName:'dwad',
-        staffPhone:'dwada',
-        busAddr:'dwad',
-        busEmail:'dwada',
-        busTel:'dwadadada',
-        busTelegram:''
-    })
     const meters = useMemo(()=>[
         {
             label:"No.",
@@ -144,33 +154,33 @@ const Qtprint = ({
     const busInfo = useMemo(()=>[
         {
             label:"Name:",
-            val:val.staffName,
-            clss:`${employee === true || val.staffName === "" ? "!hidden" : ""}`
+            val:staffName,
+            clss:`${employee === true || staffName === "" ? "!hidden" : ""}`
         },
         {
             label:"Tel:",
-            val:val.staffPhone,
-            clss:`${employee === true || val.staffPhone === "" ? "!hidden" : ""}`
+            val:staffPhone,
+            clss:`${employee === true || staffPhone === "" ? "!hidden" : ""}`
         },
         {
             label:"Add:",
-            val:val.busAddr,
-            clss:`${address === true || val.busAddr === "" ? "!hidden" : ""}`
+            val:busAddr,
+            clss:`${address === true || busAddr === "" ? "!hidden" : ""}`
         },
         {
             label:"Email:",
-            val:val.busEmail,
-            clss:`${address === true || val.busEmail === "" ? "!hidden" : ""}`
+            val:busEmail,
+            clss:`${address === true || busEmail === "" ? "!hidden" : ""}`
         },
         {
             label:"Tel:",
-            val:val.busTel,
-            clss:`${address === true || val.busTel === "" ? "!hidden" : ""}`
+            val:busPhone,
+            clss:`${address === true || busPhone === "" ? "!hidden" : ""}`
         },
         {
             label:"Telegram",
-            val:val.busTelegram,
-            clss:`${address === true || val.busTelegram === "" ? "!hidden" : ""}`
+            val:busTelegram,
+            clss:`${address === true || busTelegram === "" ? "!hidden" : ""}`
         }
     ],[address , employee])
     const cusInfo = useMemo(()=>[
@@ -230,20 +240,21 @@ const Qtprint = ({
                             <div className='flex justify-start items-center'>
                                    {
                                     logo === true ? (
-                                        <h1 className='font-semibold text-[43px] leading-[10px] mb-[40px]'>Quotation</h1>
+                                        <h1 className='font-semibold text-[35px] leading-[10px] mb-[40px]'>Quotation</h1>
                                     ) : (
                                         <Image src={!busLogo ? '/white.png' : busLogo} 
                                         alt='#' 
                                         width={520} 
                                         height={520} 
-                                        className='Logo w-[auto] h-[80px]'/>
+                                        className={`Logo w-[auto] h-[70px]`}/>
                                     )
                                    }
                                 {/*****************Image size w-160 h-160**************/}
                             </div>
                             <div className='text-end'>
-                                    <textarea className={`text-end text-[11.5px] ${!logo ? 'w-[300px]' : 'w-[190px]'} h-[90px] leading-[20.5px] overflow-hidden outline-none resize-none`} style={{fontFamily:"khmerContent"}}>
-                                        {busDes}
+                                    <textarea className={`text-end text-[10.5px] w-[300px] h-[90px] leading-[20.5px] overflow-hidden outline-none resize-none`} style={{fontFamily:"khmerContent"}}
+                                    value={busDes}>
+                                        
                                 </textarea>
                             </div>
                         </div>
@@ -251,14 +262,14 @@ const Qtprint = ({
                             <div className='col-span-1'>
                                 {
                                     logo === false && (
-                                        <h1 className='font-bold text-[28px]'>Quotation</h1>
+                                        <h1 className='font-bold text-[27px]'>Quotation</h1>
                                     )
                                 }
-                                <p className='text-[13px] font-bold'>
+                                <p className='text-[12px] font-bold'>
                                 No. {invNo}
                                 </p>
                             </div>
-                            <p className='text-[13px] text-end font-bold flex flex-col col-span-1 justify-end'>
+                            <p className='text-[12px] text-end font-bold flex flex-col col-span-1 justify-end'>
                                 Date. {dateFormat(invDate === undefined ? '' : invDate)}
                             </p>
                         </div>
@@ -269,8 +280,8 @@ const Qtprint = ({
                                     for(let i = 6; i > (test2?.length || 0); i--){
                                         row.push(
                                             <div key={crypto.randomUUID()} className={`flex pl-[5px] justify-start items-center invisible`} style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[10.6px]'>mp</p>
-                                                    <p className='text-[10px]'>ddd</p>
+                                                    <p className='text-[9.6px]'>mp</p>
+                                                    <p className='text-[9px]'>ddd</p>
                                             </div>
                                         )
                                     }
@@ -280,9 +291,9 @@ const Qtprint = ({
                                 {
                                     cusInfo.map((item)=>{
                                         return(
-                                            <div key={item.id} className={`pl-[5px] ${item.class} ${!item.val ? "hidden" : "flex"} items-center gap-1`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[10px]'>{item.label}</p>
-                                                <p className='text-[10px]'>{item.val}</p>
+                                            <div key={item.id} className={`pl-[5px] ${item.class} ${!item.val ? "hidden" : "flex"} items-start gap-1 w-[200px]`} style={{fontFamily:"khmerContent"}}>
+                                                <p className='text-[9.6px]'>{item.label}</p>
+                                                <p className='text-[9px]'>{item.val}</p>
                                             </div>
                                         )
                                     })
@@ -294,12 +305,12 @@ const Qtprint = ({
                                     employee === true && (
                                             <>
                                             <div className={`invisible flex pl-[5px] justify-end`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[10.6px]'>ddd</p>
-                                                <p className='text-[10px]'>ddd</p>
+                                                <p className='text-[9.6px]'>ddd</p>
+                                                <p className='text-[9px]'>ddd</p>
                                             </div>
                                             <div className={`invisible flex pl-[5px] justify-end`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[10.6px]'>ddd</p>
-                                                <p className='text-[10px]'>ddd</p>
+                                                <p className='text-[9.6px]'>ddd</p>
+                                                <p className='text-[9px]'>ddd</p>
                                             </div>
                                             </>
                                     )
@@ -308,16 +319,16 @@ const Qtprint = ({
                                     address === true && (
                                         <>
                                             <div className={`invisible flex pl-[5px] justify-end`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[10.6px]'>ddd</p>
-                                                <p className='text-[10px]'>ddd</p>
+                                                <p className='text-[9.6px]'>ddd</p>
+                                                <p className='text-[9px]'>ddd</p>
                                             </div>
                                              <div className={`invisible flex pl-[5px] justify-end`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[10.6px]'>ddd</p>
-                                                <p className='text-[10px]'>ddd</p>
+                                                <p className='text-[9.6px]'>ddd</p>
+                                                <p className='text-[9px]'>ddd</p>
                                             </div>
                                              <div className={`invisible flex pl-[5px] justify-end`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[10.6px]'>ddd</p>
-                                                <p className='text-[10px]'>ddd</p>
+                                                <p className='text-[9.6px]'>ddd</p>
+                                                <p className='text-[9px]'>ddd</p>
                                             </div>
                                         </>
                                     )
@@ -327,8 +338,8 @@ const Qtprint = ({
                                     for(let i = 5; i > (test3?.length || 0); i--){
                                         row.push(
                                             <div key={crypto.randomUUID()} className={`flex pl-[5px] justify-start items-center invisible`} style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[10.6px]'>mp</p>
-                                                    <p className='text-[10.6px]'>ddd</p>
+                                                    <p className='text-[9.6px]'>mp</p>
+                                                    <p className='text-[9px]'>ddd</p>
                                             </div>
                                         )
                                     }
@@ -338,23 +349,25 @@ const Qtprint = ({
                                 {
                                     busInfo.map((item)=>{
                                         return(
-                                            <div key={item.label} className={`flex pl-[5px] justify-end ${item.clss} items-center gap-1`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[10.6px]'>{item.label}</p>
-                                                <p className='text-[10px] text-end'>{item.val}</p>
+                                           <div className='flex justify-end'>
+                                             <div key={item.label} className={`flex pl-[5px] justify-end w-[200px] ${item.clss} items-start gap-1 pt-[1px]`} style={{fontFamily:"khmerContent"}}>
+                                                <p className='text-[9.6px]'>{item.label}</p>
+                                                <p className='text-[9px] text-end'>{item.val}</p>
                                             </div>
+                                           </div>
                                         )
                                     })
                                 }
                             </div>
                             </div>
                         </div>
-                        <table className='w-full mt-[5px] border-[1px] border-black'>
+                        <table className={`w-full ${ !cusAddr ? "" : cusAddr.length > 44 ? "mt-[18px]" : "mt-[25px]"} border-[1px] border-black`}>
                         <thead>
                                 <tr>
                                 {
                                     desTop.map((item)=>{
                                         return(
-                                            <th className={`bg-mainBlue text-white font-bold ${item.class} text-[11px] `} key={crypto.randomUUID()} >
+                                            <th className={`bg-mainBlue text-white font-bold ${item.class} text-[10px] `} key={crypto.randomUUID()} >
                                                 {item.label}
                                             </th>           
                                         )
@@ -367,10 +380,10 @@ const Qtprint = ({
                                     des?.map((item,index)=>{
                                         return(
                                             <tr key={item.id}>
-                                                <td className='text-[10px] text-start pl-3 py-[2px]'>
+                                                <td className='text-[9px] text-start pl-3 py-[2px]'>
                                                 {index + 1}
                                                 </td>
-                                                <td className='text-[10px] text-start py-[2px] w-full pl-[8px]'>
+                                                <td className='text-[9px] text-start py-[2px] w-full pl-[8px]'>
                                                 {item.text}
                                                 </td>
                                             </tr>
@@ -383,8 +396,8 @@ const Qtprint = ({
                                                 for(let i = 6; i > (des?.length || 0); i--){
                                                     row.push(
                                                         <tr key={i}>
-                                                            <td className='text-[10px] py-[2px]'><div className='invisible'>No</div></td>
-                                                            <td className='text-[10px] py-[2px]'></td>
+                                                            <td className='text-[9px] py-[2px]'><div className='invisible'>No</div></td>
+                                                            <td className='text-[9px] py-[2px]'></td>
                                                         </tr>
                                                     )
                                                 }
@@ -409,7 +422,7 @@ const Qtprint = ({
                                         {
                                             meters.map((item)=>{
                                                 return(
-                                                            <th key={item.label}  className={`bg-mainBlue text-white font-bold ${item.class} text-[11px]`}>{item.label} </th>
+                                                            <th key={item.label}  className={`bg-mainBlue text-white font-bold ${item.class} text-[10px]`}>{item.label} </th>
                                                 )
                                             })
                                         }
@@ -422,7 +435,7 @@ const Qtprint = ({
                                     {
                                             generals.map((item)=>{
                                                 return(
-                                                            <th key={item.label}  className={`bg-mainBlue text-white font-bold ${item.class} text-[11px]`}>{item.label} </th>
+                                                            <th key={item.label}  className={`bg-mainBlue text-white font-bold ${item.class} text-[9px]`}>{item.label} </th>
                                                 )
                                             })
                                         }
@@ -440,25 +453,25 @@ const Qtprint = ({
                                                 return(
                                                     <tr 
                                                     key={item.id} >
-                                                            <td className='text-[10px] text-start pl-3 py-[2px]'>
+                                                            <td className='text-[9px] text-start pl-3 py-[2px]'>
                                                                 {i+1}
                                                             </td>
-                                                            <td className='text-[10px] text-start py-[2px] w-[170px]'>
-                                                                {item.description}
+                                                            <td className='text-[9px] text-start py-[2px] w-[170px]'>
+                                                                {!item.description ? "" : item.description.length < 44 ? item.description : <input className='outline-none' value={item.description}/>}
                                                             </td>
-                                                            <td className='text-[10px] py-[2px] border-l-[1px] border-black'>
+                                                            <td className='text-[9px] py-[2px] border-l-[1px] border-black'>
                                                                 <div className='flex justify-center items-center'>
                                                                 {item.sizeWidth === 0 ? "" : item.sizeWidth}
                                                                 {item.sizeHeight && item.sizeWidth ? "x" : ""}
                                                                 {item.sizeHeight === 0 ? "" : item.sizeHeight}
                                                               </div> 
                                                             </td>
-                                                            <td className='text-[10px] text-center py-[2px] border-l-[1px] border-black'>
+                                                            <td className='text-[9px] text-center py-[2px] border-l-[1px] border-black'>
                                                                 {item.m2 === 0 ? "" : item.m2}
                                                             </td>
-                                                            <td className='text-[10px] text-center py-[2px] border-l-[1px] border-black'>{item.quantity !== '' ? item.quantity : ""}</td>
-                                                            <td className='text-[10px] text-end py-[2px] border-l-[1px] border-black pr-1.5'>{item.unitPrice} </td>
-                                                            <td className='text-[10px] text-end pr-3 py-[2px] border-l-[1px] border-black'>{item.total}</td>
+                                                            <td className='text-[9px] text-center py-[2px] border-l-[1px] border-black'>{item.quantity !== '' ? item.quantity : ""}</td>
+                                                            <td className='text-[9px] text-end py-[2px] border-l-[1px] border-black pr-1.5'>{item.unitPrice} </td>
+                                                            <td className='text-[9px] text-end pr-3 py-[2px] border-l-[1px] border-black'>{item.total}</td>
                                                     </tr>
                                                 )
                                             })
@@ -474,15 +487,15 @@ const Qtprint = ({
                                                 return(
                                                     <tr 
                                                     key={item.id} >
-                                                            <td className='text-[10px] text-start pl-3 py-[2px]'>
+                                                            <td className='text-[9px] text-start pl-3 py-[2px]'>
                                                                 {i+1}
                                                             </td>
-                                                            <td className='text-[10px] text-start py-[2px] w-[260px]'>
-                                                                {item.description}
+                                                            <td className='text-[9px] text-start py-[2px] w-[260px]'>
+                                                                {!item.description ? "" : item.description.length < 44 ? item.description : <input className='w-[200px] outline-none' value={item.description}/>}
                                                             </td>
-                                                            <td className='text-[10px] text-center py-[2px] border-l-[1px] border-black'>{item.quantity === "" ? "" : item.quantity}</td>
-                                                            <td className='text-[10px] text-end pr-2 py-[2px] border-l-[1px] border-black'>{item.unitPrice} </td>
-                                                            <td className='text-[10px] text-end pr-2 py-[2px] border-l-[1px] border-black'>{item.total}</td>
+                                                            <td className='text-[9px] text-center py-[2px] border-l-[1px] border-black'>{item.quantity === "" ? "" : item.quantity}</td>
+                                                            <td className='text-[9px] text-end pr-2 py-[2px] border-l-[1px] border-black'>{item.unitPrice} </td>
+                                                            <td className='text-[9px] text-end pr-2 py-[2px] border-l-[1px] border-black'>{item.total}</td>
                                                     </tr>
                                                 )
                                             })
@@ -500,13 +513,13 @@ const Qtprint = ({
                                                 for(let i = 6; i > (items?.length || 0); i--){
                                                     row.push(
                                                         <tr key={i}>
-                                                            <td className='text-[10px] py-[2px]'><div className='invisible'>No</div></td>
-                                                            <td className='text-[10px] py-[2px]'></td>
-                                                            <td className='text-[10px] py-[2px] border-l-[1px] border-black'></td>
-                                                            <td className='text-[10px] py-[2px] border-l-[1px] border-black'></td>
-                                                            <td className='text-[10px] py-[2px] border-l-[1px] border-black'></td>
-                                                            <td className='text-[10px] py-[2px] border-l-[1px] border-black'></td>
-                                                            <td className='text-[10px] py-[2px] border-l-[1px] border-black'></td>
+                                                            <td className='text-[9px] py-[2px]'><div className='invisible'>No</div></td>
+                                                            <td className='text-[9px] py-[2px]'></td>
+                                                            <td className='text-[9px] py-[2px] border-l-[1px] border-black'></td>
+                                                            <td className='text-[9px] py-[2px] border-l-[1px] border-black'></td>
+                                                            <td className='text-[9px] py-[2px] border-l-[1px] border-black'></td>
+                                                            <td className='text-[9px] py-[2px] border-l-[1px] border-black'></td>
+                                                            <td className='text-[9px] py-[2px] border-l-[1px] border-black'></td>
                                                         </tr>
                                                     )
                                                 }
@@ -525,11 +538,11 @@ const Qtprint = ({
                                                 for(let i = 6; i > (items?.length || 0); i--){
                                                     row.push(
                                                         <tr key={i}>
-                                                            <td className='text-[10px] py-[2px]'><div className='invisible'>No</div></td>
-                                                            <td className='text-[10px] py-[2px]'></td>
-                                                            <td className='text-[10px] py-[2px] border-l-[1px] border-black'></td>
-                                                            <td className='text-[10px] py-[2px] border-l-[1px] border-black'></td>
-                                                            <td className='text-[10px] py-[2px] border-l-[1px] border-black'></td>
+                                                            <td className='text-[9px] py-[2px]'><div className='invisible'>No</div></td>
+                                                            <td className='text-[9px] py-[2px]'></td>
+                                                            <td className='text-[9px] py-[2px] border-l-[1px] border-black'></td>
+                                                            <td className='text-[9px] py-[2px] border-l-[1px] border-black'></td>
+                                                            <td className='text-[9px] py-[2px] border-l-[1px] border-black'></td>
                                                         </tr>
                                                     )
                                                 }
@@ -592,12 +605,9 @@ const Qtprint = ({
                                 <tr>
                                 <td className='text-start' rowSpan={3} colSpan={busType === 'meter' ? 5 : 3}>
                                 <p className='font-bold text-[8px]'>Note: Payment term:</p>
-                                    <p className='w-[250px] text-[7px]'>
-                                    Deposite 50% and full payment after finished the project
-                                    we are looking forward to hearing from you. and we hope to
-                                    have a good collaboration with you in the nearest future
-                                    Thanks for your time and consideration of our company
-                                    </p>
+                                    <textarea className='w-[200px] text-[7px] outline-none resize-none overflow-hidden' rows={4} value={busPayTerm}>
+                                    
+                                    </textarea>
                                 </td>
                                 <td className='text-end text-[12px] font-bold'>Total:</td>
                                 <td >
