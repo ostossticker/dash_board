@@ -312,7 +312,7 @@ const General = ({
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index?: number, field?: string) => {
     if (focus1 === index) {
       if (event.keyCode === 38 || event.keyCode === 40) { // Up or Down arrow key
-        const filteredProducts = products.filter(item => item.prodBusType === busType);
+        const filteredProducts = products.filter(item => item.prodBus === invBus);
         const indexInFiltered = filteredProducts.findIndex(item => item.id === selectedItemId);
         const newIndex = event.keyCode === 38
           ? Math.max(indexInFiltered - 1, 0)
@@ -326,7 +326,8 @@ const General = ({
   
           if (field === 'description') {
             updatedCalculation[field] = products.find(item => item.id === selectedItemId)?.prodItemName || ''
-            updatedCalculation.unitPrice = `$${parseFloat(products.find(item => item.id === selectedItemId)?.prodUnitPrice || '').toFixed(2)}`
+            const parsedUnitPrice = parseFloat(products.find(item => item.id === selectedItemId)?.prodUnitPrice || '');
+            updatedCalculation.unitPrice = !isNaN(parsedUnitPrice) ? `$${parsedUnitPrice.toFixed(2)}` : ''; 
             handleChange(index , 'unitPrice' , updatedCalculation.unitPrice)
           }
   

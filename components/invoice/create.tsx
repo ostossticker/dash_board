@@ -53,7 +53,7 @@ type cusDrop = {
     cusEmail:string;
     cusAddr:string;
     cusComp:string;
-    
+    cusBus:string;
 }
 
 type empProps = {
@@ -297,6 +297,7 @@ const Createinv = () => {
                 cusEmail:test1.find(item => item.id === selectedItemId)?.cusEmail || "",
                 cusAddr:test1.find(item => item.id === selectedItemId)?.cusAddr || "",
                 customerId:test1.find(item => item.id === selectedItemId)?.id || "",
+                invBus:test1.find(item => item.id === selectedItemId)?.cusBus || "",
               }));
               setFocus(prev=>({
                 ...prev,
@@ -312,6 +313,7 @@ const Createinv = () => {
                 cusEmail:test2.find(item => item.id === selectedItemId)?.cusEmail || "",
                 cusAddr:test2.find(item => item.id === selectedItemId)?.cusAddr || "",
                 customerId:test2.find(item => item.id === selectedItemId)?.id || "",
+                invBus:test2.find(item => item.id === selectedItemId)?.cusBus || "",
                 }));
                 setFocus(prev=>({
                   ...prev,
@@ -756,7 +758,8 @@ const Createinv = () => {
                                                                         cusPhone:op.cusPhone1 || '',
                                                                         cusEmail:op.cusEmail || '',
                                                                         cusAddr:op.cusAddr || '',
-                                                                        customerId:op.id || ''
+                                                                        customerId:op.id || '',
+                                                                        invBus:op.cusBus || ''
                                                                     }))
                                                                 }}>{op.cusName}</li>
                                                             )
@@ -809,7 +812,8 @@ const Createinv = () => {
                                                                         cusPhone:op1.cusPhone1 || '',
                                                                         cusEmail:op1.cusEmail || '',
                                                                         cusAddr:op1.cusAddr || '',
-                                                                        customerId:op1.id || ''
+                                                                        customerId:op1.id || '',
+                                                                        invBus:op1.cusBus || ''
                                                                     }))
                                                                 }}>{op1.cusPhone1}</li>
                                                             )
