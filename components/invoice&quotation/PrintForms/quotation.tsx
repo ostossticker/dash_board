@@ -349,8 +349,8 @@ const Qtprint = ({
                                 {
                                     busInfo.map((item)=>{
                                         return(
-                                           <div className='flex justify-end'>
-                                             <div key={item.label} className={`flex pl-[5px] justify-end w-[200px] ${item.clss} items-start gap-1 pt-[1px]`} style={{fontFamily:"khmerContent"}}>
+                                           <div key={item.label} className='flex justify-end'>
+                                             <div  className={`flex pl-[5px] justify-end w-[200px] ${item.clss} items-start gap-1 pt-[1px]`} style={{fontFamily:"khmerContent"}}>
                                                 <p className='text-[9.6px]'>{item.label}</p>
                                                 <p className='text-[9px] text-end'>{item.val}</p>
                                             </div>

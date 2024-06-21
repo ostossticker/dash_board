@@ -15,9 +15,7 @@ import { addQtGen, editQtGen } from "@/app/(protected)/quotation/actions/general
 import { url } from "@/lib/url";
 import axios from "axios";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import Image from "next/image";
 import { recentlyActivity } from "@/app/(protected)/recently/action";
-import { validateEmail } from "@/lib/functions";
 
 type Calculation = {
   id:string;
