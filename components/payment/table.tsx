@@ -20,10 +20,6 @@ type sumVal ={
     balance:string
 }
 
-type dateProps = {
-    createdAt:string;
-    updatedAt:string
-}
 
 type arr = {
   id:string;
@@ -43,8 +39,7 @@ type arr = {
   createdAt:string;
   updatedAt:string;
   balance:string;
-  _sum:sumVal;
-  _max:dateProps;
+  _sum:sumVal
 }
 
 type optionDrop = {
@@ -214,19 +209,19 @@ const InvTable = () => {
     },
     {
       label: "STATUS",
-      textAlign:"text-center"
+      textAlign:`${switching === 'ungroup' ? "text-center" : "hidden"}`
     },
     {
       label: "CREATE DATE",
-      textAlign:"text-end"
+      textAlign:`${switching === 'ungroup' ? "text-end" : "hidden"}`
     },
     {
       label: "UPDATE DATE",
-      textAlign:"text-end"
+      textAlign:`${switching === 'ungroup' ? "text-end" : "hidden"}`
     },
     {
      label: "PHONE NUMBER",
-     textAlign:"text-end"
+     textAlign:`${switching === 'ungroup' ? "text-end" : "hidden"}`
     },
     {
       label:"TOTAL",
@@ -236,7 +231,7 @@ const InvTable = () => {
         label:"ACTIONS",
         textAlign:""
     }
-  ],[])
+  ],[switching])
 
   if(error) return <div>Error fetching data</div>
 
@@ -469,41 +464,55 @@ const InvTable = () => {
                         )
                     }
                    
-                    <td className={`${placeholderClass}`}>
-                    <div className='flex justify-center '>
-                      <div className={` font-semibold text-[15px] rounded-md lg:text-[9px] xl:text-[13px] ${item.invStatus === 'paid' ? "bg-mainLightBlue text-white" : item.invStatus === 'unpay' ? "bg-insomnia-primary text-white" : item.invStatus === 'partial' ? "bg-[#FBB96F] text-white" : ""} xl:w-[80px] lg:w-[50px]`}>
-                        {item.invStatus === "unpay" ? "Unpaid" : item.invStatus.charAt(0).toUpperCase() + item.invStatus.slice(1) }
+                    {
+                      item.invStatus && (
+                        <td className={`${placeholderClass}`}>
+                        <div className='flex justify-center '>
+                          <div className={` font-semibold text-[15px] rounded-md lg:text-[9px] xl:text-[13px] ${item.invStatus === 'paid' ? "bg-mainLightBlue text-white" : item.invStatus === 'unpay' ? "bg-insomnia-primary text-white" : item.invStatus === 'partial' ? "bg-[#FBB96F] text-white" : ""} xl:w-[80px] lg:w-[50px]`}>
+                            {item.invStatus === "unpay" ? "Unpaid" : item.invStatus.charAt(0).toUpperCase() + item.invStatus.slice(1) }
+                          </div>
+                          </div>
+                          </td>
+                      )
+                    }
+                   {
+                    item.createdAt && (
+                      <td className={placeholderClass}>
+                        <div className='flex justify-end items-center'>
+                      <div className='pr-[5px]'>
+                          {dateFormat(item.createdAt)}
+                      </div>
+                      <div>
+                          {convertTime(item.createdAt)}
                       </div>
                       </div>
                       </td>
-                    <td className={placeholderClass}><div className='flex justify-end items-center'>
-                    <div className='pr-[5px]'>
-                        {item._max && item._max.createdAt !== undefined && !item._max.createdAt ? '' : (item._max && item._max.createdAt && dateFormat(item._max.createdAt))}
-                        {item.createdAt !== undefined && !item.createdAt ? '' : (item.createdAt && dateFormat(item.createdAt))}
-                    </div>
-                    <div>
-                        {item._max && item._max.createdAt !== undefined && item._max.createdAt ? convertTime(item._max.createdAt) : ''}
-                        {item.createdAt !== undefined && item.createdAt ? convertTime(item.createdAt) : ''}
-                    </div>
-                    </div>
-                    </td>
-                    <td className={placeholderClass}>
-                    <div className='flex justify-end items-center'>
-                    <div className='pr-[5px]'>
-                        {item._max && item._max.updatedAt !== undefined && !item._max.updatedAt ? '' : (item._max && item._max.updatedAt && dateFormat(item._max.updatedAt))}
-                        {item.updatedAt !== undefined && !item.updatedAt ? '' : (item.updatedAt && dateFormat(item.updatedAt))}
-                    </div>
-                        <div>
-                            {item._max && item._max.updatedAt !== undefined && item._max.updatedAt ? convertTime(item._max.updatedAt) : ''}
-                            {item.updatedAt !== undefined && item.updatedAt ? convertTime(item.updatedAt) : ''}
-                        </div>
-                    </div>
-                    </td>
-                    <td className={`${placeholderClass} text-end`}>
+                    )
+                   }
+                    {
+                      item.updatedAt && (
+                        <td className={placeholderClass}>
+                          <div className='flex justify-end items-center'>
+                          <div className='pr-[5px]'>
+                              {dateFormat(item.updatedAt)}
+
+                          </div>
+                              <div>
+                                  {convertTime(item.updatedAt)}
+                              </div>
+                          </div>
+                          </td>
+                      )
+                    }
+                    
                           {
-                            switching === 'ungroup' ? item.customer.cusName === 'General Customer' ? item.invCusPhone : item.invCusPhone1 : item.cusName1 === 'General Customer' ? item.invCusPhone : item.invCusPhone1
+                            switching === 'ungroup' && (
+                              <td className={`${placeholderClass} text-end`}>
+                                  {item.customer.cusName === 'General Customer' ? item.invCusPhone : item.invCusPhone1 }
+                             </td>
+                            ) 
                           }
-                    </td>
+                    
                     <td className={`${placeholderClass} text-end`}>${item._sum && item._sum.balance !== undefined && parseFloat(item._sum.balance).toFixed(2)} {item.balance !== undefined && parseFloat(item.balance).toFixed(2)}</td>
                     <td className={placeholderClass}>
                     <div className='flex justify-center items-center gap-1'>
@@ -513,9 +522,8 @@ const InvTable = () => {
                             setIcon(true)
                             setVal(prev=>({
                                 ...prev,
-                                filter:item.cusName1 === 'General Customer' ? item.invCusPhone : item.cusName1,
-                                filter1:item.invBus,
-                                status:item.invStatus
+                                filter:item.cusName1,
+                                filter1:item.invBus
                             }))
                           }else{
                             router.push('/invoice/created')
@@ -559,10 +567,10 @@ const InvTable = () => {
                         <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>
-                        <td className={placeholderClass}></td>
-                        <td className={placeholderClass}></td>
-                        <td className={placeholderClass}></td>
-                        <td className={placeholderClass}></td>
+                        {switching === 'ungroup' && <td className={placeholderClass}></td>}
+                        {switching === 'ungroup' && <td className={placeholderClass}></td>}
+                        {switching === 'ungroup' && <td className={placeholderClass}></td>}
+                        {switching === 'ungroup' && <td className={placeholderClass}></td>}
                         <td className={placeholderClass}>
                           <div className='flex justify-end items-center gap-1 invisible'>
                           <button className={`${darkMode ? "text-blue-400" : "text-blue-700" } p-1 lg:text-[14px] xl:text-[20px]`}>

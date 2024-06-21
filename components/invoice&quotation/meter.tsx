@@ -491,7 +491,8 @@ const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index?: num
 
         if (field === 'description') {
           updatedCalculation[field] = products.find(item => item.id === selectedItemId)?.prodItemName || '';
-          updatedCalculation.unitPrice = `$${parseFloat(products.find(item => item.id === selectedItemId)?.prodUnitPrice || '').toFixed(2)}`
+          const parsedUnitPrice = parseFloat(products.find(item => item.id === selectedItemId)?.prodUnitPrice || '');
+          updatedCalculation.unitPrice = !isNaN(parsedUnitPrice) ? `$${parsedUnitPrice.toFixed(2)}` : ''; 
           handleChange(index , 'unitPrice' , updatedCalculation.unitPrice)
         }
 
@@ -547,7 +548,7 @@ const handleClickProducts = (index:number , field:keyof Calculation , op:string 
     if(field === 'description'){
       updated[field] = op as string
       updated.unitPrice = `$${parseFloat(money).toFixed(2)}`
-      handleChange(index , 'unitPrice' , updated.unitPrice)
+      handleChange(index , 'unitPrice' , !isNaN(parseInt(updated.unitPrice)) ? updated.unitPrice : '')
     } 
 
     update[index] = updated
@@ -1323,7 +1324,7 @@ const calculateBalance = () => {
               onChange={(e) => handleChange(index , 'm2' , e.target.value)}
               onBlur={(e) => handleM2(e.target.value, index)}
               onKeyDown={(e) => handleM2Key(e, index , item.m2.toString())}
-              className={`${darkMode ? "text-dark-lg-color" : ""} w-full text-center border px-2 py-1 bg-transparent border-input-primary rounded-md`}
+              className={`${darkMode ? "text-dark-lg-color" : ""} w-full text-center outline-none border px-2 py-1 bg-transparent border-input-primary rounded-md`}
             />
           </td>
           <td className=" px-[10px] py-2">
@@ -1331,7 +1332,7 @@ const calculateBalance = () => {
               type="text"
               value={item.quantity === '' ? '' : item.quantity}
               onChange={(e) => handleChange(index, 'quantity', e.target.value)}
-              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border text-center px-2 py-1 bg-transparent border-input-primary rounded-md`}
+              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border text-center outline-none px-2 py-1 bg-transparent border-input-primary rounded-md`}
             />
             <div className="relative ">
             {
@@ -1351,7 +1352,7 @@ const calculateBalance = () => {
               onChange={(e) => handleChange(index, 'unitPrice', e.target.value)}
               onBlur={(e) => handleUnitPriceBlur(e.target.value, index)}
               onKeyDown={(e) => handleUnitPriceKeyDown(e, e.currentTarget.value, index)}
-              className={`${darkMode ? "text-dark-lg-color" : ""} w-full text-center border px-2 py-1 bg-transparent border-input-primary rounded-md`}
+              className={`${darkMode ? "text-dark-lg-color" : ""} w-full text-center border outline-none px-2 py-1 bg-transparent border-input-primary rounded-md`}
             />
           </td>
           <td className=" px-[10px] py-2">
@@ -1361,7 +1362,7 @@ const calculateBalance = () => {
               onBlur={(e) => handleTotalBlur(index, e.target.value)}
               onKeyDown={(e) => handleTotalKeyDown(e, index, item.total)}
               onChange={(e) => handleTotalChange(index, e.target.value)}
-              className={`${darkMode ? "text-dark-lg-color" : ""} w-full text-center border px-2 py-1 bg-transparent border-input-primary rounded-md`}
+              className={`${darkMode ? "text-dark-lg-color" : ""} w-full text-center border px-2 py-1  outline-none bg-transparent border-input-primary rounded-md`}
             />
           </td>
           <td className=" px-[10px] py-2">

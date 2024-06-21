@@ -56,6 +56,7 @@ type cusDrop = {
     cusEmail:string;
     cusAddr:string;
     cusComp:string;
+    cusBus:string;
 }
 
 type empProps = {
@@ -354,7 +355,8 @@ const CreateQt = () => {
                 cusEmail:test1.find(item => item.id === selectedItemId)?.cusEmail || "",
                 cusAddr:test1.find(item => item.id === selectedItemId)?.cusAddr || "",
                 customerId:test1.find(item => item.id === selectedItemId)?.id || "",
-              }));
+                quoteBus:test1.find(item => item.id === selectedItemId)?.cusBus || ""
+            }));
               setFocus(prev=>({
                 ...prev,
                 check:false
@@ -364,11 +366,12 @@ const CreateQt = () => {
                 setVal(prev=>({
                   ...prev,
                   cusName:test2.find(item => item.id === selectedItemId)?.cusName || "",
-                cusComp:test2.find(item => item.id === selectedItemId)?.cusComp || "",
-                cusPhone:test2.find(item => item.id === selectedItemId)?.cusPhone1 || "",
-                cusEmail:test2.find(item => item.id === selectedItemId)?.cusEmail || "",
-                cusAddr:test2.find(item => item.id === selectedItemId)?.cusAddr || "",
-                customerId:test2.find(item => item.id === selectedItemId)?.id || "",
+                  cusComp:test2.find(item => item.id === selectedItemId)?.cusComp || "",
+                  cusPhone:test2.find(item => item.id === selectedItemId)?.cusPhone1 || "",
+                  cusEmail:test2.find(item => item.id === selectedItemId)?.cusEmail || "",
+                  cusAddr:test2.find(item => item.id === selectedItemId)?.cusAddr || "",
+                  customerId:test2.find(item => item.id === selectedItemId)?.id || "",
+                  quoteBus:test1.find(item => item.id === selectedItemId)?.cusBus || ""
                 }));
                 setFocus(prev=>({
                   ...prev,
@@ -785,7 +788,8 @@ const CreateQt = () => {
                                                                         cusPhone:item.cusPhone1 || '',
                                                                         cusEmail:item.cusEmail || '',
                                                                         cusAddr:item.cusAddr || '',
-                                                                        customerId:item.id || ''
+                                                                        customerId:item.id || '',
+                                                                        quoteBus:item.cusBus || ''
                                                                     }))
                                                                 }}>{item.cusName}</li>
                                                             )
@@ -837,7 +841,8 @@ const CreateQt = () => {
                                                                     cusPhone:item.cusPhone1 || '',
                                                                     cusEmail:item.cusEmail || '',
                                                                     cusAddr:item.cusAddr || '',
-                                                                    customerId:item.id || ''
+                                                                    customerId:item.id || '',
+                                                                    quoteBus:item.cusBus || ''
                                                                 }))}}>{item.cusPhone1}</li>
                                                             )
                                                         })

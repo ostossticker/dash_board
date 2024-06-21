@@ -116,7 +116,7 @@ const Create = () => {
   useEffect(()=>{
     setVal({
       prodItemName: edit ? prods.prodItemName : '',
-      prodUnitPrice: edit ? (typeof prods.prodUnitPrice === 'number' ? `$${prods.prodUnitPrice.toFixed(2)}` : prods.prodUnitPrice) : '',
+      prodUnitPrice: edit ? (typeof prods.prodUnitPrice === 'number' ? prods.prodUnitPrice === 0 ? '' : `$${prods.prodUnitPrice.toFixed(2)}` : prods.prodUnitPrice) : '',
       prodBus: edit ? prods.prodBus : '',
       prodSince: edit ? prods.prodSince : new Date().toISOString().split('T')[0],
       prodBustype: edit ? prods.prodBusType : ''
@@ -281,7 +281,7 @@ const Create = () => {
     }else{
        addProduct({
         prodItemName:prodItemName,
-        prodUnitPrice:prodUnitPrice,
+        prodUnitPrice:!prodUnitPrice ? '0' : prodUnitPrice,
         prodBus:prodBus,
         prodSince:prodSince,
         proditemDes:text,
@@ -330,7 +330,7 @@ const Create = () => {
        editProduct({
         id:passingId,
         prodItemName:prodItemName,
-        prodUnitPrice:prodUnitPrice,
+        prodUnitPrice:!prodUnitPrice ? '0' : prodUnitPrice,
         prodBus:prodBus,
         prodSince:prodSince,
         proditemDes:text,

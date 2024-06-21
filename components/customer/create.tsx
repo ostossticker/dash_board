@@ -5,7 +5,7 @@ import { useCurrentUser } from '@/hooks/use-current-user';
 import { closeModal, fetchData } from '@/lib/functions';
 import { url } from '@/lib/url';
 import axios from 'axios';
-import React, {  useEffect, useMemo, useRef, useState } from 'react'
+import React, {  useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 
@@ -68,6 +68,8 @@ type optionDrop = {
 }
 
 const Create = () => {
+  const    MIN_TEXTAREA_HEIGHT = 32;
+  const textareaRef = useRef<any>(null);
   const { pending , setPending , setModalisopen ,isModal ,edit , passingId} = useToggle()
   const [suggest , setSuggest] = useState<optionDrop[]>([])
   const user = useCurrentUser()
@@ -88,6 +90,14 @@ const Create = () => {
     cusAddr:'',
     cusWebsite:'',
   })
+
+  useLayoutEffect(()=>{
+    textareaRef.current.style.height = "inherit";
+    textareaRef.current.style.height = `${Math.max(
+        textareaRef.current.scrollHeight,
+        MIN_TEXTAREA_HEIGHT
+      )}px`;
+  },[val.cusAddr])
 
   useEffect(()=>{
     setVal({
@@ -195,14 +205,8 @@ const scrollToSelectedIndex = () => {
       type:'date',
       name:'cusMember',
       val:val.cusMember
-    },
-    {
-      label:'Address',
-      type:'text',
-      name:'cusAddr',
-      val:val.cusAddr
     }
-  ],[val.cusName , val.cusBus,val.cusComp , val.cusMember , val.cusAddr])
+  ],[val.cusName , val.cusBus,val.cusComp , val.cusMember])
   const right = useMemo(()=>[
     {
       label:'Telegram',
@@ -228,15 +232,9 @@ const scrollToSelectedIndex = () => {
       name:'cusEmail',
       val:val.cusEmail
     },
-    {
-      label:"Website",
-      type:'text',
-      name:'cusWebsite',
-      val:val.cusWebsite
-    }
-  ],[val.cusTelegram , val.cusPhone1 , val.cusPhone2 , val.cusEmail , val.cusWebsite])
+  ],[val.cusTelegram , val.cusPhone1 , val.cusPhone2 , val.cusEmail])
 
-  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) =>{
     const {name , value} = e.target
     if((name === 'cusPhone1' || name === 'cusPhone2') && isNaN(Number(value))){
       setVal(prev=>({
@@ -419,7 +417,18 @@ const scrollToSelectedIndex = () => {
         })
       }
       </div>
+      
     </div>
+    <div className='[&>span]:focus-within:text-mainBlue px-3 py-1 pb-3'>
+       <span className='text-[12px] font-bold text-slate-400'>Website</span><br />
+      
+         <input autoComplete='off' type='text' className='w-full text-[13px] outline-none shadow-sm border-full solid 
+               border-[1px] rounded-md border-slate-200 focus:border-mainLightBlue  h-[30px] px-1 bg-[#F8F8F8]' name='cusWebsite' value={val.cusWebsite}  onChange={handleChange}/>
+    </div>
+      <div className='px-3 py-1 '>
+        <textarea name='cusAddr' ref={textareaRef} style={{minHeight:MIN_TEXTAREA_HEIGHT , resize:"none"}} className='w-full text-[13px] outline-none shadow-sm border-full solid 
+               border-[1px] rounded-md border-slate-200 px-1 bg-[#F8F8F8]' value={val.cusAddr} onChange={handleChange}></textarea>
+      </div>
     <div className='flex justify-center items-center gap-5 mt-[20px]'>
       <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.cusName  !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? <span className='loading loading-spinner text-default'></span> : <p>Save</p>}</button>
       <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>{closeModal('my_modal_5') , setModalisopen(false) }}>Cancel</button>

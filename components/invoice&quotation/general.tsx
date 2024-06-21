@@ -383,7 +383,7 @@ const General = ({
       if(field === 'description'){
         updated[field] = op as string
         updated.unitPrice = `$${parseFloat(money).toFixed(2)}`
-        handleChange(index , 'unitPrice' , updated.unitPrice)
+        handleChange(index , 'unitPrice' , !isNaN(parseInt(updated.unitPrice)) ? updated.unitPrice : '')
       } 
   
       update[index] = updated
@@ -1186,7 +1186,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
           <td className=" px-[10px] py-2" >
           <input
               type="text"
-              className={`${darkMode ? "text-dark-lg-color" : ""} border lg:w-[500px] xl:w-[900px] 2xl:w-[1400px] px-2 py-1 bg-transparent border-input-primary rounded-md`}
+              className={`${darkMode ? "text-dark-lg-color" : ""} border lg:w-[500px] outline-none xl:w-[900px] 2xl:w-[1400px] px-2 py-1 bg-transparent border-input-primary rounded-md`}
               value={item.description}
               onClick={handleOnClick}
               onChange={(e) => {
@@ -1224,7 +1224,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               type="text"
               value={item.quantity === "" ? '' : item.quantity}
               onChange={(e) => handleChange(index, 'quantity', e.target.value)}
-              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border px-2 py-1 bg-transparent border-input-primary rounded-md text-center`}
+              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border outline-none px-2 py-1 bg-transparent border-input-primary rounded-md text-center`}
             />
             <div className="relative w-[100px]">
             {
@@ -1244,7 +1244,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               onChange={(e) => handleChange(index, 'unitPrice', e.target.value)}
               onBlur={(e) => handleUnitPriceBlur(e.target.value, index)}
               onKeyDown={(e) => handleUnitPriceKeyDown(e, e.currentTarget.value, index)}
-              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border px-2 py-1 bg-transparent border-input-primary rounded-md text-center`}
+              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border px-2 py-1 outline-none bg-transparent border-input-primary rounded-md text-center`}
             />
           </td>
           <td className="px-[10px] py-2">
@@ -1254,7 +1254,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               onBlur={(e) => handleTotalBlur(index, e.target.value)}
               onKeyDown={(e) => handleTotalKeyDown(e, index, item.total)}
               onChange={(e) => handleTotalChange(index, e.target.value)}
-              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border px-2 py-1 bg-transparent border-input-primary rounded-md text-center`}
+              className={`${darkMode ? "text-dark-lg-color" : ""} w-full border px-2 py-1 outline-none bg-transparent border-input-primary rounded-md text-center`}
             />
           </td>
           <td className=" px-[10px] py-2">

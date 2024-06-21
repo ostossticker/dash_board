@@ -160,7 +160,6 @@ const Option = ({
     edit,
     passingId
   } = useToggle()
-  const [show , setShow] = useState<boolean>(false)
   const printableComponent = useRef<any>()
   const printableComponent1 = useRef<any>()
   const user = useCurrentUser()
@@ -181,12 +180,6 @@ const Option = ({
   },[width])
 
   const options = [
-    {
-        id:"Opmenu1",
-        label:"Options",
-        clss:"",
-        func:()=>setShow(!show)
-    },
     {
         id:"Opmenu4",
         label:"Cancel",
@@ -232,13 +225,13 @@ const Option = ({
     {
       id:"Opmenu10",
       label:"PDF",
-      clss:"bg-mainBlue",
+      clss:"bg-mainLightBlue",
       func:()=>{}
     },
     {
       id:"Opmenu11",
       label:"Receipt",
-      clss:`bg-mainBlue ${printing === "quotation" && "!hidden"}`,
+      clss:`bg-mainLightBlue ${printing === "quotation" && "!hidden"}`,
       func:()=>{
         if(edit && routerSwitch === changeMode){
           update({id:passingId , receip:'receipt'})
@@ -779,13 +772,13 @@ const Option = ({
     {child}
     <ResponsiveElement width={100} height={'auto'} className='flex flex-col justify-end'>
     <div >
-    {
-      show === true && (
-        <ResponsiveElement width={'auto'} height={'auto'} className={`${darkMode ? "bg-dark-box-color" : "bg-white"} flex flex-col items-center justify-center`} py={4}>
+
+        <ResponsiveElement width={'auto'} height={'auto'} className={`${darkMode ? "bg-dark-box-color" : "bg-white"} flex flex-col items-center rounded-t-lg justify-center`} py={4}>
         <div >
+            <h1 className='text-gray-800 text-[25px] font-semibold'>SETTING</h1>
             {expandableMenu.map((item)=>{
               return(
-                <ResponsiveElement key={item.id} width={80} height={'auto'} py={2} mt={5} mb={5} fontSize={10} className={`${item.clss} text-white`}>
+                <ResponsiveElement key={item.id} width={80} height={'auto'} py={2} mt={5} mb={5} fontSize={10} className={`${item.clss} text-white rounded-lg`}>
                   <button onClick={item.func}>
                     {item.label}
                   </button>
@@ -796,9 +789,7 @@ const Option = ({
         </div>
         </ResponsiveElement>
         
-      )
-    }
-    <ResponsiveElement width={'auto'} height={'auto'} py={4} className={`${darkMode ? "bg-dark-box-color" : "bg-white"} flex flex-col justify-center  items-center`}>
+    <ResponsiveElement width={'auto'} height={'auto'} py={4} className={`${darkMode ? "bg-dark-box-color" : "bg-white"} flex flex-col justify-center   rounded-b-lg items-center`}>
     <div >
     {
         printing === 'quotation' && (
@@ -807,7 +798,7 @@ const Option = ({
               }else{
                 saveQt()
               }}}>
-              <ResponsiveElement className='bg-insomnia-primary text-white' width={80} height={'auto'} py={2} mt={5} mb={5} fontSize={10} >
+              <ResponsiveElement className='bg-insomnia-primary text-white rounded-lg' width={80} height={'auto'} py={2} mt={5} mb={5} fontSize={10} >
                   <div>
                     {edit ? "UPDATED" : "SAVE" }
                   </div>
@@ -824,7 +815,7 @@ const Option = ({
                   save()
                 }
               }}>
-              <ResponsiveElement className='bg-insomnia-primary text-white' width={80} height={'auto'} py={2} mt={5} mb={5} fontSize={10} >
+              <ResponsiveElement className='bg-insomnia-primary text-white rounded-lg' width={80} height={'auto'} py={2} mt={5} mb={5} fontSize={10} >
                   <div>
                     {edit && routerSwitch === changeMode ? "UPDATED" : "SAVE"}
                   </div>
@@ -837,9 +828,9 @@ const Option = ({
           <ReactToPrint
           trigger={()=>(
           <button>
-          <ResponsiveElement className='bg-insomnia-primary text-white' width={80} height={'auto'} py={2} mt={5} mb={5} fontSize={10} >
+          <ResponsiveElement className='bg-insomnia-primary text-white rounded-lg' width={80} height={'auto'} py={2} mt={5} mb={5} fontSize={10} >
             <div>
-              test1
+              Print
             </div>
           </ResponsiveElement>
           </button>
@@ -855,9 +846,9 @@ const Option = ({
           <ReactToPrint
               trigger={()=>(
               <button>
-              <ResponsiveElement className='bg-insomnia-primary text-white' width={80} height={'auto'} py={2} mt={5} mb={5} fontSize={10} >
+              <ResponsiveElement className='bg-insomnia-primary text-white rounded-lg' width={80} height={'auto'} py={2} mt={5} mb={5} fontSize={10} >
                   <div>
-                    test2
+                    Print
                   </div>
               </ResponsiveElement>
               </button>
@@ -871,7 +862,7 @@ const Option = ({
       {
           options.map((item)=>{
             return(
-              <ResponsiveElement className={`${item.clss} bg-insomnia-primary text-white`} width={80} height={'auto'} py={2} mt={5} mb={5} key={item.id} fontSize={10} >
+              <ResponsiveElement className={`${item.clss} bg-gray-200 text-gray-800 rounded-lg`} width={80} height={'auto'} py={2} mt={5} mb={5} key={item.id} fontSize={10} >
                 <button  onClick={item.func}>
                   {item.label}
                 </button>

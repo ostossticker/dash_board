@@ -113,3 +113,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-family: Arial, Helvetica, Sans-serif;
   padding: 8px;
 }
+
+input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
