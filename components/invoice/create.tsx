@@ -146,7 +146,7 @@ const Createinv = () => {
     const ulRef3 = useRef<HTMLUListElement>(null)
     const buscheck = !edit && passingId === "" ? typeof window !== 'undefined' ? localStorage.getItem('businessCheck') : null :""
     const [val , setVal] = useState<cusType>({
-        cusName:'',
+        cusName:'General Customer',
         cusComp:'',
         cusPhone:'',
         cusEmail:'',

@@ -156,25 +156,25 @@ const Invprint = ({
             id:"printBus1",
             label:"Add:",
             val:busAddr,
-            clss:`${address === true || busAddr === "" ? "!hidden" : ""}`
+            clss:`${address === true || busAddr === "" ? "invisible" : ""}`
         },
         {
             id:"printBus2",
             label:"Email:",
             val:busEmail,
-            clss:`${address === true || busEmail === "" ? "!hidden" : ""}`
+            clss:`${address === true || busEmail === "" ? "invisible" : ""}`
         },
         {
             id:"printBus3",
             label:"Tel:",
             val:busPhone,
-            clss:`${address === true || busPhone === "" ? "!hidden" : ""}`
+            clss:`${address === true || busPhone === "" ? "invisible" : ""}`
         },
         {
             id:"printBus4",
             label:"Telegram",
             val:busTelegram,
-            clss:`${address === true || busTelegram === "" ? "!hidden" : ""}`
+            clss:`${address === true || busTelegram === "" ? "invisible" : ""}`
         }
     ],[address])
     const cusInfo = useMemo(()=>[
@@ -292,28 +292,6 @@ const Invprint = ({
                             </div>
                             <div className='col-span-1 flex flex-col justify-end'>
                             <div>
-                            {
-                                    address === true && (
-                                        <>
-                                        <div className='invisible flex pl-[5px] py-[1px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[9.6px]'>mp</p>
-                                                    <p className='text-[9px] py-[1px] text-end'>ddd</p>
-                                        </div>
-                                        <div className='invisible flex pl-[5px] py-[1px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[9.6px]'>mp</p>
-                                                    <p className='text-[9px] text-end'>ddd</p>
-                                        </div>
-                                        <div className='invisible flex pl-[5px] py-[1px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[9.6px]'>mp</p>
-                                                    <p className='text-[9px] text-end'>ddd</p>
-                                        </div>
-                                        <div className='invisible flex pl-[5px] py-[1px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[9.6px]'>mp</p>
-                                                    <p className='text-[9px] text-end'>ddd</p>
-                                        </div>
-                                        </>
-                                    )
-                                }
                             {(()=>{
                                     let row = []
                                     for(let i = 4; i > (test3?.length || 0); i--){
@@ -457,10 +435,10 @@ const Invprint = ({
                                 {
                                         bankInfo === true && (
                                             <div style={{fontFamily:"khmerContent"}}>
-                                                    <textarea rows={2} className='outline-none text-[9px] resize-none overflow-hidden text-start w-[200px] py-[1px]' value={busInvkh}>
+                                                    <textarea rows={2} className='outline-none text-[9px] resize-none overflow-hidden text-start w-[200px] ' value={busInvkh}>
 
                                                     </textarea><br />
-                                                    <textarea rows={2} className='outline-none text-[9px] resize-none overflow-hidden text-start w-[200px] py-[1px]' value={busInvEng}>
+                                                    <textarea rows={2} className='outline-none text-[9px] resize-none overflow-hidden text-start w-[200px] ' value={busInvEng}>
 
                                                     </textarea>
                                             </div>

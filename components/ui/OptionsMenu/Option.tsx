@@ -193,31 +193,31 @@ const Option = ({
     {
         id:"Opmenu5",
         label:"Logo",
-        clss:"bg-mainLightBlue",
+        clss:`${!logo ? 'bg-mainLightBlue' : 'bg-gray-200 !text-gray-800'}`,
         func:()=>setLogo()
     },
     {
       id:"Opmenu6",
       label:"Bank Info",
-      clss:`bg-mainLightBlue ${printing !== 'quotation' ? "" : "!hidden"}` ,
+      clss:`${!bankInfo ? "bg-mainLightBlue" : 'bg-gray-200 !text-gray-800'} ${printing !== 'quotation' ? "" : "!hidden"}` ,
       func:()=>setBankInfo()
   },
     {
         id:"Opmenu7",
         label:"Address",
-        clss:"bg-mainLightBlue",
+        clss:`${!address ? "bg-mainLightBlue" : 'bg-gray-200 !text-gray-800'}`,
         func:()=>setAddr()
     },
     {
       id:"Opmenu8",
       label:"Signature",
-      clss:"bg-mainLightBlue",
+      clss:`${!signature ? "bg-mainLightBlue" : 'bg-gray-200 !text-gray-800'}`,
       func:()=>setSign()
     },
     {
       id:"Opmenu9",
       label:"Employee",
-      clss:`bg-mainLightBlue ${printing !== "quotation" && "!hidden"}`,
+      clss:`${!employee ? "bg-mainLightBlue" : 'bg-gray-200 !text-gray-800'} ${printing !== "quotation" && "!hidden"}`,
       func:()=>setEmp()
     },
     {

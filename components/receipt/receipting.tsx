@@ -154,12 +154,12 @@ const Receipting = () => {
         try {
           const { data } = await axios.get(`${url}/api/invoice/${recId}?email=${user.id}`);
           setTest(`$${data.balance.toFixed(2)}`)
-          setFrom(data.cusComp)
+          setFrom(data.invCusName)
           setPayOf(data.invTitle)
           setBusFil(data.invBus)
           setTestVal(prev=>({
             ...prev,
-            val:data.cusComp,
+            val:data.invCusName,
             val1:data.invTitle,
             val2:data.invBus
           }))

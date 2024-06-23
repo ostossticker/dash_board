@@ -155,32 +155,32 @@ const Qtprint = ({
         {
             label:"",
             val:staffName,
-            clss:`${employee === true || staffName === "" ? "!hidden" : ""}`
+            clss:`${employee === true || staffName === "" ? "invisible" : ""}`
         },
         {
             label:"Tel:",
             val:staffPhone,
-            clss:`${employee === true || staffPhone === "" ? "!hidden" : ""}`
+            clss:`${employee === true || staffPhone === "" ? "invisible" : ""}`
         },
         {
             label:"Add:",
             val:busAddr,
-            clss:`${address === true || busAddr === "" ? "!hidden" : ""}`
+            clss:`${address === true || busAddr === "" ? "invisible" : ""}`
         },
         {
             label:"Email:",
             val:busEmail,
-            clss:`${address === true || busEmail === "" ? "!hidden" : ""}`
+            clss:`${address === true || busEmail === "" ? "invisible" : ""}`
         },
         {
             label:"Tel:",
             val:busPhone,
-            clss:`${address === true || busPhone === "" ? "!hidden" : ""}`
+            clss:`${address === true || busPhone === "" ? "invisible" : ""}`
         },
         {
             label:"Telegram",
             val:busTelegram,
-            clss:`${address === true || busTelegram === "" ? "!hidden" : ""}`
+            clss:`${address === true || busTelegram === "" ? "invisible" : ""}`
         }
     ],[address , employee])
     const cusInfo = useMemo(()=>[
@@ -301,38 +301,6 @@ const Qtprint = ({
                             </div>
                             <div className='col-span-1 flex flex-col justify-end'>
                             <div>
-                            {
-                                    employee === true && (
-                                            <>
-                                            <div className={`invisible flex pl-[5px] justify-end`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[9.6px]'>ddd</p>
-                                                <p className='text-[9px]'>ddd</p>
-                                            </div>
-                                            <div className={`invisible flex pl-[5px] justify-end`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[9.6px]'>ddd</p>
-                                                <p className='text-[9px]'>ddd</p>
-                                            </div>
-                                            </>
-                                    )
-                                }
-                                {
-                                    address === true && (
-                                        <>
-                                            <div className={`invisible flex pl-[5px] justify-end`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[9.6px]'>ddd</p>
-                                                <p className='text-[9px]'>ddd</p>
-                                            </div>
-                                             <div className={`invisible flex pl-[5px] justify-end`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[9.6px]'>ddd</p>
-                                                <p className='text-[9px]'>ddd</p>
-                                            </div>
-                                             <div className={`invisible flex pl-[5px] justify-end`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[9.6px]'>ddd</p>
-                                                <p className='text-[9px]'>ddd</p>
-                                            </div>
-                                        </>
-                                    )
-                                }
                                 {(()=>{
                                     let row = []
                                     for(let i = 5; i > (test3?.length || 0); i--){

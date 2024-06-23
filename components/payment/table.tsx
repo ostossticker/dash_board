@@ -158,6 +158,23 @@ const InvTable = () => {
       };
     }, [selectedItemId]);
 
+    useEffect(() => {
+      const handleBackspace = (event: KeyboardEvent) => {
+          event.preventDefault();
+  
+          if (event.key === 'Backspace') {
+            setIcon(false) /// set switching invoice and delivery as text withy icon instead
+            setSwitching('group')
+          }
+      };
+  
+      window.addEventListener('keydown', handleBackspace);
+  
+      return () => {
+          window.removeEventListener('keydown', handleBackspace);
+      };
+  }, []);
+
   const renderPageNumbers = () =>{
     const maxPagesToShow = 3;
     const startPage = Math.max(1, page - Math.floor(maxPagesToShow / 2));
@@ -612,10 +629,7 @@ const InvTable = () => {
         <Modal typeSelect='caution' id='invtable' handlingAction={()=>handleDelete(passing , cusComp , bus)} CautionText={'Deletion'}/>
     </div>
     <div className='flex justify-end gap-4'>
-    
-    {
-        switching !== 'ungroup' ? (
-          <>
+
               {
                 totalStatus.map((item,id)=>{
                   return(
@@ -632,12 +646,6 @@ const InvTable = () => {
               Total Sale: ${totalValue.toFixed(2)}  
               </p>
             </div>
-          </>
-           
-        ) : (
-             <div className='bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>${totalValue.toFixed(2)}</div>       
-        )
-    }
     </div>
     </>
   )

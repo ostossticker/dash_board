@@ -98,7 +98,7 @@ const PrintForm = ({
     busEng,
     busKh
 }:invFormProps) => {
-    const {logo , address , signature , bankInfo , routerSwitch} = useToggle()
+    const {logo , address , onCancel , setPrint , setPrinting , signature , bankInfo , routerSwitch} = useToggle()
     const generals = useMemo(()=>[
         {
             label:"No.",
@@ -157,25 +157,25 @@ const PrintForm = ({
             id:'invBus1',
             label:"Add:",
             val:busAddr,
-            clss:`${address === true || busAddr === "" ? "!hidden" : ""}`
+            clss:`${address === true || busAddr === "" ? "invisible" : ""}`
         },
         {
             id:'invBus2',
             label:"Email:",
             val:busEmail,
-            clss:`${address === true || busEmail === "" ? "!hidden" : ""}`
+            clss:`${address === true || busEmail === "" ? "invisible" : ""}`
         },
         {
             id:'invBus3',
             label:"Tel:",
             val:busPhone,
-            clss:`${address === true || busPhone === "" ? "!hidden" : ""}`
+            clss:`${address === true || busPhone === "" ? "invisible" : ""}`
         },
         {
             id:'invBus4',
             label:"Telegram:",
             val:busTelegram,
-            clss:`${address === true || busTelegram === "" ? "!hidden" : ""}`
+            clss:`${address === true || busTelegram === "" ? "invisible" : ""}`
         }
     ],[busAddr , busEmail , busPhone ,  busTelegram  , address])
     const cusInfo = useMemo(()=>[
@@ -257,6 +257,24 @@ const PrintForm = ({
         }
         start()
     },[toggleAddr])
+
+    useEffect(() => {
+        const handleKeyPress = (event: KeyboardEvent) => {
+          event.preventDefault();
+          if (event.key === 'Backspace') {
+            setPrinting('')
+            onCancel()
+            setPrint(false)
+          }
+        };
+    
+        window.addEventListener('keydown', handleKeyPress);
+    
+        return () => {
+          window.removeEventListener('keydown', handleKeyPress);
+        };
+      }, []);
+
   return ( 
     <div className='flex'>
         <ResponsiveElement width={490}  height={'auto'} px={40} py={20} className='bg-white mx-auto'>
@@ -330,7 +348,7 @@ const PrintForm = ({
                                     cusInfo.map((item)=>{
                                         return(
                                             <div key={item.label} className={`${item.class} ${!item.val ? "hidden" : "flex"} w-[300px] pl-[5px] items-start gap-1`} style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
                                                     <p>{item.label}</p>
                                                 </ResponsiveElement>
                                                 <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
@@ -343,50 +361,12 @@ const PrintForm = ({
                             </div>
                             <div className='col-span-1 flex flex-col justify-end'>
                             <div>
-                            {
-                                    address === true && (
-                                        <>
-                                        <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8}>
-                                                    <p>ddd</p>
-                                                </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
-                                                    <p>ddd</p>
-                                                </ResponsiveElement>
-                                        </div>
-                                        <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8}>
-                                                    <p>ddd</p>
-                                                </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
-                                                    <p>ddd</p>
-                                                </ResponsiveElement>
-                                        </div>
-                                        <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8}>
-                                                    <p>ddd</p>
-                                                </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
-                                                    <p>ddd</p>
-                                                </ResponsiveElement>
-                                        </div>
-                                        <div className='invisible flex pl-[5px] justify-end' style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8}>
-                                                    <p>ddd</p>
-                                                </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
-                                                    <p>ddd</p>
-                                                </ResponsiveElement>
-                                        </div>
-                                        </>
-                                    )
-                                }
                                 {(()=>{
                                     let row = []
                                     for(let i = 4; i > (test3?.length || 0); i--){
                                         row.push(
                                             <div key={crypto.randomUUID()} className={`flex pl-[5px] justify-start items-center invisible`} style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
+                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
                                                     <p>mp</p>
                                                 </ResponsiveElement>
                                                 <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
@@ -406,10 +386,10 @@ const PrintForm = ({
                                                 item.label !== 'Add:' ? (
                                                     <div className='flex justify-end'>
                                                         <div  className={`flex pl-[5px] w-[240px] justify-end ${item.clss} items-start gap-1`} style={{fontFamily:"khmerContent"}}>
-                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} >
+                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} >
                                                             <p>{item.label}</p>
                                                         </ResponsiveElement>
-                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} className='text-end pt-[2px]'>
+                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} className='text-end '>
                                                             <p>{item.val}</p>
                                                         </ResponsiveElement>
                                                     </div>
@@ -417,10 +397,10 @@ const PrintForm = ({
                                                 ) : (
                                                     <div className='flex justify-end'>
                                                         <div  className={`flex pl-[5px]  justify-end ${item.clss} items-start gap-1`} style={{fontFamily:"khmerContent"}}>
-                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} >
+                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} >
                                                             <p>{item.label}</p>
                                                         </ResponsiveElement>
-                                                        <ResponsiveElement width={100} height={'auto'} fontSize={6} className='text-end pt-[2px] outline-none resize-none overflow-hidden'>
+                                                        <ResponsiveElement width={100} height={'auto'} fontSize={6} className='text-end outline-none resize-none overflow-hidden'>
                                                             <textarea rows={2}>{item.val}</textarea>
                                                         </ResponsiveElement>
                                                     </div>
@@ -595,9 +575,9 @@ const PrintForm = ({
                         <div className='flex justify-between mt-[3px] lg:mt-[5px] md:mt-[5px] 2xl:mt-[10px] px-[5px] '>
                                     {
                                         bankInfo === true && (
-                                            <ResponsiveElement width={200} height={'auto'} fontSize={6.3} style={{fontFamily:"khmerContent"}}>
+                                            <ResponsiveElement width={200} height={'auto'} fontSize={5} style={{fontFamily:"khmerContent"}}>
                                                     <div>
-                                                                    <textarea className='w-full resize-none outline-none overflow-hidden text-start py-[5px]' rows={2} value={busKh}>
+                                                                    <textarea className='w-full resize-none outline-none overflow-hidden text-start pt-[5px]' rows={2} value={busKh}>
 
                                                                     </textarea><br />
                                                                     <textarea className='w-full resize-none outline-none overflow-hidden text-start' rows={2} value={busEng}>
