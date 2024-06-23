@@ -24,9 +24,7 @@ type qtProps = {
   id:string;
   qtNo:string;
   qtTitle:string;
-  customer:{
-    cusName:string;
-  }
+  invCusName:string;
   qtBus:string;
   total:number;
   createdAt:string;
@@ -166,7 +164,7 @@ const QtTable = () => {
   }
 
   const filteredUsers = anagramFilter
-  ? qt.filter(quote => areAnagrams(quote.customer.cusName, anagramFilter))
+  ? qt.filter(quote => areAnagrams(quote.invCusName, anagramFilter))
   : qt;
 
   const thead = useMemo(()=>[
@@ -382,7 +380,7 @@ const QtTable = () => {
                     <td className={placeholderClass}>{(page - 1) * take + i + 1}</td>
                     <td className={`${placeholderClass} text-start pl-[30px]`}>{item.qtNo}</td>
                     <td className={`${placeholderClass} text-start`}>{item.qtTitle}</td>
-                    <td className={`${placeholderClass} text-start`}>{item.customer.cusName}</td>
+                    <td className={`${placeholderClass} text-start`}>{item.invCusName}</td>
                     <td className={`${placeholderClass} text-start`}>{item.qtBus}</td>
                     <td className={`${placeholderClass} text-end`}>${item.total.toFixed(2)}</td>
                     <td className={placeholderClass}>
@@ -437,7 +435,7 @@ const QtTable = () => {
                           openModal('quotations')
                           setPassing(item.id)
                           setPrint(false)
-                          setCus(item.customer.cusName)
+                          setCus(item.invCusName)
                           setPaperno(item.qtNo)
                         }}>
                             <PiTrashLight />

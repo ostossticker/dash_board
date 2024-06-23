@@ -2,9 +2,6 @@
 
 import { prisma } from "@/lib/db/prisma";
 import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { writeFile } from "fs/promises";
-import path, { join } from "path";
-
 type arr  = {
     id?:string;
     description: string;
@@ -52,7 +49,6 @@ type quotationProps = {
     oldImg?:string;
     oldImg1?:string;
     enableNote?:boolean;
-    customerId:string
 }
 
 function isArrValid(item: arr): boolean {
@@ -134,8 +130,7 @@ export const addQtGen = async({
     items,
     method,
     enableNote,
-    total,
-    customerId
+    total
 }:quotationProps,data:FormData) =>{
     const file:File | null = data.get('img1') as unknown as File
     const file1:File | null = data.get('img2') as unknown as File
@@ -189,21 +184,6 @@ export const addQtGen = async({
     if(items?.length === 0){
         return {error:"sorry u cant save this invoice without adding some item"}
     }
-    let creatcustomer
-    if(cusName2 === 'General Customer'){
-        creatcustomer = await prisma.customer.update({
-            where:{
-                id:customerId
-            },
-            data:{
-                cusName:cusName2,
-                cusPhone1:cusPhone2,
-                cusEmail,
-                cusComp,
-                cusAddr
-            }
-        })
-    }
 
     const datas = await prisma.quotation.create({
         data:{
@@ -220,7 +200,11 @@ export const addQtGen = async({
             staffName,
             staffPhone,
             staffTelegram,
-            invCusPhone:cusName2 === 'General Customer' ? cusPhone2 : null,
+            invCusPhone:cusPhone2,
+            invCusAddr:cusAddr,
+            invCusComp:cusComp,
+            invCusEmail:cusEmail,
+            invCusName:cusName2,
             qtNo,
             qtTitle,
             qtDate,
@@ -231,12 +215,11 @@ export const addQtGen = async({
             method,
             total,
             enableNote,
-            customerId,
             qtImage1:!file ? null : path,
             qtImage2:!file1 ? null : path1
         }
     })
-    if(datas && creatcustomer){
+    if(datas){
         return {success:"saving successfully!",id:datas.id}
     }
 }
@@ -272,8 +255,7 @@ export const editQtGen = async ({
             total,
             oldImg1,
             oldImg,
-            enableNote,
-            customerId
+            enableNote
 }:quotationProps,data:FormData)=>{
     const file:File | null = data.get('img1') as unknown as File
     const file1:File | null = data.get('img2') as unknown as File
@@ -335,21 +317,7 @@ export const editQtGen = async ({
     if(items?.length === 0){
         return {error:"sorry u cant save this invoice without adding some item"}
     }
-    let creatcustomer;
-    if(cusName2 === 'General Customer'){
-        creatcustomer = await prisma.customer.update({
-            where:{
-                id:customerId
-            },
-            data:{
-                cusName:cusName2,
-                cusPhone1:cusPhone2,
-                cusEmail,
-                cusComp,
-                cusAddr
-            }
-        })
-    }
+
     const datas = await prisma.quotation.update({
         where:{
             id
@@ -368,7 +336,11 @@ export const editQtGen = async ({
             staffName,
             staffPhone,
             staffTelegram,
-            invCusPhone:cusName2 === 'General Customer' ? cusPhone2 : null,
+            invCusPhone:cusPhone2,
+            invCusAddr:cusAddr,
+            invCusComp:cusComp,
+            invCusEmail:cusEmail,
+            invCusName:cusName2,
             qtNo,
             qtTitle,
             qtDate,
@@ -379,12 +351,11 @@ export const editQtGen = async ({
             method,
             total,
             enableNote,
-            customerId,
             qtImage1:!file ? oldImg : path,
             qtImage2:!file1 ? oldImg1 : path1
         }
     })
-    if(datas && creatcustomer){
+    if(datas){
         return {success:"updated quotaiton!",id:datas.id}
     }
 }

@@ -153,7 +153,7 @@ const QuotationForm = ({
     const busInfo = useMemo(()=>[
         {
             id:'qtForm1',
-            label:"Name:",
+            label:"",
             val:staffName,
             clss:`${employee === true || staffName === "" ? "!hidden" : ""}`
         },
@@ -469,7 +469,7 @@ const QuotationForm = ({
                                                 onDragOver={handleDragOver}
                                                 onDrop={(e)=>handleDropDes(e,item.id)}>
                                                     <ResponsiveElement fontSize={7} width={'auto'} height={'auto'} py={1} className='text-start pl-3 2xl:!text-[16px]'>
-                                                        <td>{index + 1}</td>
+                                                        <td>{index === 0 ? '' : '-'}</td>
                                                     </ResponsiveElement>
                                                     <ResponsiveElement width={'full'} height={'auto'} fontSize={7} py={1} className='text-start 2xl:!text-[16px] pl-2' style={{fontFamily:"khmerContent"}}>
                                                         <td >{item.text}</td>

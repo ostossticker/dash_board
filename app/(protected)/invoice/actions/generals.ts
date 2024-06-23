@@ -47,7 +47,6 @@ type invoiceProps = {
  discount?:number;
  total?:number;
  balance?:number;
- customerId:string;
 }
 
 function isArrValid(item: arr): boolean {
@@ -89,8 +88,7 @@ export const addGeneral = async ({
     total,
     balance,
     noti,
-    enableNote,
-    customerId
+    enableNote
 }:invoiceProps) =>{
     const isValid = items?.every(item => isArrValid(item));
     if(!isValid){
@@ -109,25 +107,6 @@ export const addGeneral = async ({
     if(items?.length === 0){
         return {error:"sorry u cant save this invoice without adding some item"}
     }
-    if(!customerId){
-        return {error:"sorry this not work"}
-    }
-
-    let creatcustomer
-   if(cusName1 !== 'General Customer'){
-    creatcustomer = await prisma.customer.update({
-        where:{
-            id:customerId
-        },
-        data:{
-            cusName:cusName1,
-            cusPhone1:invCusPhone1,
-            cusComp,
-            cusEmail,
-            cusAddr
-        }
-    })
-   }
 
     const datas = await prisma.invoice.create({
         data:{
@@ -144,7 +123,11 @@ export const addGeneral = async ({
             toggleAddress,
             toggleSignature,
             /////// toggle stuff
-            invCusPhone:cusName1 === 'General Customer' ? invCusPhone1 : null, 
+            invCusAddr:cusAddr,
+            invCusComp:cusComp,
+            invCusName:cusName1,
+            invCusEmail:cusEmail,
+            invCusPhone:invCusPhone1, 
             invNo,
             invPo,
             mode,
@@ -162,10 +145,9 @@ export const addGeneral = async ({
             balance,
             noti,
             enableNote,
-            customerId
         }
     })
-    if(datas || creatcustomer){
+    if(datas){
         return {success:"updated! invoice" , id: datas.id}
     }
 }
@@ -208,7 +190,6 @@ export const editGeneral = async ({
     balance,
     noti,
     enableNote,
-    customerId
 }:invoiceProps) =>{
     const isValid = items?.every(item => isArrValid(item));
     if(!isValid){
@@ -227,22 +208,6 @@ export const editGeneral = async ({
         return {error:"sorry u cant save this invoice without adding some item"}
     }
 
-    let creatcustomer;
-    if(cusName1 !== "General Customer"){
-         creatcustomer = await prisma.customer.update({
-            where:{
-                id:customerId
-            },
-            data:{
-                cusName:cusName1,
-                cusPhone1:invCusPhone1,
-                cusEmail,
-                cusComp,
-                cusAddr
-            }
-        })
-    }
-
     const datas = await prisma.invoice.update({
         where:{
             id
@@ -256,7 +221,11 @@ export const editGeneral = async ({
             toggleAddr,
             togglePo,
             ///////-----///////
-            invCusPhone:cusName1 === 'General Customer' ? invCusPhone1 : null,
+            invCusAddr:cusAddr,
+            invCusComp:cusComp,
+            invCusName:cusName1,
+            invCusEmail:cusEmail,
+            invCusPhone:invCusPhone1, 
             toggleLogo,
             toggleBankInfo,
             toggleAddress,
@@ -277,11 +246,10 @@ export const editGeneral = async ({
             total,
             balance,
             noti,
-            enableNote,
-            customerId
+            enableNote
         }
     })
-    if(datas || creatcustomer){
+    if(datas){
         return {success:"updated! invoice" , id: datas.id}
     }
 }

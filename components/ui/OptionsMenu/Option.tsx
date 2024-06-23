@@ -82,7 +82,6 @@ type optionProps = {
   img2?:File | undefined;
   ////mode 
   changeMode?:string;
-  customerId:string
 }
 
 type desProps = {
@@ -135,8 +134,7 @@ const Option = ({
   oldImg,
   img1,
   img2,
-  changeMode,
-  customerId
+  changeMode
 }:optionProps) => {
   const router = useRouter()
   const {
@@ -282,8 +280,7 @@ const Option = ({
             partial,
             discount,
             total,
-            balance,
-            customerId
+            balance
             })
             if(data?.error){
               toast.error(data.error)
@@ -343,8 +340,7 @@ const Option = ({
             partial,
             discount,
             total,
-            balance,
-            customerId
+            balance
           })
           if(data?.error){
             toast.error(data.error)
@@ -426,8 +422,7 @@ const Option = ({
           prodDes:des,
           items:items === undefined ? [] : items,
           method:busType,
-          total,
-          customerId
+          total
         },formData)
           if(data?.error){
             toast.error(data.error)
@@ -481,8 +476,7 @@ const Option = ({
             prodDes:des,
             items:items1 === undefined ? [] : items1,
             method:busType,
-            total,
-            customerId
+            total
           },formData)
             if(data?.error){
               toast.error(data.error)
@@ -550,8 +544,7 @@ const Option = ({
           partial,
           discount,
           total,
-          balance,
-          customerId
+          balance
         }).then((data)=>{
           if(data?.error){
             toast.error(data.error)
@@ -604,8 +597,7 @@ const Option = ({
           partial,
           discount,
           total,
-          balance,
-          customerId
+          balance
         }).then((data)=>{
         if(data?.error){
           toast.error(data.error)
@@ -682,8 +674,7 @@ const Option = ({
           method:busType,
           oldImg:oldImg,
           oldImg1:oldImg1,
-          total,
-          customerId
+          total
         },formData).then((data)=>{
         if(data?.error){
           toast.error(data.error)
@@ -732,8 +723,7 @@ const Option = ({
           method:busType,
           oldImg:oldImg,
           oldImg1:oldImg1,
-          total,
-          customerId
+          total
         },formData).then((data)=>{
           if(data?.error){
             toast.error(data.error)
@@ -775,7 +765,9 @@ const Option = ({
 
         <ResponsiveElement width={'auto'} height={'auto'} className={`${darkMode ? "bg-dark-box-color" : "bg-white"} flex flex-col items-center rounded-t-lg justify-center`} py={4}>
         <div >
-            <h1 className='text-gray-800 text-[25px] font-semibold'>SETTING</h1>
+            <ResponsiveElement width={'auto'} height={'auto'} fontSize={12} className='text-gray-800 font-semibold'>
+            <h1 >SETTING</h1>
+            </ResponsiveElement>
             {expandableMenu.map((item)=>{
               return(
                 <ResponsiveElement key={item.id} width={80} height={'auto'} py={2} mt={5} mb={5} fontSize={10} className={`${item.clss} text-white rounded-lg`}>

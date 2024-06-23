@@ -54,7 +54,6 @@ type quotationProps = {
     oldImg?:string;
     oldImg1?:string;
     enableNote?:boolean;
-    customerId:string;
 }
 
 function isArrValid(item: arr): boolean {
@@ -137,8 +136,7 @@ export const addQtMeter = async({
     items,
     method,
     enableNote,
-    total,
-    customerId
+    total
 }:quotationProps,data:FormData) =>{
     const file:File | null = data.get('img1') as unknown as File
     const file1:File | null = data.get('img2') as unknown as File
@@ -192,18 +190,6 @@ export const addQtMeter = async({
     if(items?.length === 0){
         return {error:"sorry u cant save this quotation without adding some item"}
     }
-    const creatcustomer = await prisma.customer.update({
-        where:{
-            id:customerId
-        },
-        data:{
-            cusName:cusName2,
-            cusPhone1:cusPhone2,
-            cusEmail,
-            cusComp,
-            cusAddr
-        }
-    })
    const datas = await prisma.quotation.create({
         data:{
             toggleName,
@@ -230,8 +216,7 @@ export const addQtMeter = async({
             total,
             enableNote,
             qtImage1:!file ? null : path,
-            qtImage2:!file1 ? null : path1,
-            customerId
+            qtImage2:!file1 ? null : path1
         }
     })
     if(datas){
@@ -270,8 +255,7 @@ export const editQtMeter = async ({
             total,
             oldImg1,
             enableNote,
-            oldImg,
-            customerId
+            oldImg
 }:quotationProps,data:FormData)=>{
     const file:File | null = data.get('img1') as unknown as File
     const file1:File | null = data.get('img2') as unknown as File
@@ -333,18 +317,6 @@ export const editQtMeter = async ({
     if(items?.length === 0){
         return {error:"sorry u cant save this quotation without adding some item"}
     }
-    const creatcustomer = await prisma.customer.update({
-        where:{
-            id:customerId
-        },
-        data:{
-            cusName:cusName2,
-            cusPhone1:cusPhone2,
-            cusEmail,
-            cusComp,
-            cusAddr
-        }
-    })
    const datas = await prisma.quotation.update({
         where:{
             id
@@ -374,11 +346,10 @@ export const editQtMeter = async ({
             total,
             enableNote,
             qtImage1:!file ? oldImg : path,
-            qtImage2:!file1 ? oldImg1 : path1,
-            customerId
+            qtImage2:!file1 ? oldImg1 : path1
         }
     })
-    if(datas && creatcustomer){
+    if(datas){
         return {success:"updated quotation!" , id: datas.id}
     }
 }

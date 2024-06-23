@@ -29,7 +29,6 @@ type cusType = {
     quoteDate:string;
     oldImg1?:string;
     oldImg2?:string;
-    customerId:string;
 }
 
 type optionDrop = {
@@ -157,8 +156,7 @@ const CreateQt = () => {
         quoteTitle:'',
         oldImg1:'',
         oldImg2:'',
-        quoteDate:new Date().toISOString().split('T')[0],
-        customerId:''
+        quoteDate:new Date().toISOString().split('T')[0]
     })
 
     useEffect(()=>{
@@ -167,11 +165,11 @@ const CreateQt = () => {
                 .then((res)=>{
                     const data = res.data
                     setVal({
-                        cusName: edit ? data.customer.cusName : '',
-                        cusComp: edit ? data.customer.cusComp : '',
-                        cusPhone: edit ? data.customer.cusName === 'General Customer' ? data.invCusPhone : data.customer.cusPhone1 : '',
-                        cusEmail: edit ? data.customer.cusEmail : '',
-                        cusAddr: edit ? data.customer.cusAddr : '',
+                        cusName: edit ? data.invCusName : '',
+                        cusComp: edit ? data.invCusComp : '',
+                        cusPhone: edit ? data.invCusPhone : '',
+                        cusEmail: edit ? data.invCusEmail : '',
+                        cusAddr: edit ? data.invCusAddr : '',
                         staffName: edit ? data.staffName : '',
                         staffPhone: edit ? data.staffPhone : '',
                         staffTelegram: edit ? data.staffTelegram : '',
@@ -180,8 +178,7 @@ const CreateQt = () => {
                         quoteTitle: edit ? data.qtTitle : '',
                         quoteDate: edit ? data.qtDate : '',
                         oldImg1:edit ? data.qtImage1 : '',
-                        oldImg2:edit ? data.qtImage2 : '',
-                        customerId:edit? data.customerId : ''
+                        oldImg2:edit ? data.qtImage2 : ''
                     });
                     setToggle({
                         cusName:edit ? data.toggleName : false,
@@ -354,7 +351,6 @@ const CreateQt = () => {
                 cusPhone:test1.find(item => item.id === selectedItemId)?.cusPhone1 || "",
                 cusEmail:test1.find(item => item.id === selectedItemId)?.cusEmail || "",
                 cusAddr:test1.find(item => item.id === selectedItemId)?.cusAddr || "",
-                customerId:test1.find(item => item.id === selectedItemId)?.id || "",
                 quoteBus:test1.find(item => item.id === selectedItemId)?.cusBus || ""
             }));
               setFocus(prev=>({
@@ -370,7 +366,6 @@ const CreateQt = () => {
                   cusPhone:test2.find(item => item.id === selectedItemId)?.cusPhone1 || "",
                   cusEmail:test2.find(item => item.id === selectedItemId)?.cusEmail || "",
                   cusAddr:test2.find(item => item.id === selectedItemId)?.cusAddr || "",
-                  customerId:test2.find(item => item.id === selectedItemId)?.id || "",
                   quoteBus:test1.find(item => item.id === selectedItemId)?.cusBus || ""
                 }));
                 setFocus(prev=>({
@@ -788,7 +783,6 @@ const CreateQt = () => {
                                                                         cusPhone:item.cusPhone1 || '',
                                                                         cusEmail:item.cusEmail || '',
                                                                         cusAddr:item.cusAddr || '',
-                                                                        customerId:item.id || '',
                                                                         quoteBus:item.cusBus || ''
                                                                     }))
                                                                 }}>{item.cusName}</li>
@@ -841,7 +835,6 @@ const CreateQt = () => {
                                                                     cusPhone:item.cusPhone1 || '',
                                                                     cusEmail:item.cusEmail || '',
                                                                     cusAddr:item.cusAddr || '',
-                                                                    customerId:item.id || '',
                                                                     quoteBus:item.cusBus || ''
                                                                 }))}}>{item.cusPhone1}</li>
                                                             )
@@ -1160,7 +1153,7 @@ const CreateQt = () => {
                                 handleDragStart(e, item.id);
                                 }}
                                 >
-                                {index + 1}
+                                {index === 0 ? '' : '-'}
                                 </div>
                                </div>
                                </td>
@@ -1169,7 +1162,7 @@ const CreateQt = () => {
                                 <input type="text" 
                                  value={item.text}
                                  onChange={(e)=>handleChangeDes(index,'text',e.target.value)}
-                                 className={`${darkMode ? "text-dark-lg-color" : ""} w-full text-start border px-2 py-1 bg-transparent border-input-primary rounded-md`}/>    
+                                 className={`${darkMode ? "text-dark-lg-color" : ""} w-full outline-none text-start border px-2 py-1 bg-transparent border-input-primary rounded-md`}/>    
                                 </td>
                                 <td className=" px-[10px] py-2 w-[100px]">
                                     <div className={`flex justify-center items-center gap-2 `}>
@@ -1201,8 +1194,6 @@ const CreateQt = () => {
                         val.quoteBus === item.busName && (
                             <>
                             <General 
-
-                            customerId={val.customerId}
                             des={des}
                             setDes={setDes}
                             generalItems={general}
@@ -1241,7 +1232,6 @@ const CreateQt = () => {
                             abaNumber={item.busBankNumber}
                             />
                             <Meter 
-                            customerId={val.customerId}
                             des={des}
                             setDes={setDes}
                             meterItems={meter}

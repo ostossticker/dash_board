@@ -24,7 +24,6 @@ type cusType = {
     invTitle:string;
     invDate:string;
     invStatus:string;
-    customerId:string;
 }
 
 type optionDrop = {
@@ -157,8 +156,7 @@ const Createinv = () => {
         invStatus:'paid',
         invPo:'',
         invTitle:'',
-        invDate:new Date().toISOString().split('T')[0],
-        customerId:''
+        invDate:new Date().toISOString().split('T')[0]
     })
 
     useEffect(()=>{
@@ -170,18 +168,17 @@ const Createinv = () => {
                     const code = generateFourDigitCode(edit && routerSwitch !== data.mode && passingdata)
                     setVal(prev=>({
                         ...prev,
-                        cusName:edit ? data.customer.cusName : '',
-                        cusComp:edit ? data.customer.cusComp : '',
-                        cusPhone:edit ? data.customer.cusName === 'General Customer' ? data.invCusPhone : data.customer.cusPhone1 : '',
-                        cusEmail:edit ? data.customer.cusEmail : '',
-                        cusAddr:edit ? data.customer.cusAddr : '',
+                        cusName:edit ? data.invCusName : '',
+                        cusComp:edit ? data.invCusComp : '',
+                        cusPhone:edit ?  data.invCusPhone : '',
+                        cusEmail:edit ? data.invCusEmail : '',
+                        cusAddr:edit ? data.invCusAddr : '',
                         invBus:edit ? data.invBus : '',
                         invNo:edit && routerSwitch === data.mode ? data.invNo : `${routerSwitch === 'delivery' ? `Dn-${code}` : `Inv-${code}`}`,
                         invStatus:edit ? data.invStatus : '',
                         invPo:edit ? data.invPo : '',
                         invTitle:edit ? data.invTitle : '',
                         invDate:edit ? data.invDate : '',
-                        customerId:edit ? data.customerId : ''
                     }))
                     
                     setToggle(prev=>({
@@ -296,7 +293,6 @@ const Createinv = () => {
                 cusPhone:test1.find(item => item.id === selectedItemId)?.cusPhone1 || "",
                 cusEmail:test1.find(item => item.id === selectedItemId)?.cusEmail || "",
                 cusAddr:test1.find(item => item.id === selectedItemId)?.cusAddr || "",
-                customerId:test1.find(item => item.id === selectedItemId)?.id || "",
                 invBus:test1.find(item => item.id === selectedItemId)?.cusBus || "",
               }));
               setFocus(prev=>({
@@ -312,7 +308,6 @@ const Createinv = () => {
                 cusPhone:test2.find(item => item.id === selectedItemId)?.cusPhone1 || "",
                 cusEmail:test2.find(item => item.id === selectedItemId)?.cusEmail || "",
                 cusAddr:test2.find(item => item.id === selectedItemId)?.cusAddr || "",
-                customerId:test2.find(item => item.id === selectedItemId)?.id || "",
                 invBus:test2.find(item => item.id === selectedItemId)?.cusBus || "",
                 }));
                 setFocus(prev=>({
@@ -380,15 +375,14 @@ const Createinv = () => {
                 console.log('fetch')
                 setVal(prev => ({
                     ...prev,
-                    cusName: qtId ? data.customer.cusName : '',
-                    cusComp: qtId ? data.customer.cusComp : '',
-                    cusPhone: qtId ? data.customer.cusPhone1 : '',
-                    cusEmail: qtId ? data.customer.cusEmail : '',
-                    cusAddr: qtId ? data.customer.cusAddr : '',
+                    cusName: qtId ? data.invCusName : '',
+                    cusComp: qtId ? data.invCusComp : '',
+                    cusPhone: qtId ? data.invCusPhone : '',
+                    cusEmail: qtId ? data.invCusEmail : '',
+                    cusAddr: qtId ? data.invCusAddr : '',
                     invBus: qtId ? data.qtBus : '',
                     invTitle: qtId ? data.qtTitle : '',
-                    invDate: qtId ? data.qtDate : '',
-                    customerId:qtId ? data.customerId : ''
+                    invDate: qtId ? data.qtDate : ''
                 }));
     
                 setToggle(prev => ({
@@ -758,7 +752,6 @@ const Createinv = () => {
                                                                         cusPhone:op.cusPhone1 || '',
                                                                         cusEmail:op.cusEmail || '',
                                                                         cusAddr:op.cusAddr || '',
-                                                                        customerId:op.id || '',
                                                                         invBus:op.cusBus || ''
                                                                     }))
                                                                 }}>{op.cusName}</li>
@@ -812,7 +805,6 @@ const Createinv = () => {
                                                                         cusPhone:op1.cusPhone1 || '',
                                                                         cusEmail:op1.cusEmail || '',
                                                                         cusAddr:op1.cusAddr || '',
-                                                                        customerId:op1.id || '',
                                                                         invBus:op1.cusBus || ''
                                                                     }))
                                                                 }}>{op1.cusPhone1}</li>
@@ -1017,7 +1009,6 @@ const Createinv = () => {
                             <>
                             <General 
                              des={des}
-                             customerId={val.customerId}
                              setDes={setDes}
                             generalItems={general}
                             form='invoice'
@@ -1062,7 +1053,6 @@ const Createinv = () => {
                             des={des}
                             setDes={setDes}
                             meterItems={meter}
-                            customerId={val.customerId}
                             form='invoice'
                             routerPush='invoice'
                             toggleName={toggle.cusName}

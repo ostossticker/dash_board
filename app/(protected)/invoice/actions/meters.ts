@@ -51,7 +51,6 @@ type invoiceProps = {
  discount?:number;
  total?:number;
  balance?:number;
- customerId:string
 }
 
 function isArrValid(item: arr): boolean {
@@ -93,8 +92,7 @@ export const addMeter = async ({
     total,
     balance,
     noti,
-    enableNote,
-    customerId
+    enableNote
 }:invoiceProps) =>{
     const isValid = items?.every(item => isArrValid(item));
     if(!isValid){
@@ -113,21 +111,6 @@ export const addMeter = async ({
         return {error:"sorry u cant save this invoice without adding some item"}
     }
 
-    let creatcustomer;
-    if(cusName1 !== "General Customer"){
-        creatcustomer = await prisma.customer.update({
-            where:{
-                id:customerId
-            },
-            data:{
-                cusName:cusName1,
-                cusPhone1:invCusPhone1,
-                cusEmail,
-                cusComp,
-                cusAddr
-            }
-        })
-    }
      
 
     const datas =  await prisma.invoice.create({
@@ -163,10 +146,9 @@ export const addMeter = async ({
             balance,
             noti,
             enableNote,
-            customerId
         }
     })
-    if(datas || creatcustomer){
+    if(datas ){
         return {success:"add! invoice" , id: datas.id}
     }
     
@@ -209,8 +191,7 @@ export const editMeter = async ({
     total,
     balance,
     noti,
-    enableNote,
-    customerId
+    enableNote
 }:invoiceProps) =>{
     const isValid = items?.every(item => isArrValid(item));
     if(!isValid){
@@ -227,21 +208,6 @@ export const editMeter = async ({
     }
     if(items?.length === 0){
         return {error:"sorry u cant save this invoice without adding some item"}
-    }
-    let creatcustomer;
-    if(cusName1 !== "General Customer"){
-        creatcustomer = await prisma.customer.update({
-            where:{
-                id:customerId
-            },
-            data:{
-                cusName:cusName1,
-                cusPhone1:invCusPhone1,
-                cusEmail,
-                cusComp,
-                cusAddr
-            }
-        })
     }
     const datas = await prisma.invoice.update({
         where:{
@@ -278,10 +244,9 @@ export const editMeter = async ({
             balance,
             noti,
             enableNote,
-            customerId
         }
     })
-    if(datas || creatcustomer){
+    if(datas){
         return {success:"updated! invoice" , id: datas.id}
     }
 }

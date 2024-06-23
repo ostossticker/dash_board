@@ -32,7 +32,6 @@ type desProps ={
 }
 
 type generalProps = {
-  customerId:string;
   form:string;
   busType:string | undefined;
   ////invoice form
@@ -151,7 +150,6 @@ const General = ({
   sigLogo,
   busDes,
   busPayTerm,
-  customerId,
   bankdes,
   busKh,
   busEng
@@ -383,7 +381,7 @@ const General = ({
       if(field === 'description'){
         updated[field] = op as string
         updated.unitPrice = `$${parseFloat(money).toFixed(2)}`
-        handleChange(index , 'unitPrice' , !isNaN(parseInt(updated.unitPrice)) ? updated.unitPrice : '')
+        handleChange(index , 'unitPrice' , updated.unitPrice === '$0.00' ? '' : updated.unitPrice)
       } 
   
       update[index] = updated
@@ -675,7 +673,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
 
     let validation = ''
 
-    if(!cusName || !cusPhone){
+    if(!cusName){
       validation = "sorry this field is required"
       toast.error(validation)
       setPending(false)
@@ -712,7 +710,6 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
             discount,
             noti:notification,
             enableNote:enableNote,
-            customerId,
             total:parseFloat(calculateGrandTotal()),
             balance:parseFloat(calculateBalance())
           })
@@ -762,7 +759,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
       formData.append('img2',image.img2)
     }
 
-    if(!cusName || !cusPhone){
+    if(!cusName){
       validation = 'sorry this field is required'
       toast.error(validation)
       setPending(false)
@@ -798,7 +795,6 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
           items:calculations,
           method:busType,
           enableNote:enableNote,
-          customerId,
           total:parseFloat(calculateGrandTotal()),
         },formData)
           setImage({
@@ -842,7 +838,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
   const onUpdate = async({id,receip}:{id:string , receip?:string}) =>{
     setPending(true)
     let validation = ''
-    if(!cusName || !cusPhone){
+    if(!cusName){
       validation = "sorry this field is required"
       toast.error(validation)
       setPending(false)
@@ -880,7 +876,6 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
           discount,
           noti:notification,
           enableNote:enableNote,
-          customerId,
           total:parseFloat(calculateGrandTotal()),
           balance:parseFloat(calculateBalance())
         })
@@ -933,7 +928,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
       formData.append('img2',image.img2)
     }
 
-    if(!cusName || !cusPhone){
+    if(!cusName){
       validation = "sorry this field is required"
       toast.error(validation)
       setPending(false)
@@ -972,7 +967,6 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
           oldImg:oldImg,
           oldImg1:oldImg1,
           enableNote:enableNote,
-          customerId,
           total:parseFloat(calculateGrandTotal()),
         },formData)
         setImage({
@@ -1428,7 +1422,6 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
           printing === "quotation" && (
             <>
             <Option
-            customerId={customerId}
             staffName={staffName}
             staffPhone={staffPhone}
             staffTelegram={staffTelegram}
@@ -1539,7 +1532,6 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
           printing === 'invoice' &&(
             <>
             <Option width={610}
-            customerId={customerId}
             busType={busType}
             toggleName={toggleName}
             toggleComp={toggleComp}

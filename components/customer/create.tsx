@@ -210,7 +210,7 @@ const scrollToSelectedIndex = () => {
   const right = useMemo(()=>[
     {
       label:'Telegram',
-      type:'text',
+      type:'number',
       name:'cusTelegram',
       val:val.cusTelegram
     },
@@ -425,7 +425,8 @@ const scrollToSelectedIndex = () => {
          <input autoComplete='off' type='text' className='w-full text-[13px] outline-none shadow-sm border-full solid 
                border-[1px] rounded-md border-slate-200 focus:border-mainLightBlue  h-[30px] px-1 bg-[#F8F8F8]' name='cusWebsite' value={val.cusWebsite}  onChange={handleChange}/>
     </div>
-      <div className='px-3 py-1 '>
+      <div className='[&>span]:focus-within:text-mainBlue px-3 py-1 '>
+      <span className='text-[12px] font-bold text-slate-400'>Website</span><br />
         <textarea name='cusAddr' ref={textareaRef} style={{minHeight:MIN_TEXTAREA_HEIGHT , resize:"none"}} className='w-full text-[13px] outline-none shadow-sm border-full solid 
                border-[1px] rounded-md border-slate-200 px-1 bg-[#F8F8F8]' value={val.cusAddr} onChange={handleChange}></textarea>
       </div>

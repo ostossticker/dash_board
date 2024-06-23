@@ -1,25 +1,16 @@
 "use server"
 import { prisma } from "@/lib/db/prisma"
 
-export const deletePaymentAll = async(cusName:string , cusComp:string ,invBus:string, invStatus:string , invCusPhone1:string ,invCusPhone:string) =>{
+export const deletePaymentAll = async(cusName:string , cusComp:string ,invBus:string) =>{
     try {
         const now = new Date()
 
         await prisma.invoice.updateMany({
             where: {
-                customer:{
-                    cusName:{contains:cusName},
-                    cusComp:{contains:cusComp},
-                    cusPhone1:{contains:invCusPhone1}
-                },
+                invCusName:cusName,
+                invCusComp:cusComp,
                 invBus:{
                     contains:invBus
-                },
-                invStatus:{
-                    contains:invStatus
-                },
-                invCusPhone:{
-                    contains:invCusPhone
                 }
             },
             data:{

@@ -91,7 +91,6 @@ type meterProps = {
     busDes?:string;
     ////mode
     mode?:string,
-    customerId:string;
     ////bankdes
     bankdes?:string;
     ////bus
@@ -154,7 +153,6 @@ const Meters = ({meterItems,
   invNo ,
   invPo ,
   invTitle ,
-  customerId,
   bankdes,
   busEng,
   busKh,
@@ -548,7 +546,7 @@ const handleClickProducts = (index:number , field:keyof Calculation , op:string 
     if(field === 'description'){
       updated[field] = op as string
       updated.unitPrice = `$${parseFloat(money).toFixed(2)}`
-      handleChange(index , 'unitPrice' , !isNaN(parseInt(updated.unitPrice)) ? updated.unitPrice : '')
+      handleChange(index , 'unitPrice' , updated.unitPrice === '$0.00' ? '' : updated.unitPrice)
     } 
 
     update[index] = updated
@@ -854,7 +852,7 @@ const calculateBalance = () => {
   const onUpdate = async({id,receip}:{id:string , receip?:string}) =>{
     setPending(true)
     let validation = ''
-    if(!cusName || !cusPhone){
+    if(!cusName){
       validation = "sorry this field is required"
       toast.error(validation)
       setPending(false)
@@ -891,7 +889,6 @@ const calculateBalance = () => {
           partial,
           discount,
           noti:notification,
-          customerId,
           enableNote:enableNote,
           total:parseFloat(calculateGrandTotal()),
           balance:parseFloat(calculateBalance())
@@ -941,7 +938,7 @@ const calculateBalance = () => {
       formData.append('img2',image.img2)
     }
 
-    if(!cusName || !cusPhone){
+    if(!cusName){
       validation = "sorry this field is required"
       toast.error(validation)
       setPending(false)
@@ -980,7 +977,6 @@ const calculateBalance = () => {
           oldImg:oldImg,
           oldImg1:oldImg1,
           enableNote:enableNote,
-          customerId,
           total:parseFloat(calculateGrandTotal()),
         },formData)
         setImage({
@@ -1023,7 +1019,7 @@ const calculateBalance = () => {
   const save = async(receip?:string) =>{
     setPending(true)
     let validation = ''
-    if(!cusName || !cusPhone){
+    if(!cusName){
       validation = "sorry this field is required"
       toast.error(validation)
       setPending(false)
@@ -1060,7 +1056,6 @@ const calculateBalance = () => {
           discount,
           noti:notification,
           enableNote:enableNote,
-          customerId,
           total:parseFloat(calculateGrandTotal()),
           balance:parseFloat(calculateBalance())
         })
@@ -1108,7 +1103,7 @@ const calculateBalance = () => {
       formData.append('img2',image.img2)
     }
 
-    if(!cusName || !cusPhone){
+    if(!cusName){
       validation = 'sorry this field is required'
       toast.error(validation)
       setPending(false)
@@ -1144,7 +1139,6 @@ const calculateBalance = () => {
             items:calculations,
             method:busType,
             enableNote:enableNote,
-            customerId,
             total:parseFloat(calculateGrandTotal()),
           },formData)
           setImage({
@@ -1535,7 +1529,6 @@ const calculateBalance = () => {
           printing === "quotation" && (
             <>
             <Option 
-            customerId={customerId}
             staffName={staffName}
             staffPhone={staffPhone}
             staffTelegram={staffTelegram}
@@ -1645,7 +1638,6 @@ const calculateBalance = () => {
           printing === 'invoice' &&(
             <>
             <Option width={610}
-            customerId={customerId}
             busType={busType}
             toggleName={toggleName}
             toggleComp={toggleComp}

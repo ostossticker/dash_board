@@ -401,16 +401,33 @@ const PrintForm = ({
                                 {
                                     busInfo.map((item)=>{
                                         return(
-                                            <div key={item.label} className='flex justify-end'>
-                                                <div  className={`flex pl-[5px] w-[240px] justify-end ${item.clss} items-start gap-1`} style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} >
-                                                    <p>{item.label}</p>
-                                                </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} className='text-end pt-[2px]'>
-                                                    <p>{item.val}</p>
-                                                </ResponsiveElement>
-                                            </div>
-                                            </div>
+                                            <React.Fragment key={item.label}>
+                                            {
+                                                item.label !== 'Add:' ? (
+                                                    <div className='flex justify-end'>
+                                                        <div  className={`flex pl-[5px] w-[240px] justify-end ${item.clss} items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} >
+                                                            <p>{item.label}</p>
+                                                        </ResponsiveElement>
+                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} className='text-end pt-[2px]'>
+                                                            <p>{item.val}</p>
+                                                        </ResponsiveElement>
+                                                    </div>
+                                                    </div>
+                                                ) : (
+                                                    <div className='flex justify-end'>
+                                                        <div  className={`flex pl-[5px]  justify-end ${item.clss} items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} >
+                                                            <p>{item.label}</p>
+                                                        </ResponsiveElement>
+                                                        <ResponsiveElement width={100} height={'auto'} fontSize={6} className='text-end pt-[2px] outline-none resize-none overflow-hidden'>
+                                                            <textarea rows={2}>{item.val}</textarea>
+                                                        </ResponsiveElement>
+                                                    </div>
+                                                    </div>
+                                                )
+                                            }
+                                            </React.Fragment>
                                         )
                                     })
                                 }

@@ -3,9 +3,7 @@
 type Invoice ={
     id:string
     invNo:string;
-    customer:{
-        cusName:string;
-    }
+    invCusName:string;
     createdAt:string;
     deletedAt:string;
 }
@@ -13,9 +11,7 @@ type Invoice ={
 type Quotation ={
     id:string
     qtNo:string;
-    customer:{
-        cusName:string;
-    }
+    invCusName:string;
     createdAt:string;
     deletedAt:string;
     qtImage1:string;
@@ -345,7 +341,7 @@ const Rectable = () => {
                                                 <tr key={idem.id} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} xl:text-[16px] lg:text-[11px] hover:bg-[#F9FAFB]`}>
                                                     <td className={`${placeholderClass} text-center`}>{(page - 1 ) * take + i + 1}</td>
                                                     <td className={`${placeholderClass} text-start`}>{idem.invNo}</td>
-                                                    <td className={`${placeholderClass} text-start`}>{idem.customer.cusName}</td>
+                                                    <td className={`${placeholderClass} text-start`}>{idem.invCusName}</td>
                                                     <td className={placeholderClass}>
                                                         <div className='flex justify-end items-center'>
                                                             <div className='pr-[5px]'>
@@ -444,7 +440,7 @@ const Rectable = () => {
                                                         <tr key={idem.id} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} xl:text-[16px] lg:text-[11px] hover:bg-[#F9FAFB]`}>
                                                             <td className={`${placeholderClass} text-center`}>{(page - 1 ) * take + i + 1}</td>
                                                             <td className={`${placeholderClass} text-start`}>{idem.qtNo}</td>
-                                                            <td className={`${placeholderClass} text-start`}>{idem.customer.cusName}</td>
+                                                            <td className={`${placeholderClass} text-start`}>{idem.invCusName}</td>
                                                             <td className={placeholderClass}>
                                                                 <div className='flex justify-end items-center'>
                                                                     <div className='pr-[5px]'>

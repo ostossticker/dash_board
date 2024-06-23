@@ -153,7 +153,7 @@ const Qtprint = ({
     
     const busInfo = useMemo(()=>[
         {
-            label:"Name:",
+            label:"",
             val:staffName,
             clss:`${employee === true || staffName === "" ? "!hidden" : ""}`
         },
@@ -381,7 +381,7 @@ const Qtprint = ({
                                         return(
                                             <tr key={item.id}>
                                                 <td className='text-[9px] text-start pl-3 py-[2px]'>
-                                                {index + 1}
+                                                {index === 0 ? '' : '-'}
                                                 </td>
                                                 <td className='text-[9px] text-start py-[2px] w-full pl-[8px]'>
                                                 {item.text}

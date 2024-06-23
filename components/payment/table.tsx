@@ -16,30 +16,23 @@ import { softDelete } from '@/app/(protected)/invoice/actions/meters';
 import { useCurrentRole } from '@/hooks/use-current-role';
 import { usePayment } from '@/hooks/usedatas';
 
-type sumVal ={
-    balance:string
-}
-
-
 type arr = {
   id:string;
   invNo:string;
-  cusName1:string;
-  cusComp:string;
+  invCusName:string;
+  invCusComp:string;
   invCusPhone:string;
-  customer:{
-    cusName:string;
-    cusComp:string;
-    cusPhone1:string;
-  };
   invBus:string;
-  cusNameCount:number;
   invStatus:string;
-  invCusPhone1:string;
   createdAt:string;
   updatedAt:string;
   balance:string;
-  _sum:sumVal
+  _sum:{
+    balance:number
+  }
+  _count:{
+    invCusName:number;
+  }
 }
 
 type optionDrop = {
@@ -68,11 +61,8 @@ const InvTable = () => {
   const [test , setTest] = useState<optionDrop[]>([])
   const [totalStatus , setTotalStatus] = useState<balanceStatus[]>([])
   const [passing , setPassing] = useState<string>('')
-  const [invCusPhone , setInvCusPhone] = useState<string>('')
   const [cusComp , setCusComp] = useState<string>('')
   const [bus , setBus] = useState<string>('')
-  const [invStatus , setInvStatus] = useState<string>('')
-  const [invCusPhone1 , setCusPhone1] = useState<string>('')
   const ulRef = useRef<HTMLUListElement>(null);
   const [val , setVal] = useState({
     filter:'',
@@ -235,10 +225,10 @@ const InvTable = () => {
 
   if(error) return <div>Error fetching data</div>
 
-  const handleDelete = async (id:string , cusComp:string ,invBus:string ,invStatus:string , invCusPhone1:string, invCusPhone:string) =>{
+  const handleDelete = async (id:string , cusComp:string ,invBus:string) =>{
     setPending(true)
     if(switching === 'group'){
-        await deletePaymentAll(id , cusComp , invBus , invStatus , invCusPhone1 ,invCusPhone)
+        await deletePaymentAll(id , cusComp , invBus )
         .then((data)=>{
         if(data?.success){
             toast.success(data.success)
@@ -455,12 +445,12 @@ const InvTable = () => {
                   <tr key={item.id} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} xl:text-[16px] lg:text-[11px] hover:bg-[#F9FAFB]`}>
                     <td className={placeholderClass}>{i + 1}</td>
                     <td className={`${placeholderClass} text-start pl-[30px] ${switching === 'ungroup' ? "" : "!hidden"}`}>{item.invNo}</td>
-                    <td className={`${placeholderClass} text-start pl-[50px]`}>{switching === 'ungroup' ? item.customer.cusName :  item.cusName1}</td>
-                    <td className={`${placeholderClass} text-start`}>{switching === 'ungroup' ? item.customer.cusComp : item.cusComp}</td>
+                    <td className={`${placeholderClass} text-start pl-[50px]`}>{item.invCusName}</td>
+                    <td className={`${placeholderClass} text-start`}>{item.invCusComp}</td>
                     <td className={`${placeholderClass} text-start`}>{item.invBus}</td>
                     {
-                        item.cusNameCount && (
-                            <td className={`${placeholderClass} text-center`}>{item.cusNameCount}</td>
+                        item._count && (
+                            <td className={`${placeholderClass} text-center`}>{item._count.invCusName}</td>
                         )
                     }
                    
@@ -508,21 +498,21 @@ const InvTable = () => {
                           {
                             switching === 'ungroup' && (
                               <td className={`${placeholderClass} text-end`}>
-                                  {item.customer.cusName === 'General Customer' ? item.invCusPhone : item.invCusPhone1 }
+                                  {item.invCusPhone }
                              </td>
                             ) 
                           }
                     
-                    <td className={`${placeholderClass} text-end`}>${item._sum && item._sum.balance !== undefined && parseFloat(item._sum.balance).toFixed(2)} {item.balance !== undefined && parseFloat(item.balance).toFixed(2)}</td>
+                    <td className={`${placeholderClass} text-end`}>${item._sum && item._sum.balance !== undefined && item._sum.balance.toFixed(2)} {item.balance !== undefined && parseFloat(item.balance).toFixed(2)}</td>
                     <td className={placeholderClass}>
                     <div className='flex justify-center items-center gap-1'>
                         <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
-                          if(item.cusNameCount !== undefined){
+                          if(item._count.invCusName !== undefined){
                             setSwitching('ungroup')
                             setIcon(true)
                             setVal(prev=>({
                                 ...prev,
-                                filter:item.cusName1,
+                                filter:item.invCusName,
                                 filter1:item.invBus
                             }))
                           }else{
@@ -532,17 +522,14 @@ const InvTable = () => {
                             setPassingId(item.id)
                           }
                         }}>
-                         {item.cusNameCount ? <PiEyeLight/> : <PiPencilSimpleLineLight/> }  
+                         {item._count && item._count.invCusName ? <PiEyeLight/> : <PiPencilSimpleLineLight/> }  
                         </button>
                         <button className={`${darkMode ? "text-red-400 " : "text-red-700" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
                             openModal('invtable')
-                            if(item.cusNameCount ){
-                                setPassing(item.cusName1)
-                                setCusComp(item.cusComp)
+                            if(item._count.invCusName){
+                                setPassing(item.invCusName)
+                                setCusComp(item.invCusComp)
                                 setBus(item.invBus)
-                                setInvStatus(item.invStatus)
-                                setCusPhone1(item.invCusPhone1)
-                                setInvCusPhone(item.invCusPhone)
                             }else{
                                 setPassing(item.id)
                             }
@@ -622,7 +609,7 @@ const InvTable = () => {
           </div>
         {/****************** */}
         
-        <Modal typeSelect='caution' id='invtable' handlingAction={()=>handleDelete(passing , cusComp , bus , invStatus , invCusPhone1 , invCusPhone)} CautionText={'Deletion'}/>
+        <Modal typeSelect='caution' id='invtable' handlingAction={()=>handleDelete(passing , cusComp , bus)} CautionText={'Deletion'}/>
     </div>
     <div className='flex justify-end gap-4'>
     

@@ -24,10 +24,8 @@ type arr = {
   id:string;
   invNo:string;
   invTitle:string;
-  customer:{
-    cusName:string;
-    cusPhone1:string;
-  }
+  invCusName:string;
+  invCusPhone:string;
   invBus:string;
   invStatus:string;
   createdAt:string;
@@ -444,7 +442,7 @@ const filteredUsers = anagramFilter
                   <tr key={item.id} className={`${darkMode ? "bg-dark-box-color text-dark-lg-color" : "bg-white"} hover:bg-[#F9FAFB]`}>
                     <td className={`${placeholderClass}`}>{(page - 1) * take + i + 1}</td>
                     <td className={`${placeholderClass} text-start pl-[30px]`}>{item.invNo}</td>
-                    <td className={`${placeholderClass} text-start `}>{item.customer.cusName}</td>
+                    <td className={`${placeholderClass} text-start `}>{item.invCusName}</td>
                     <td className={`${placeholderClass} text-start `}>{item.invBus}</td>
                     <td className={`${placeholderClass}  ${routerSwitch === 'delivery' ? "hidden" : ""} `}>
                       <div className='flex justify-center '>
@@ -506,7 +504,7 @@ const filteredUsers = anagramFilter
                             openModal('invtable')
                             setPassing(item.id)
                             setPrint(false)
-                            setCus(item.customer.cusName)
+                            setCus(item.invCusName)
                             setPaperno(item.invNo)
                           }}>
                             <PiTrashLight />
