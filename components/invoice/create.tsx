@@ -118,6 +118,7 @@ const Createinv = () => {
     const [general , setGeneral] = useState<general[]>([])
     const [test2 , setTest2] = useState<cusDrop[]>([])
     const [test3 , setTest3] = useState<empProps[]>([])
+    const [note , setNote] = useState<string>('')
     const [emp , setEmp] = useState<string[]>([])
     const [staff , setStaff] = useState<string>('')
     const [partial , setPartial] = useState<string>('')
@@ -204,6 +205,7 @@ const Createinv = () => {
                         setValueNoti(data.noti)
                         setValueNote(data.enableNote)
                         setMode(data.mode)
+                        setNote(data.invNote)
                     }
                 }).catch((error)=>{
                     console.log(error)
@@ -1024,6 +1026,7 @@ const Createinv = () => {
                             bankdes={item.busBankDes}
                             busPhone={item.busPhone1}
                             busEng={item.busInvEng}
+                            invNote={note}
                             busKh={item.busInvkh}
                             togglePo={toggle.invPo}
                             mode={mode}
@@ -1065,6 +1068,7 @@ const Createinv = () => {
                             busAddr={item.busAddr}
                             busEmail={item.busEmail}
                             bankdes={item.busBankDes}
+                            invNote={note}
                             busTelegram={item.busTelegram}
                             busPhone={item.busPhone1}
                             mode={mode}

@@ -96,6 +96,8 @@ type meterProps = {
     ////bus
     busKh?:string;
     busEng?:string;
+    ////inv note
+    invNote?:string;
 }
 
 type prodProps ={
@@ -156,6 +158,7 @@ const Meters = ({meterItems,
   bankdes,
   busEng,
   busKh,
+  invNote,
   invDate}:meterProps) => {
   const router = useRouter()
   const {darkMode, 
@@ -323,6 +326,9 @@ const Meters = ({meterItems,
       m2: 0,
       total: ""
     }])
+    if(edit){
+      setNote(invNote || '')
+    }
   },[edit , passingId , qtId])
 
   const handleRemoveCalculation = (index: number) => {

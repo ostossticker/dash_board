@@ -91,6 +91,8 @@ type generalProps = {
   bankdes?:string;
   busEng?:string;
   busKh?:string;
+  ////inv note
+  invNote?:string;
 }
 
 type prodProps ={
@@ -126,6 +128,7 @@ const General = ({
   cusName,
   cusComp,
   cusPhone , 
+  invNote,
   busAddr,
   busEmail,
   busPhone,
@@ -300,6 +303,9 @@ const General = ({
       unitPrice: "",
       total: ""
     }])
+    if(edit){
+      setNote(invNote || '')
+    }
   },[edit , passingId , qtId])
 
   const fetchdatas = async (filterProduct?:string ) =>{

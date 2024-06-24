@@ -165,6 +165,14 @@ const InvTable = () => {
           if (event.key === 'Backspace') {
             setIcon(false) /// set switching invoice and delivery as text withy icon instead
             setSwitching('group')
+            setVal(prev=>({
+              ...prev,
+              filter:'',
+              filter1:'',
+              status:'',
+              fromDate:'',
+              toDate:''
+            }))
           }
       };
   
@@ -633,9 +641,9 @@ const InvTable = () => {
               {
                 totalStatus.map((item,id)=>{
                   return(
-                    <div key={item.id} className='bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>
-                    <p>
-                      {item.invStatus === 'unpay' ? "unpaid" : item.invStatus}: ${item._sum.balance.toFixed(2)}
+                    <div key={item.id} className='bg-insomnia-primary  mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>
+                    <p className='w-[195px] text-center'>
+                      {item.invStatus === 'unpay' ? "Unpaid" : item.invStatus.charAt(0).toUpperCase() + item.invStatus.slice(1)}: ${item._sum.balance.toFixed(2)}
                     </p>
                     </div>
                   )
