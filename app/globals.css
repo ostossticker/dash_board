@@ -123,3 +123,418 @@ input::-webkit-outer-spin-button,
 input[type="number"] {
     -moz-appearance: textfield;
 }
+
+
+
+
+@media screen and (max-width: 1920px) {
+  /*********************** this is invoice form ****************/
+  /*************************************************************/
+  /*************************************************************/
+  /*************************************************************/
+  .cart{
+      width: 475px;
+      height: 672px;
+      padding-left: 35px;
+      padding-right: 35px;
+      
+  }
+  .cartInv{
+    padding-top: 33px;
+    padding-bottom: 15px;
+  }
+  .cartDe{
+    padding-top: 45px;
+    padding-bottom: 15px;
+  }
+  .cart1{
+      width: 475px;
+      height: 672px;
+      padding-left: 35px;
+      padding-right: 35px;
+      padding-top: 28px;
+      padding-bottom: 25px;
+  }
+  .inv{
+      font-size: 20px;
+      font-weight: bold;
+  }
+  .de{
+    font-size: 13px;
+    font-weight: bold;
+  }
+  .invNo{
+      font-size: 9px;
+      font-weight: bold;
+  }
+  .img{
+      width: 80px;
+  }
+  .des{
+      font-size: 10px;
+      width: 200px;
+      line-height: 17px;
+      height: 85px;
+  }
+  .cusInfo{
+      font-size: 7.5px;
+      font-family: 'khmerContent';
+  }
+  .busInfo{
+      font-size: 7.5px;
+      font-family: 'khmerContent';
+  }
+  .staffInfo{
+      font-size: 7.5px;
+      font-family: 'khmerContent';
+  }
+  .textarea0{
+      width: 120px;
+      font-family: 'khmerContent';
+  }
+  .textarea1{
+      width: 105px;
+      font-family: 'khmerContent';
+  }
+  .thead0{
+      font-size: 8px;
+  }
+  .tbody0{
+      font-size: 7px;
+  }
+  .pt{
+      padding-top: 5px;
+  }
+  .aba{
+      width: 45px;
+      height: 50px;
+      padding-right: 5px;
+  }
+  .totaling{
+      width: 80px;
+      font-size: 8px;
+      text-align: end;
+      padding-right: 5px;
+      padding-top: 1px;
+      padding-bottom: 1px;
+  }
+  .totalinging{
+      font-size: 9px;
+      padding-right: 5px;
+  }
+  .abaText{
+      font-size: 9px;
+      font-family: 'khmerContent';
+  }
+  .qr{
+      width: 90px;
+      height: 90px;
+  }
+  .eng{
+      font-size: 7.5px;
+      width: 180px;
+      font-family: 'khmerContent';
+      padding-bottom: 5px;
+  }
+  .kh{
+      font-size: 7.5px;
+      width: 180px;
+      padding-bottom: 5px;
+  }
+  .sigText{
+      font-size: 7.5px;
+      font-family: 'khmerContent';
+  }
+  .sigImg{
+      width: 50px;
+      height: 40px;
+  }
+  .money{
+      padding-top: 10px;
+  }
+  .qrdes{
+      padding-top: 10px;
+  }
+  .table0{
+      margin-top: 5px;
+  }
+  .ptop{
+   padding-top: 5px;   
+  }
+  .invOn{
+      padding-top: 10px;
+      font-size: 25px !important;
+  }
+  
+  /*************************************************************/
+  /*************************************************************/
+  /*************************************************************/
+  /*************************************************************/
+  .img1{
+      width: 60px;
+  }
+  .img2{
+      width: 60px;
+  }
+  .paymentTitle{
+      font-size: 9px;
+      padding-top: 10px;
+  }
+  .paymentTerm{
+      font-size: 6px;
+      width: 200px;
+      height: 45px;
+      text-align: start;
+  }
+  .qtTotal{
+      font-size: 9px;
+  }
+  .qtPrice{
+      font-size: 8px;
+  }
+  .th1{
+      width: 15px;
+  }
+  .cusSig{
+      font-size: 7.5px;
+  }
+  .authSig{
+      font-size: 7.5px;
+  }
+  .prodArtWork{
+      font-size: 7px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+  }
+  .theadUnitprice{
+      padding-right: 3px;
+  }
+  .theadTotal{
+      padding-right: 3px;
+  }
+  .prodflex{
+      padding-bottom: 13px;
+  }
+  .py{
+      padding-top: 1px;
+      padding-bottom: 1px;
+  }
+  .pt{
+      padding-top: 3px;
+  }
+  .cusempty{
+      height: 50px;
+  }
+  .dnOn{
+    font-size: 15px;
+  }
+}
+
+/* Styles for screens from 1081 pixels to 2000 pixels wide */
+@media screen and (min-width: 1921px) and (max-width: 2560px) {
+  /*********************** this is invoice form ****************/
+  /*************************************************************/
+  /*************************************************************/
+  /*************************************************************/
+    .cart {
+        width: 680px;
+        height: 970px;
+        padding-left: 50px;
+        padding-right: 50px;
+        
+    }
+    .cartInv{
+      padding-top: 45px;
+        padding-bottom: 35px;
+    }
+    .cartDe{
+      padding-top: 50px;
+        padding-bottom: 35px;
+    }
+    .cart1 {
+      width: 680px;
+      height: 970px;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+  }
+    .inv{
+        font-size: 35px;
+        font-weight: bold;
+    }
+    .de{
+      font-size: 25px;
+      font-weight: bold;
+    }
+    .invNo{
+        font-size: 13px;
+        font-weight: bold;
+    }
+    .img{
+        width: 120px;
+    }
+    .des{
+        font-size: 15px;
+        width: 400px;
+        line-height: 24px;
+        height: 118px;
+    }
+    .cusInfo{
+        font-size: 11px;   
+        font-family: 'khmerContent';
+    }
+    .busInfo{
+        font-size: 11px; 
+        font-family: 'khmerContent';
+    }
+    .staffInfo{
+      font-size: 11px; 
+      font-family: 'khmerContent';
+    }
+    .textarea0{
+        width: 200px;
+        font-family: 'khmerContent';
+    }
+    .textarea1{
+        width: 155px;
+        font-family: 'khmerContent';
+    }
+    .thead0{
+        font-size: 12px;
+    }
+    .tbody0{
+        font-size: 11px;
+    }
+    .pt{
+        padding-top: 7px;
+    }
+    .aba{
+        width: 70px;
+        height: 70px;
+        padding-right: 10px;
+    }
+    .totaling{
+        width: 120px;
+        font-size: 12px;
+        text-align: end;
+        padding-right: 5px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+    .totalinging{
+        font-size: 13px;
+        padding-right: 5px;
+    }
+    .abaText{
+        font-size: 13px;
+    }
+    .qr{
+        width: 135px;
+        height: 135px;
+    }
+
+
+    .eng{
+        font-size: 11px;
+        width: 260px;
+        font-family: 'khmerContent';
+        padding-bottom: 5px;
+    }
+    .kh{
+        font-size: 11px;
+        width: 260px;
+        padding-bottom: 5px;
+    }
+    .sigText{
+        font-size: 13px;
+        font-family: 'khmerContent';
+    }
+    .sigImg{
+        width: 60px;
+        height: 50px;
+    }
+
+
+    .money{
+        padding-top: 15px;
+    }
+    .qrdes{
+        padding-top: 15px;
+    }
+    .table0{
+        margin-top: 5px;
+    }
+    .ptop{
+        padding-top: 7px;   
+    }
+    .invOn{
+      padding-top: 15px;
+      font-size: 40px !important;
+  }
+  
+    /*************************************************************/
+    /*************************************************************/
+    /*************************************************************/
+    /*************************************************************/
+  .img1{
+      width: 80px;
+  }
+  .img2{
+      width: 80px;
+  }
+  .paymentTitle{
+      font-size: 13px;
+      padding-top: 20px;
+  }
+  .paymentTerm{
+      font-size: 8px;
+      width: 300px;
+      height: 65px;
+      text-align: start;
+  }
+  .qtTotal{
+      font-size: 13px;
+  }
+  .qtPrice{
+      font-size: 12px;
+      height: 20px;
+  }
+  .th1{
+      width: 30px;
+  }
+  .cusSig{
+      font-size: 11px;
+      height: 80px;
+  }
+  .authSig{
+      font-size: 11px;
+      height: 80px;
+  }
+  .prodArtWork{
+      font-size: 11px;
+      padding-top: 13px;
+      padding-bottom: 13px;
+  }
+  .theadUnitprice{
+      padding-right: 5px;
+  }
+  .theadTotal{
+      padding-right: 5px;
+  }
+  .prodflex{
+      padding-bottom: 20px;
+  }
+  .py{
+      padding-top: 2px;
+      padding-bottom: 2px;
+  }
+  .pt{
+      padding-top: 5px;
+  }
+  .dnOn{
+   font-size: 20px; 
+  }
+}
+
+

@@ -97,95 +97,43 @@ const QuotationForm = ({
     busTelegram
 }:invFormProps) => {
     const {logo , address , setPrint , setPrinting , onCancel, signature , employee} = useToggle()
-    const generals = useMemo(()=>[
-        {
-            label:"No.",
-            class:"text-start pl-2"
-        },
-        {
-            label:"Description",
-            class:'text-start'
-        },
-        {
-            label:"Qty",
-            class:'text-center px-1 border-l-[1px] border-black'
-        },
-        {
-            label:"Unit Price",
-            class:'text-center border-l-[1px] border-black'
-        },
-        {
-            label:"Total Amount",
-            class:'text-center border-l-[1px] border-black'
-        }
-    ],[])
-    const meters = useMemo(()=>[
-        {
-            label:"No.",
-            class:"text-start pl-2 2xl!:text-[14px]"
-        },
-        {
-            label:"Description",
-            class:'text-start 2xl!:text-[14px]'
-        },
-        {
-            label:"Size cm",
-            class:"text-center 2xl!:text-[14px] border-l-[1px] border-black"
-        },
-        {
-            label:"M2",
-            class:"text-center 2xl!:text-[14px] border-l-[1px] border-black"
-        },
-        {
-            label:"Qty",
-            class:'text-center 2xl!:text-[14px] border-l-[1px] border-black'
-        },
-        {
-            label:"Unit Price",
-            class:'text-center 2xl!:text-[14px] border-l-[1px] border-black'
-        },
-        {
-            label:"Total Amount",
-            class:'text-center  2xl!:text-[14px] border-l-[1px] border-black'
-        }
-    ],[])
     
     const busInfo = useMemo(()=>[
         {
             id:'qtForm1',
             label:"",
             val:staffName,
-            clss:`${employee === true || staffName === "" ? "invisible" : ""}`
+            clss:`${employee === true || staffName === "" ? "hidden" : ""}`
         },
         {
             id:'qtForm2',
             label:"Tel:",
             val:staffPhone,
-            clss:`${employee === true || staffPhone === "" ? "invisible" : ""}`
+            clss:`${employee === true || staffPhone === "" ? "hidden" : ""}`
         },
         {
             id:'qtForm3',
             label:"Add:",
             val:busAddr,
-            clss:`${address === true || busAddr === "" ? "invisible" : ""}`
+            clss:`${address === true || busAddr === "" ? "hidden" : ""}`
         },
         {
             id:'qtForm4',
             label:"Email:",
             val:busEmail,
-            clss:`${address === true || busEmail === "" ? "invisible" : ""}`
+            clss:`${address === true || busEmail === "" ? "hidden" : ""}`
         },
         {
             id:'qtForm5',
             label:"Tel:",
             val:busPhone,
-            clss:`${address === true || busPhone === "" ? "invisible" : ""}`
+            clss:`${address === true || busPhone === "" ? "hidden" : ""}`
         },
         {
             id:'qtForm6',
             label:"Telegram",
             val:busTelegram,
-            clss:`${address === true || busTelegram === "" ? "invisible" : ""}`
+            clss:`${address === true || busTelegram === "" ? "hidden" : ""}`
         }
     ],[employee, address, staffName , staffPhone , busAddr , busEmail , busPhone , busTelegram])
     const cusInfo = useMemo(()=>[
@@ -260,18 +208,6 @@ const QuotationForm = ({
         updatedRows.splice(targetIndex, 0, draggedRow);
         setDes(updatedRows);
       };
-    const desTop = [
-        {
-           label:"No.",
-           class:"text-start pl-2"
-        },
-        {
-           label:"Description",
-           class:'text-start pl-2'
-        },
-    ]
-   let test2 = cusInfo.reduce((a:number[], e ,i)=>(e.val !== "") ? a.concat(i) : a ,[])
-   let test3 = busInfo.reduce((a:number[], e, i)=>(e.val !== "") ? a.concat(i) : a ,[])
 
    useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -291,490 +227,356 @@ const QuotationForm = ({
   }, []);
 
   return ( 
-    <>
-        <ResponsiveElement width={490}  height={'auto'} px={30} py={20} className='bg-white '>
-            <div>
-            <div className='flex justify-between'>
-                            <div className='flex justify-start items-center'>
-                                {
-                                    logo === true ? (
-                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={30}  pb={39.5} className='font-semibold'>
-                                            <h1 >Quotation</h1>
-                                        </ResponsiveElement>
-                                    ) : (
-                                        <ResponsiveElement width={'auto'} height={94}>
-                                            <Image src={!busLogo ? '/white.png' : busLogo} alt='#' width={0} height={0} sizes="100vw"/>
-                                        </ResponsiveElement>
-                                    )
-                                }
-                                
-                                {/*****************Image size w-160 h-160**************/}
-                            </div>
-                            <div className='text-end'>
-                                <ResponsiveElement leading={27} width={270} height={110} fontSize={8} className='text-end pt-[20pxs] p-4 !pr-0 resize-none outline-none overflow-hidden' style={{fontFamily:"khmerContent"}}>
-                                <textarea>
-                                     {busDes}
-                                    </textarea>
-                                </ResponsiveElement>
-                            </div>
-                        </div>
-                        <div className='grid grid-cols-2 pb-[5px]  px-[5px]'>
-                            <div className='col-span-1'>
-                                {
-                                    logo === false && (
-                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={16} className='font-bold'>
-                                        <h1 >QUOTATION</h1>
-                                        </ResponsiveElement>
-                                    )
-                                }
-                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} className='font-bold'>
-                                    <p>No. {invNo}</p>
-                                </ResponsiveElement>
-                            </div>
-    
-                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} className='text-end font-bold  flex flex-col col-span-1 justify-end'>
-                                    <p >
-                                        Date. {dateFormat(invDate === undefined ? '' : invDate)}
-                                    </p>
-                            </ResponsiveElement>
-    
-                        </div>
-                        <div className='grid grid-cols-2'>
-                            <div className='col-span-1  flex flex-col justify-end'>
-                                {(()=>{
-                                    let row = []
-                                    for(let i = 5; i > (test2?.length || 0); i--){
-                                        row.push(
-                                            <div key={crypto.randomUUID()} className={`flex pl-[5px] justify-start items-center invisible`} style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
-                                                    <p>mp</p>
-                                                </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
-                                                    <p>ddd</p>
-                                                </ResponsiveElement>
-                                            </div>
-                                        )
-                                    }
-                                    return row
-                                })()
-                                }
-                                {
-                                    cusInfo.map((item)=>{
-                                        return(
-                                            <div key={item.id} className={`${item.class} ${!item.val ? "hidden" : "flex"} pl-[5px] justify-start items-start w-[300px] gap-1`} style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
-                                                    <p>{item.label}</p>
-                                                </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
-                                                    <p>{item.val}</p>
-                                                </ResponsiveElement>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                            <div className='col-span-1 flex flex-col justify-end'>
-                            <div>
 
-                                {(()=>{
-                                    let row = []
-                                    for(let i = 5; i > (test3?.length || 0); i--){
-                                        row.push(
-                                            <div key={crypto.randomUUID()} className='flex justify-end items-center'>
-                                            <div  className={`flex pl-[5px] items-start gap-1 w-[240px] invisible`} style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
-                                                    <p>mp</p>
-                                                </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
-                                                    <p>ddd</p>
-                                                </ResponsiveElement>
-                                            </div>
-                                            </div>
-                                        )
-                                    }
-                                    return row
-                                })()
-                                }
+        <div className='cart1 bg-white'>
+         
+
+        <div className='flex justify-between'>
+            {
+                logo === true ? (
+                    <div className='flex items-start'>  
+                        <h1 className='inv'>Quotation</h1>
+                    </div>
+                ) : (
+                    <div className="img">
+                     <Image src={!busLogo ? '/white.png' : busLogo} alt="#" width={400} height={400}/>
+                    </div>
+                )
+            }
+              <div className="flex-row justify-start">
+            <textarea value={busDes} className="bg-transparent font-[khmerContent] des text-end  outline-none resize-none overflow-hidden">
+            </textarea>
+          </div>
+            </div>
+
+
+            <div className="flex  justify-between items-end">
+                <div>
+                <p className={`inv ${logo === false ? '' : 'invisible'}`}>Quotation</p>
+                <p className="invNo">No. {invNo}</p>
+                </div>
+                <p className="invNo">Date. {dateFormat(invDate === undefined ? '' : invDate)}</p>
+            </div>
+
+
+
+            <div className="flex justify-between items-end ptop">
+                
+                <div >
+                <p className={`cusInfo ${cusName === "" ? "invisible" : "hidden"}`}>At: ដាដាដាដឹា</p>
+                <p className={`cusInfo ${cusComp === "" ? "invisible" : "hidden"}`}>To: Grab</p>
+                <p className={`cusInfo ${cusPhone === "" ? "invisible" : "hidden"}`}>Tel: 0712338932</p>
+                <p className={`cusInfo ${cusEmail === "" ? "invisible" : "hidden"}`}>Email: renko@gmail.com</p>
+                <div className={`flex cusInfo ${cusAddr === "" ? "invisible" : "hidden"}`}>
+                <p>Add:</p>
+                <textarea className="outline-none textarea0 resize-none bg-transparent overflow-hidden" rows={3}>
+                    dhwajkdhajkjakwdajkwha
+                    dwajkldajdklwajdlkwajdakjdw
+                    dwajkldwajkldawjldjdawldj
+                </textarea>
+                </div>
+
+                {
+                    cusInfo.map((item)=>{
+                        return(
+                            <React.Fragment key={item.label}>
                                 {
-                                    busInfo.map((item)=>{
-                                        return(
-                                            <div className='flex justify-end items-center' key={item.id}>
-                                            <div className={`flex pl-[5px] justify-end ${item.clss} items-start gap-1 w-[240px]`} style={{fontFamily:"khmerContent"}}>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6}>
-                                                    <p>{item.label}</p>
-                                                </ResponsiveElement>
-                                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} className='text-end pt-[1px]'>
-                                                    <p>{item.val}</p>
-                                                </ResponsiveElement>
-                                            </div>
-                                            </div>
-                                        )
-                                    })
+                                    item.label !== 'Add:' ? (
+                                        <p className={`cusInfo ${item.class} ${!item.val ? "hidden" : ''}`}>{item.label} {item.val}</p>
+                                    ) : (
+                                        <div className={`flex cusInfo ${item.class} ${!item.val ? "hidden" : ''}`}>
+                                            <p>Add:</p>
+                                            <textarea className="outline-none textarea0 resize-none bg-transparent overflow-hidden" rows={3} value={item.val}>
+
+                                            </textarea>
+                                        </div>
+                                    )
                                 }
-                            </div>
-                            </div>
-                        </div>
-                        <ResponsiveElement width={'full'} height={'auto'} mt={3} className='border border-black'>
-                        <table className='w-full mt-[3px] lg:mt-[5px] md:mt-[5px] 2xl:mt-[10px] '>
-                                <thead>
-                                    <tr>
-                                        {
-                                            desTop.map((item)=>{
-                                                return(
-                                                <ResponsiveElement key={crypto.randomUUID()} width={'auto'} height={'auto'} fontSize={8.3} className={`bg-mainBlue text-white font-bold ${item.class}`}>
-                                                    <th>{item.label} </th>
-                                                </ResponsiveElement>
-                                                )
-                                            })
-                                        }
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        des?.map((item,index)=>{
-                                            return(
-                                                <tr key={item.id} draggable="true"
+                            </React.Fragment>
+                        )
+                    })
+                }
+
+                </div>
+
+
+                <div className={`text-end`}>
+                <div className={employee === false ? '' : 'hidden'}>
+                <p className={`staffInfo ${staffName === '' ? 'invisible' : 'hidden'}`}>Mov</p>
+                <p className={`staffInfo ${staffPhone === '' ? 'invisible' : 'hidden'}`}>Tel: 0867617822</p>
+                
+                </div>
+           
+                <div className={`text-end`}>
+                <div className={`flex busInfo ${busAddr === '' ? 'invisible' : 'hidden'}`}>
+                <p>Add:</p>
+                <textarea className="outline-none textarea1 text-end resize-none bg-transparent overflow-hidden" rows={2}>
+                    dhwajkdhajkjakwdajkwha
+                    dwajkldajdklwajdlkwajdakjdw
+                </textarea>
+                </div>
+                <p className={`busInfo ${busEmail === "" ? "invisible" : "hidden"}`}>Email: renko@gmail.com</p>
+                <p className={`busInfo ${busPhone === "" ? "invisible" : "hidden"}`}>Tel: 088224224 | 0712338932</p>
+                <p className={`busInfo ${busTelegram === "" ? "invisible" : "hidden"}`}>Telegram: 233892</p>
+                </div>
+                {
+                    busInfo.map((item)=>{
+                        return(
+                            <React.Fragment key={item.label}>
+                                {
+                                    item.label !== 'Add:' ? (
+                                        <div className={`busInfo ${item.clss}`}>
+                                            {item.label} {item.val}
+                                        </div>
+                                    ) : (
+                                        <div className={`flex busInfo ${item.clss}`}>
+                                            <p>{item.label}</p>
+                                            <textarea className="outline-none textarea1 text-end resize-none bg-transparent overflow-hidden" rows={2} value={item.val}>
+                                            </textarea>
+                                        </div>
+                                    )
+                                }
+                            </React.Fragment>
+                        )
+                    })
+                }
+
+                </div>
+            </div>
+            
+            <table className='w-full table0 border border-black qtDes'>
+                <thead className='bg-mainBlue thead0 text-white'>
+                    <tr>
+                        <th className='th1'></th>
+                        <th className='text-start'>Description</th>
+                    </tr>
+                </thead>
+                <tbody className='tbody0'>
+                    {
+                        des.map((item , i)=>{
+                            return(
+                                <tr key={item.id} draggable="true"
                                                 onDragStart={(e)=>handleDragStart(e,item.id)}
                                                 onDragOver={handleDragOver}
                                                 onDrop={(e)=>handleDropDes(e,item.id)}>
-                                                    <ResponsiveElement fontSize={7} width={'auto'} height={'auto'} py={1} className='text-start pl-3 2xl:!text-[16px]'>
-                                                        <td>{index === 0 ? '' : '-'}</td>
-                                                    </ResponsiveElement>
-                                                    <ResponsiveElement width={'full'} height={'auto'} fontSize={7} py={1} className='text-start 2xl:!text-[16px] pl-2' style={{fontFamily:"khmerContent"}}>
-                                                        <td >{item.text}</td>
-                                                    </ResponsiveElement>
-                                                    
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                    {
-                                            (()=>{
-                                                let row = []
-                                                for(let i = 5; i > (des?.length || 0) ; i--){
-                                                    row.push(
-                                                        <tr key={crypto.randomUUID()}>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px]'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px] '>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                        </tr>
-                                                    )
-                                                }
-                                                return row
-                                            })()
-                                        }
-                                </tbody>
-                        </table>
-                        </ResponsiveElement>
-
-    
-                        <ResponsiveElement width={'full'} height={'auto'} mt={3}>
-                        <table>
-                            <thead className='border-t-[1px] border-x-[1px] bg-blue-950 text-white border-black'>
-                                <tr>
-                                {
-                                        busType === "meter" && (
-                                            <>
-                                            {
-                                            meters.map((item)=>{
-                                                    return(
-                                                            <ResponsiveElement key={crypto.randomUUID()} width={'auto'} height={'auto'} fontSize={7.3} className={`bg-mainBlue text-white font-bold ${item.class}`}>
-                                                                <th>{item.label} </th>
-                                                            </ResponsiveElement>
-                                                    )
-                                                })
-                                            }
-                                            </>
+                                    <td className={`text-center ${i === 0 ? 'pt' : 'py'}`}>{i === 0 ? '' : '-'}</td>
+                                        <td className={`text-start ${i === 0 ? 'pt' : 'py'}`}>{item.text}</td>
+                                </tr>
+                            )
+                        })
+                    }
+                    {
+                        (()=>{
+                        let row = []
+                        for(let i = 6; i > (des?.length || 0) ; i--){
+                                row.push(
+                                        <tr key={crypto.randomUUID()}>
+                                            <td className={`text-center py invisible`}>{i === 0 ? '' : '-'}</td>
+                                            <td className={`text-start py invisible`}>dwadadad</td>
+                                        </tr>
+                                    )
+                                }
+                            return row
+                        })()
+                    }
+                </tbody>
+            </table>
+            <table className='w-full table0 qtCal '>
+                <thead className='bg-mainBlue thead0 text-white border-t-[1px] border-x-[1px] border-black'>
+                    {
+                        busType === 'meter' && (
+                            <tr>
+                                <th className='th1'></th>
+                                <th className='text-start'>Item Description</th>
+                                <th className='text-center border-l-[1px] border-black'>Size cm</th>
+                                <th className='text-center border-l-[1px] border-black'>M2</th>
+                                <th className='text-center border-l-[1px] border-black'>Qty</th>
+                                <th className='text-end border-l-[1px] border-black theadUnitprice'>Unit Price</th>
+                                <th className='text-end border-l-[1px] border-black theadTotal'>Total Amount</th>
+                            </tr>
+                        )
+                    }
+                    {
+                        busType === 'general' && (
+                            <tr>
+                                <th className='th1'></th>
+                                <th className='text-start'>Item Description</th>
+                                <th className='text-center border-l-[1px] border-black'>Qty</th>
+                                <th className='text-end border-l-[1px] border-black theadUnitprice'>Unit Price</th>
+                                <th className='text-end border-l-[1px] border-black theadTotal'>Total Amount</th>
+                            </tr>
+                        )
+                    }
+                </thead>
+                <tbody className='tbody0 border-b-[1px] border-x-[1px] border-black'>
+                    {
+                        busType === 'meter' && (
+                            <>
+                            {
+                                arr.map((item,i)=>{
+                                    return(
+                                        <tr key={item.id} 
+                                        draggable="true"
+                                        onDragStart={(e)=>handleDragStart(e,item.id)}
+                                        onDragOver={handleDragOver}
+                                        onDrop={(e)=>handleDrop(e,item.id)}>
+                                            <td className={`text-center ${i === 0 ? 'pt' : 'py'}`}>{i + 1}</td>
+                                            <td className={`text-start ${i === 0 ? 'pt' : 'py'}`}>{!item.description ? "" : item.description.length < 44 ? item.description : <input value={item.description} className='w-[180px] outline-none'/>}</td>
+                                            <td className='border-l-[1px] border-black'>
+                                                <div className='flex items-center justify-center'>
+                                                    <div>{item.sizeWidth === 0 ? "" : item.sizeWidth}</div>
+                                                        <p className='px-[2px]'>{item.sizeHeight && item.sizeWidth ? "x" : ""}</p>
+                                                    <div>{item.sizeHeight === 0 ? "" : item.sizeHeight}</div>
+                                                </div>
+                                            </td>
+                                            <td className={`border-l-[1px] text-center border-black ${i === 0 ? 'pt' : 'py'}`}>{item.m2 === 0 ? "" : item.m2?.toFixed(2)}</td>
+                                            <td className={`border-l-[1px] text-center border-black ${i === 0 ? 'pt' : 'py'}`}>{item.quantity === "" ? "" : item.quantity}</td>
+                                            <td className={`border-l-[1px] text-end border-black theadUnitprice ${i === 0 ? 'pt' : 'py'}`}>{item.unitPrice}</td>
+                                            <td className={`border-l-[1px] text-end border-black theadTotal ${i === 0 ? 'pt' : 'py'}`}>{item.total}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                            </>
+                        )
+                    }
+                    {
+                        busType === 'general' && (
+                            <>
+                            {
+                                arr.map((item,i)=>{
+                                    return(
+                                        <tr key={item.id} 
+                                        draggable="true"
+                                        onDragStart={(e)=>handleDragStart(e,item.id)}
+                                        onDragOver={handleDragOver}
+                                        onDrop={(e)=>handleDrop(e,item.id)}>
+                                            <td className={`text-center ${i === 0 ? 'pt' : 'py'}`}>{i + 1}</td>
+                                            <td className={`text-start ${i === 0 ? 'pt' : 'py'}`}>{!item.description ? "" : item.description.length < 44 ? item.description : <input value={item.description} className='w-[320px] outline-none'/>}</td>
+                                            <td className={`border-l-[1px] text-center border-black ${i === 0 ? 'pt' : 'py'}`}>{item.quantity === "" ? "" : item.quantity}</td>
+                                            <td className={`border-l-[1px] text-end border-black theadUnitprice ${i === 0 ? 'pt' : 'py'}`}>{item.unitPrice}</td>
+                                            <td className={`border-l-[1px] text-end border-black theadTotal ${i === 0 ? 'pt' : 'py'}`}>{item.total}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                            </>
+                        )
+                    }
+                    {
+                        busType === 'general' && (
+                            <>
+                            {
+                                (()=>{
+                                    let row = []
+                                    for(let i = 6; i > (items?.length || 0); i--){
+                                        row.push(
+                                            <tr key={crypto.randomUUID()}>
+                                                <td className={`text-center py invisible`}>n</td>
+                                                <td className={`text-start py invisible`}>n</td>
+                                                <td className={`border-l-[1px] text-center border-black py invisible`}>n</td>
+                                                <td className={`border-l-[1px] text-end border-black theadUnitprice py invisible`}>n</td>
+                                                <td className={`border-l-[1px] text-end border-black theadTotal py invisible`}>n</td>
+                                            </tr>
                                         )
                                     }
-                                    {
-                                        busType === "general" && (
-                                            <>
-                                            {
-                                                generals.map((item)=>{
-                                                    return(
-                                                            <ResponsiveElement key={crypto.randomUUID()} width={'auto'} height={'auto'} fontSize={7.3} className={`bg-mainBlue text-white font-bold ${item.class}`}>
-                                                                <th>{item.label} </th>
-                                                            </ResponsiveElement>
-                                                    )
-                                                })
-                                            }
-                                            </>
+                                    return row
+                                })()
+                            }
+                            </>
+                        )
+                    }
+                    {
+                        busType === 'meter' && (
+                            <>
+                            {
+                                (()=>{
+                                    let row = []
+                                    for(let i = 6; i > (items?.length || 0); i--){
+                                        row.push(
+                                            <tr key={crypto.randomUUID()}>
+                                                <td className={`text-center py invisible`}>n</td>
+                                                <td className={`text-start py invisible`}>n</td>
+                                                <td className={`border-l-[1px] text-center border-black py invisible`}>n</td>
+                                                <td className={`border-l-[1px] text-center border-black py invisible`}>n</td>
+                                                <td className={`border-l-[1px] text-center border-black py invisible`}>n</td>
+                                                <td className={`border-l-[1px] text-end border-black theadUnitprice py invisible`}>n</td>
+                                                <td className={`border-l-[1px] text-end border-black theadTotal py invisible`}>n</td>
+                                            </tr>
                                         )
                                     }
-                                </tr>
-                            </thead>
-                            <tbody className='border-b-[1px] border-x-[1px] border-black'>
-                                {
-                                    busType === 'meter' && (
-                                        <>
-                                        {
-                                            arr.map((item,i)=>{
-                                                return(
-                                                    <tr 
-                                                    key={item.id} 
-                                                    draggable="true"
-                                                    onDragStart={(e)=>handleDragStart(e,item.id)}
-                                                    onDragOver={handleDragOver}
-                                                    onDrop={(e)=>handleDrop(e,item.id)}
-                                                    >
-                                                        <ResponsiveElement fontSize={7} width={'auto'} height={'auto'} py={1} className='text-start pl-3 2xl:!text-[16px]'>
-                                                        <td >
-                                                            {i+1}
-                                                        </td>
-                                                        </ResponsiveElement>
-                                                        <ResponsiveElement width={150} height={'auto'} fontSize={7} py={1} className='text-start 2xl:!text-[16px]' style={{fontFamily:"khmerContent"}}>
-                                                            <td>
-                                                                {!item.description ? "" : item.description.length < 44 ? item.description : <input className='outline-none' value={item.description}/>}
-                                                            </td>
-                                                        </ResponsiveElement>
-                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px] border-l-[1px] border-black'>
-                                                            <td>
-                                                                <div className='flex items-center justify-center'>
-                                                                <div>{item.sizeWidth === 0 ? "" : item.sizeWidth}</div>
-                                                                    <p className='px-[5px]'>{item.sizeHeight && item.sizeWidth ? "x" : ""}</p>
-                                                                    <div>{item.sizeHeight === 0 ? "" : item.sizeHeight}</div>
-                                                                </div>
-                                                            </td>
-                                                        </ResponsiveElement>
-                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} px={5} py={1} className='text-center  2xl:!text-[16px] border-l-[1px] border-black'>
-                                                            <td>{item.m2 === 0 ? "" : item.m2?.toFixed(2)}</td>
-                                                        </ResponsiveElement>
-                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='text-center  2xl:!text-[16px] border-l-[1px] border-black'>
-                                                            <td>{item.quantity === "" ? "" : item.quantity}</td>
-                                                        </ResponsiveElement>
-                                                    
-                                                        <ResponsiveElement className='text-end  2xl:!text-[16px] border-l-[1px] border-black pr-3' fontSize={7} py={1} width={'auto'} height={'auto'}>
-                                                            <td>{item.unitPrice} </td>
-                                                        </ResponsiveElement>
-                                                        <ResponsiveElement className='text-end pr-3  2xl:!text-[16px] border-l-[1px] border-black' fontSize={7} py={1} width={'auto'} height={'auto'}>
-                                                            <td>{item.total}</td>
-                                                        </ResponsiveElement>
-                                                    </tr>
-                                                )
-                                            })
-                                        }   
-                                        </>
-                                    )
-                                }
-                                {
-                                    busType === 'general' && (
-                                        <>
-                                        {
-                                            arr.map((item,i)=>{
-                                                return(
-                                                    <tr 
-                                                    key={item.id} 
-                                                    draggable="true"
-                                                    onDragStart={(e)=>handleDragStart(e,item.id)}
-                                                    onDragOver={handleDragOver}
-                                                    onDrop={(e)=>handleDrop(e,item.id)}
-                                                    >
-                                                        <ResponsiveElement fontSize={7} width={'auto'} height={'auto'} py={1} className='text-start pl-3'>
-                                                        <td >
-                                                            {i+1}
-                                                        </td>
-                                                        </ResponsiveElement>
-                                                        <ResponsiveElement width={240} height={'auto'} fontSize={7} py={1} className='text-start '>
-                                                            <td>
-                                                            {!item.description ? "" : item.description.length < 44 ? item.description : <input value={item.description} className='w-[320px] outline-none'/>}
-                                                            </td>
-                                                        </ResponsiveElement>
-                                                        <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='text-center border-l-[1px] border-black'>
-                                                            <td>{item.quantity === "" ? "" : item.quantity}</td>
-                                                        </ResponsiveElement>
-                                                    
-                                                        <ResponsiveElement className='text-end pr-2 border-l-[1px] border-black' fontSize={7} py={1} width={'auto'} height={'auto'}>
-                                                            <td>{item.unitPrice} </td>
-                                                        </ResponsiveElement>
-                                                        <ResponsiveElement className='text-end pr-2 border-l-[1px] border-black' fontSize={7} py={1} width={'auto'} height={'auto'}>
-                                                            <td>{item.total}</td>
-                                                        </ResponsiveElement>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-                                        </>
-                                    )
-                                }
-                                {
-                                    busType === 'general' && (
-                                        <>
-                                        {
-                                            (()=>{
-                                                let row = []
-                                                for(let i = 6; i > (items?.length || 0) ; i--){
-                                                    row.push(
-                                                        <tr key={crypto.randomUUID()}>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px]'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px]'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px] border-l-[1px] border-black'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px] border-l-[1px] border-black'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px] border-l-[1px] border-black'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                        </tr>
-                                                    )
-                                                }
-                                                return row
-                                            })()
-                                        }
-                                        </>
-                                    )
-                                }
-                                {
-                                    busType === 'meter' && (
-                                        <>
-                                        {
-                                            (()=>{
-                                                let row = []
-                                                for(let i = 6; i > (items?.length || 0) ; i--){
-                                                    row.push(
-                                                        <tr key={crypto.randomUUID()}>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px]'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px]'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px] border-l-[1px] border-black'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px] border-l-[1px] border-black'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px] border-l-[1px] border-black'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px] border-l-[1px] border-black'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                            <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} py={1} className='2xl:!text-[16px] border-l-[1px] border-black'>
-                                                            <td><div className='invisible'>No</div></td>
-                                                            </ResponsiveElement>
-                                                        </tr>
-                                                    )
-                                                }
-                                                return row
-                                            })()
-                                        }
-                                        </>
-                                    )
-                                }
-                                
-                                
-                                
-                                <tr>
-                                <td className='text-center invisible'>1</td>
-                                <td className='text-start'>
-                                    <ResponsiveElement width={'auto'} height={'auto'} fontSize={6} className={`mb-[5px] ${!img1 && !img2 && !oldImg && !oldImg1 ? 'invisible' : ''}`}>
-                                        <p>Production Sample Artwork</p>
-                                    </ResponsiveElement>
-                                    <div className='flex'>
-                                    <ResponsiveElement width={'auto'} height={70} className={`border-[5px] !border-b-[10px] border-white ${!img1 && !oldImg ? 'invisible' : ''}`}>
-                                        <Image
-                                            src={img1 ? img1 : oldImg ? oldImg : '/bocchi.jpg'}
-                                            alt='#'
-                                            width={0}
-                                            height={0}
-                                            sizes="100vw"
-                                            style={{ width: "auto", height: "10%" }}
-                                        />
-                                    </ResponsiveElement>
-                                    <ResponsiveElement width={'auto'} height={70} className={`border-[5px] !border-b-[10px] border-white ${!img2 && !oldImg1 ? 'invisible' : ''}`}>
-                                        <Image
-                                            src={img2 ? img2 : oldImg1 ? oldImg1 : '/bocchi.jpg'}
-                                            alt='#'
-                                            width={0}
-                                            height={0}
-                                            sizes="100vw"
-                                            style={{ width: "auto", height: "10%" }}
-                                        />
-                                    </ResponsiveElement>
-                                    
-                                    </div>
-                                    
-                                </td>
-                                {
-                                    busType === 'meter' && (
-                                        <>
-                                        <td className='text-center border-l-[1px] border-black'></td>
-                                        <td className='text-center border-l-[1px] border-black'></td>
-                                        <td className='text-center border-l-[1px] border-black'></td>
-                                        <td className='text-end border-l-[1px] border-black'></td>
-                                        <td className='text-end border-l-[1px] border-black'></td>
-                                        </>
-                                    )
-                                }
-                                {
-                                    busType === 'general' && (
-                                        <>
-                                        <td className='text-center border-l-[1px] border-black'></td>
-                                        <td className='text-center border-l-[1px] border-black'></td>
-                                        <td className='text-center border-l-[1px] border-black'></td>
-                                        </>
-                                    )
-                                }
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                               
-                                <td className='text-start ' rowSpan={3} colSpan={busType === 'meter' ? 5 : 3}>
-                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={5.8} className='font-bold'>
-                                <p >Note: Payment term:</p>
-                                </ResponsiveElement>
-                                <ResponsiveElement className='outline-none resize-none overflow-hidden' width={200} height={'auto'} fontSize={4.7} >
-                                    <textarea rows={4} value={busPayTerm}>
+                                    return row
+                                })()
+                            }
+                            </>
+                        )
+                    }
+                    <tr>
+                        <td></td>
+                        <td className='text-start'>
+                            <p className='prodArtWork'>Production Sample Artwork</p>
+                            <div className='flex gap-2 prodflex'>
+                                <Image src='/product.jpeg' alt='#' width={400} height={400} className='img1'/>
+                                <Image src='/product.jpeg' alt='#' width={400} height={400} className='img2'/>
+                            </div>
+                        </td>
+                        {
+                            busType === 'general' && (
+                                <>
+                                <td className='border-l-[1px] border-black'></td>
+                                <td className='border-l-[1px] border-black'></td>
+                                <td className='border-l-[1px] border-black'></td>
+                                </>
+                            )
+                        }
+                        {
+                            busType === 'meter' && (
+                                <>
+                                <td className='border-l-[1px] border-black'></td>
+                                <td className='border-l-[1px] border-black'></td>
+                                <td className='border-l-[1px] border-black'></td>
+                                <td className='border-l-[1px] border-black'></td>
+                                <td className='border-l-[1px] border-black'></td>
+                                </>
+                            )
+                        }
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td rowSpan={3} colSpan={busType === 'meter' ? 5 : 3}>
+                            <p className='paymentTitle'>Note: Payment Term:</p>
+                            <div>
+                                <textarea rows={3} className='outline-none resize-none overflow-hidden bg-transparent paymentTerm' value={busPayTerm}>
 
-                                    </textarea>
-                                    </ResponsiveElement>
-                                </td>
-                            
-                                <ResponsiveElement width={'auto'} height={'auto'} fontSize={8} className='text-end font-bold'>
-                                <td className='text-end'>Total:</td>
-                                </ResponsiveElement>
-                                
-                                <td >
-                                    <ResponsiveElement width={'auto'} height={'auto'} fontSize={7} className='text-white text-end   bg-mainBlue font-bold border-x-[1px] border-b-[1px] border-black pr-2 xl:h-[15px] 2xl:h-[20px]'>
-                                    <div >${grandTotal}</div>
-                                    </ResponsiveElement>
-                                </td>
-
-                                </tr>
-                                <tr>
-                                <td className='invisible'>1</td>
-                                <td className='invisible'>2</td>
-                                </tr>
-                                <tr>
-                                <td className='invisible'>1</td>
-                                <td className='invisible'>2</td>
-                                </tr>
-                                <tr>
-                                <td colSpan={2}>
-                                <div className='flex justify-start items-center'>
+                                </textarea>
+                            </div>
+                        </td>
+                        <td className='qtTotal text-end'>Total:</td>
+                        <td className='qtPrice font-semibold bg-mainBlue text-white text-end border-x-[1px] border-black border-b-[1px] theadUnitprice'>${grandTotal}</td>
+                    </tr>
+                    <tr>
+                         <td className='invisible'>1</td>
+                         <td className='invisible'>2</td>
+                    </tr>
+                    <tr>
+                        <td className='invisible'>1</td>
+                        <td className='invisible'>2</td>
+                    </tr>
+                    <tr>
+                        <td colSpan={2}>
+                            <div className='flex justify-start items-center'>
                                 <div>
-                                    <div className='h-[38px] xl:h-[58px] border-b-2'>
-                                    
-                                    </div>
-                                    <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
-                                    <p className='text-center '>{"Customer's Signature"}</p>
-                                    </ResponsiveElement>
-                                    </div>
+                                <div className='border-b-[1px] cusempty  border-black'>
+                                    <p className='invisible'>d</p>
                                 </div>
-                                </td>
-                                {
+                                <p className='text-center cusSig'>
+                                    {"Customer's Signature"}
+                                </p>
+                                </div>
+                            </div>
+                        </td>
+                        {
                                     busType === 'meter' && (
                                         <>
                                          <td className='invisible'>2</td>
@@ -790,42 +592,22 @@ const QuotationForm = ({
                                        </>
                                     )
                                 }
-                               
-                                <td colSpan={busType === 'meter' ? 2 : 3}>
-                                <div className='flex justify-end items-center'>
+                        <td colSpan={busType === 'meter' ? 2 : 3}>
+                            <div className='flex justify-end items-center'>
                                 <div>
-                                    <div className='flex justify-center'>
-                                    <ResponsiveElement width={'auto'} height={55} className={`${signature === true ? "invisible" : ""}`}>
-                                        <Image src={!sigLogo ? '/white.png' : sigLogo} alt='#'
-                                            width={0}
-                                            height={0}
-                                            sizes="100vw"
-                                            
-                                        />
-                                    </ResponsiveElement>
+                                    <div className='flex justify-center items-end border-b-[1px] cusempty border-black'>
+                                        <Image src={!sigLogo ? '/white.png' : sigLogo} className={`sigImg ${signature === false ? '' : 'invisible'}`} alt='#' width={400} height={400}/>
                                     </div>
-                                    <ResponsiveElement width={'auto'} height={'auto'} fontSize={7}>
-                                    <p className='text-center '>Authorized Signature</p>
-                                    </ResponsiveElement>
-                                    </div>
+                                    <p className='text-center authSig'>Authorized Signature</p>
                                 </div>
-                                </td>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+           
+        </div>
 
-                                </tr>
-                            </tfoot>
-                            </table>
-                        </ResponsiveElement>
-
-
-
-
-
-
-
-                                
-            </div>
-        </ResponsiveElement>
-        </>
   )
 }
 
