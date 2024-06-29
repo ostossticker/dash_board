@@ -66,6 +66,7 @@ type meterProps = {
   busEmail?:string;
   busTelegram?:string;
   busPhone?:string;
+  busPhone2?:string;
   busPayTerm?:string;
 
     toggleEmail?:boolean;
@@ -140,6 +141,7 @@ const Meters = ({meterItems,
   busEmail,
   busAddr,
   busPhone,
+  busPhone2,
   busTelegram,
   invStatus ,
   abaName , 
@@ -347,7 +349,7 @@ const Meters = ({meterItems,
     
     const parsedValue = parseFloat(valueWithoutDollarSign);
     if (!isNaN(parsedValue)) {
-        return parsedValue.toFixed(2);
+        return parsedValue.toFixed(3);
     }
     return ''; // Return empty string if the input value is not a valid number
 };
@@ -570,9 +572,19 @@ const handleUnitPriceBlur = (value: string, index: number) => {
       const parsedValue = parseFloat(formattedValue);
       console.log('Parsed Value:', parsedValue);
       if (!isNaN(parsedValue)) {
-          const formattedNumber = parsedValue.toFixed(2);
-          console.log('Formatted Number:', formattedNumber);
-          handleChange(index, 'unitPrice', formattedNumber); 
+        let formattedNumber
+        if(Number.isInteger(parsedValue)){
+          formattedNumber = parsedValue.toFixed(2)
+        }else{
+          let decimal = parsedValue.toString().split('.')[1]
+          if(decimal && decimal.length === 3){
+            formattedNumber = parsedValue.toFixed(3)
+          }else{
+            formattedNumber = parsedValue.toFixed(2)
+          }
+        }
+        console.log('Formatted Number:', formattedNumber);
+        handleChange(index, 'unitPrice', formattedNumber); 
       } else {
           handleChange(index, 'unitPrice', ''); 
       }
@@ -590,7 +602,12 @@ const handleUnitPriceKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, va
           const parsedValue = parseFloat(formattedValue);
           console.log('Parsed Value:', parsedValue);
           if (!isNaN(parsedValue)) {
-              const formattedNumber = parsedValue.toFixed(2);
+              let formattedNumber;
+              if(Number.isInteger(parsedValue)){
+                formattedNumber = parsedValue.toFixed(3)
+              }else{
+                formattedNumber = parsedValue.toFixed(2)
+              }
               console.log('Formatted Number:', formattedNumber);
               handleChange(index, 'unitPrice', formattedNumber); 
           } else {
@@ -1589,6 +1606,7 @@ const calculateBalance = () => {
               busEmail={busEmail}
               busTelegram={busTelegram}
               busPhone={busPhone}
+              busPhone2={busPhone2}
               busLogo={busLogo}
               sigLogo={sigLogo}
               invNo={invNo}
@@ -1621,6 +1639,7 @@ const calculateBalance = () => {
               busEmail={busEmail}
               busPayTerm={busPayTerm}
               busPhone={busPhone}
+              busPhone2={busPhone2}
               busTelegram={busTelegram}
               busLogo={busLogo}
               sigLogo={sigLogo}
@@ -1692,6 +1711,7 @@ const calculateBalance = () => {
               busKh={busKh}
               busTelegram={busTelegram}
               busPhone={busPhone}
+              busPhone2={busPhone2}
               abaName={abaName}
               abaNumber={abaNumber}
               invNo={invNo}
@@ -1732,6 +1752,7 @@ const calculateBalance = () => {
                 busAddr={busAddr}
                 busEmail={busEmail}
                 busPhone={busPhone}
+                busPhone2={busPhone2}
                 busTelegram={busTelegram}
                 bankdes={bankdes}
                 abaLogo={abaQr}

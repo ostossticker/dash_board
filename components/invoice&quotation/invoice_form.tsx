@@ -57,6 +57,8 @@ type invFormProps = {
     bankdes?:string;
     busEng?:string;
     busKh?:string
+    ///busPhone
+    busPhone2?:string
   }
 
 const PrintForm = ({
@@ -92,6 +94,7 @@ const PrintForm = ({
     busAddr,
     busEmail,
     busPhone,
+    busPhone2,
     busTelegram,
     bankdes,
     busEng,
@@ -115,7 +118,7 @@ const PrintForm = ({
         {
             id:'invBus3',
             label:"Tel:",
-            val:busPhone,
+            val:`${busPhone} | ${busPhone2}`,
             clss:`${address === true || busPhone === "" ? "hidden" : ""}`
         },
         {
@@ -454,7 +457,7 @@ const PrintForm = ({
                 ) : (
                   <div className="flex flex-col justify-start items-start">
                    <div className={`flex justify-start `}>
-                  <textarea className="outline-none resize-none text-start overflow-hidden bg-transparent eng" rows={2} value={busKh}>
+                  <textarea className="outline-none resize-none text-start overflow-hidden bg-transparent eng pt-[4px]" rows={2} value={busKh}>
                   </textarea>
                   </div>
                   <div className={`flex justify-start `}>
@@ -490,7 +493,7 @@ const PrintForm = ({
           />
           <div className="flex-row justify-end items-end">
             <div className={`flex justify-end ${bankInfo === false ? '' : 'invisible'}`}>
-            <textarea className="outline-none resize-none text-end overflow-hidden bg-transparent eng" rows={2} value={busKh}>
+            <textarea className="outline-none resize-none text-end overflow-hidden bg-transparent eng pt-[4px]" rows={2} value={busKh}>
             </textarea>
             </div>
             <div className={`flex justify-end ${bankInfo === false ? '' : 'invisible'}`}>

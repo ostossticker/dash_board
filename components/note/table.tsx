@@ -59,6 +59,10 @@ const NoteTable = () => {
       }
     },[print.text])
 
+    useEffect(()=>{
+      setPending(false)
+    },[])
+
     const note:noteProps[] = data?.note || []
     const totalPages:number = data?.pagination.totalPages || 0
 

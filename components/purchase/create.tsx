@@ -121,6 +121,10 @@ const Create = () => {
   })
 
   useEffect(()=>{
+    setPending(false)
+  },[])
+
+  useEffect(()=>{
     setVal({
       purName: edit ? pur.purName : '',
       purPrice: edit ? (typeof pur.purPrice === 'number' ? `$${pur.purPrice.toFixed(2)}` : pur.purPrice) : '',

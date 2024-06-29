@@ -68,8 +68,9 @@ type optionDrop = {
 }
 
 const Create = () => {
-  const    MIN_TEXTAREA_HEIGHT = 32;
+  const  MIN_TEXTAREA_HEIGHT = 32;
   const textareaRef = useRef<any>(null);
+  const [isError , setIsError] = useState<boolean>(false)
   const { pending , setPending , setModalisopen ,isModal ,edit , passingId} = useToggle()
   const [suggest , setSuggest] = useState<optionDrop[]>([])
   const user = useCurrentUser()
@@ -90,6 +91,10 @@ const Create = () => {
     cusAddr:'',
     cusWebsite:'',
   })
+
+  useEffect(()=>{
+    setPending(false)
+  },[])
 
   useLayoutEffect(()=>{
     textareaRef.current.style.height = "inherit";
@@ -262,7 +267,8 @@ const scrollToSelectedIndex = () => {
     if(!cusName){
       validation= "sorry this field is required"
       toast.error(validation)
-      setPending(false)
+      setPending(true)
+      setIsError(true)
     }else{
        addCustomer({
         cusName: cusName,
@@ -291,16 +297,19 @@ const scrollToSelectedIndex = () => {
         }))
         if(data?.error){
           toast.error(data.error)
-          setPending(false)
+          setPending(true)
+          setIsError(true)
         }
         if(data?.success){
           toast.success(data.success)
           setPending(false)
+          setIsError(false)
           setModalisopen(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
-        setPending(false)
+        setPending(true)
+        setIsError(true)
       })
     }
     
@@ -316,7 +325,8 @@ const scrollToSelectedIndex = () => {
     if(!cusName){
       validation= "sorry this field is required"
       toast.error(validation)
-      setPending(false)
+      setPending(true)
+      setIsError(true)
     }else{
        editCustomer({
         id:passingId,
@@ -333,16 +343,19 @@ const scrollToSelectedIndex = () => {
       }).then((data)=>{
         if(data?.error){
           toast.error(data.error)
-          setPending(false)
+          setIsError(true)
+          setPending(true)
         }
         if(data?.success){
           toast.success(data.success)
           setPending(false)
+          setIsError(false)
           setModalisopen(false)
         }
       }).catch(()=>{
         toast.error("something went wrong")
-        setPending(false)
+        setPending(true)
+        setIsError(true)
       })
     }
   }
@@ -426,12 +439,12 @@ const scrollToSelectedIndex = () => {
                border-[1px] rounded-md border-slate-200 focus:border-mainLightBlue  h-[30px] px-1 bg-[#F8F8F8]' name='cusWebsite' value={val.cusWebsite}  onChange={handleChange}/>
     </div>
       <div className='[&>span]:focus-within:text-mainBlue px-3 py-1 '>
-      <span className='text-[12px] font-bold text-slate-400'>Website</span><br />
+      <span className='text-[12px] font-bold text-slate-400'>Address</span><br />
         <textarea name='cusAddr' ref={textareaRef} style={{minHeight:MIN_TEXTAREA_HEIGHT , resize:"none"}} className='w-full text-[13px] outline-none shadow-sm border-full solid 
                border-[1px] rounded-md border-slate-200 px-1 bg-[#F8F8F8]' value={val.cusAddr} onChange={handleChange}></textarea>
       </div>
     <div className='flex justify-center items-center gap-5 mt-[20px]'>
-      <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.cusName  !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? <span className='loading loading-spinner text-default'></span> : <p>Save</p>}</button>
+      <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.cusName  !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
       <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>{closeModal('my_modal_5') , setModalisopen(false) }}>Cancel</button>
     </div>
     </>

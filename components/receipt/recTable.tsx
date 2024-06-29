@@ -347,7 +347,7 @@ const RecTable = () => {
                     <td className={`${placeholderClass} text-start`}>{item.recBus}</td>
                     <td className={`${placeholderClass} text-end`}>${item.usd.toFixed(2)}</td>
                     <td className={placeholderClass}>
-                      <div className='text-center'>
+                      <div className='text-end'>
                         {item.date}
                       </div>
                     </td>

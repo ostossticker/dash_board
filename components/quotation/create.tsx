@@ -44,6 +44,7 @@ type optionDrop = {
     busEmail:string;
     busTelegram:string;
     busPhone1:string;
+    busPhone2:string;
     busBankDes:string;
     busPayTerm:string;
 }
@@ -102,7 +103,7 @@ const CreateQt = () => {
     const router = useRouter()
     const role = useCurrentRole()
     const quotationCheck = useQuotation()
-    const {darkMode ,print ,edit , passingId , setToggleLogo , setToggleAddr , pending , setToggleBankInfo , setToggleEmp , setToggleSign , setValueNote} = useToggle()
+    const {darkMode ,print ,edit , passingId , setToggleLogo , setToggleAddr , pending , setToggleBankInfo , setToggleEmp , setToggleSign , setPending , setValueNote} = useToggle()
     const [restoring , setRestoring] = useState<string>('')
     const [selectedItemId, setSelectedItemId] = useState<string>("");
     const [test , setTest] = useState<optionDrop[]>([])
@@ -697,6 +698,7 @@ const CreateQt = () => {
         if(role !== 'ADMIN' && quotationCheck !== true){
             router.push('/dashboard')
         }
+        setPending(false)
       },[])
 
       if(role !== 'ADMIN' && quotationCheck !== true){
@@ -1213,6 +1215,7 @@ const CreateQt = () => {
                             busTelegram={item.busTelegram}
                             busPayTerm={item.busPayTerm}
                             busPhone={item.busPhone1}
+                            busPhone2={item.busPhone2}
                             sigLogo={item.signature}
                             oldImg1={val.oldImg2}
                             oldImg={val.oldImg1}
@@ -1243,6 +1246,7 @@ const CreateQt = () => {
                             bankdes={item.busDes}
                             busTelegram={item.busTelegram}
                             busPhone={item.busPhone1}
+                            busPhone2={item.busPhone2}
                             sigLogo={item.signature}
                             staff={emp}
                             staffName={val.staffName}

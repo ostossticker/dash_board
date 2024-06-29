@@ -40,6 +40,7 @@ type optionDrop = {
     busEmail:string;
     busTelegram:string;
     busPhone1:string;
+    busPhone2:string;
     busBankDes:string;
     busInvEng:string;
     busInvkh:string;
@@ -104,7 +105,8 @@ const Createinv = () => {
         setValueNoti,
         setValueNote,
         print,
-        pending
+        pending,
+        setPending
     } = useToggle()
     const router = useRouter()
     const [test , setTest] = useState<optionDrop[]>([])
@@ -304,8 +306,8 @@ const Createinv = () => {
             }
             if(name === 'cusPhone'){
                 setVal(prev=>({
-                  ...prev,
-                  cusName:test2.find(item => item.id === selectedItemId)?.cusName || "",
+                ...prev,
+                cusName:test2.find(item => item.id === selectedItemId)?.cusName || "",
                 cusComp:test2.find(item => item.id === selectedItemId)?.cusComp || "",
                 cusPhone:test2.find(item => item.id === selectedItemId)?.cusPhone1 || "",
                 cusEmail:test2.find(item => item.id === selectedItemId)?.cusEmail || "",
@@ -666,7 +668,7 @@ const Createinv = () => {
         if(role !== 'ADMIN' && userCheck !== true){
             router.push('/dashboard')
         }
-    
+        setPending(false)
       },[])
 
 
@@ -1022,6 +1024,7 @@ const Createinv = () => {
                             toggleEmail={toggle.cusEmail}
                             busAddr={item.busAddr}
                             busEmail={item.busEmail}
+                            busPhone2={item.busPhone2}
                             busTelegram={item.busTelegram}
                             bankdes={item.busBankDes}
                             busPhone={item.busPhone1}
@@ -1068,6 +1071,7 @@ const Createinv = () => {
                             busAddr={item.busAddr}
                             busEmail={item.busEmail}
                             bankdes={item.busBankDes}
+                            busPhone2={item.busPhone2}
                             invNote={note}
                             busTelegram={item.busTelegram}
                             busPhone={item.busPhone1}

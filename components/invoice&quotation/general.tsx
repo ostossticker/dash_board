@@ -69,6 +69,7 @@ type generalProps = {
   busEmail?:string;
   busTelegram?:string;
   busPhone?:string;
+  busPhone2?:string;
   busPayTerm?:string;
   ////router push
   routerPush?:string;
@@ -155,6 +156,7 @@ const General = ({
   busPayTerm,
   bankdes,
   busKh,
+  busPhone2,
   busEng
 }:generalProps) => {
   const user = useCurrentUser()
@@ -412,7 +414,7 @@ const General = ({
     
     const parsedValue = parseFloat(valueWithoutDollarSign);
     if (!isNaN(parsedValue)) {
-        return parsedValue.toFixed(2);
+        return parsedValue.toFixed(3);
     }
     return ''; // Return empty string if the input value is not a valid number
 };
@@ -459,7 +461,9 @@ const formatTotal = (value: string): string => {
     }
    
     const quantity = updatedCalculation.quantity;
-    const unitPrice = parseFloat(updatedCalculation.unitPrice.replace(/\$/g, ''));
+    const numericValue = parseFloat(updatedCalculation.unitPrice.replace(/\$/g, ''));
+    const formatedValue = numericValue.toFixed(3)
+    const unitPrice = parseFloat(formatedValue)
     if (!quantity) {
         if (!isNaN(unitPrice)) {
             updatedCalculation.total = `$${unitPrice.toFixed(2)}`;
@@ -519,7 +523,17 @@ const formatTotal = (value: string): string => {
         const parsedValue = parseFloat(formattedValue);
         console.log('Parsed Value:', parsedValue);
         if (!isNaN(parsedValue)) {
-            const formattedNumber = parsedValue.toFixed(2);
+          let formattedNumber;  
+          if(Number.isInteger(parsedValue)){
+              formattedNumber = parsedValue.toFixed(2)
+            }else{
+              let decimal = parsedValue.toString().split('.')[1]
+              if(decimal && decimal.length === 3){
+                formattedNumber = parsedValue.toFixed(3)
+              }else{
+                formattedNumber = parsedValue.toFixed(2)
+              }
+            }
             console.log('Formatted Number:', formattedNumber);
             handleChange(index, 'unitPrice', formattedNumber); 
         } else {
@@ -539,9 +553,19 @@ const formatTotal = (value: string): string => {
             const parsedValue = parseFloat(formattedValue);
             console.log('Parsed Value:', parsedValue);
             if (!isNaN(parsedValue)) {
-                const formattedNumber = parsedValue.toFixed(2);
-                console.log('Formatted Number:', formattedNumber);
-                handleChange(index, 'unitPrice', formattedNumber); 
+                let fomattedNumber;
+                if(Number.isInteger(parsedValue)){
+                  fomattedNumber = parsedValue.toFixed(2)
+                }else{
+                  let decimal = parsedValue.toString().split('.')[1]
+                  if(decimal && decimal.length === 3){
+                    fomattedNumber = parsedValue.toFixed(3)
+                  }else{
+                    fomattedNumber= parsedValue.toFixed(2)
+                  }
+                }
+                console.log('Formatted Number:', fomattedNumber);
+                handleChange(index, 'unitPrice', fomattedNumber); 
             } else {
                 handleChange(index, 'unitPrice', ''); 
             }
@@ -1479,6 +1503,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               busAddr={busAddr}
               busPayTerm={busPayTerm}
               busEmail={busEmail}
+              busPhone2={busPhone2}
               busTelegram={busTelegram}
               busPhone={busPhone}
               oldImg1={oldImg1}
@@ -1514,6 +1539,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               busLogo={busLogo}
               busDes={bankdes}
               busAddr={busAddr}
+              busPhone2={busPhone2}
               busEmail={busEmail}
               busPayTerm={busPayTerm}
               busPhone={busPhone}
@@ -1585,6 +1611,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               bankdes={bankdes}
               busTelegram={busTelegram}
               busPhone={busPhone}
+              busPhone2={busPhone2}
               busLogo={busLogo}
               abaLogo={abaQr}
               sigLogo={sigLogo}
@@ -1622,6 +1649,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
                 bankdes={bankdes}
                 busTelegram={busTelegram}
                 busPhone={busPhone}
+                busPhone2={busPhone2}
                 invNo={invNo}
                 cusName={cusName}
                 busDes={busDes}

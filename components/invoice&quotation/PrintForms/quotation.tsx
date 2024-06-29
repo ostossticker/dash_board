@@ -59,6 +59,8 @@ type meterProps = {
     /////staff info
     staffName:string;
     staffPhone:string;
+    ////busPhone
+    busPhone2?:string;
 }
 
 
@@ -91,6 +93,7 @@ const Qtprint = ({
     busEmail,
     busPayTerm,
     busPhone,
+    busPhone2,
     busTelegram,
     ////
     staffName,
@@ -174,7 +177,7 @@ const Qtprint = ({
         },
         {
             label:"Tel:",
-            val:busPhone,
+            val:`${busPhone} | ${busPhone2}`,
             clss:`${address === true || busPhone === "" ? "invisible" : ""}`
         },
         {
@@ -233,7 +236,7 @@ const Qtprint = ({
     let test2 = cusInfo.reduce((a:number[], e ,i)=>(e.val !== "") ? a.concat(i) : a , [] )
     let test3 = busInfo.reduce((a:number[] , e ,i) => (e.val !== "") ? a.concat(i) : a ,[])
   return ( 
-        <div className={`bg-white py-[20px] px-[30px] w-[546px] mx-auto my-auto`}>
+        <div className={`bg-white py-[20px] px-[30px] w-[561px] h-[795px] mx-auto my-auto`}>
             <div>
                     
                     <div className={`flex justify-between ${logo === true ? "mb-[41.8px]" : ""}`}>

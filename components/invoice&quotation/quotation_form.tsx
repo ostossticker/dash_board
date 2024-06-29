@@ -61,6 +61,8 @@ type invFormProps = {
     oldImg1?:string;
     img1?:string
     img2?:string
+    ////busPhone
+    busPhone2?:string;
   }
 
 const QuotationForm = ({
@@ -94,6 +96,7 @@ const QuotationForm = ({
     busAddr,
     busEmail,
     busPhone,
+    busPhone2,
     busTelegram
 }:invFormProps) => {
     const {logo , address , setPrint , setPrinting , onCancel, signature , employee} = useToggle()
@@ -126,7 +129,7 @@ const QuotationForm = ({
         {
             id:'qtForm5',
             label:"Tel:",
-            val:busPhone,
+            val:`${busPhone} | ${busPhone2}`,
             clss:`${address === true || busPhone === "" ? "hidden" : ""}`
         },
         {
@@ -235,7 +238,7 @@ const QuotationForm = ({
             {
                 logo === true ? (
                     <div className='flex items-start'>  
-                        <h1 className='inv'>Quotation</h1>
+                        <h1 className='qt'>QUOTATION</h1>
                     </div>
                 ) : (
                     <div className="img">
@@ -252,7 +255,7 @@ const QuotationForm = ({
 
             <div className="flex  justify-between items-end">
                 <div>
-                <p className={`inv ${logo === false ? '' : 'invisible'}`}>Quotation</p>
+                <p className={`inv ${logo === false ? '' : 'invisible'}`}>QUOTATION</p>
                 <p className="invNo">No. {invNo}</p>
                 </div>
                 <p className="invNo">Date. {dateFormat(invDate === undefined ? '' : invDate)}</p>
@@ -514,10 +517,10 @@ const QuotationForm = ({
                     <tr>
                         <td></td>
                         <td className='text-start'>
-                            <p className='prodArtWork'>Production Sample Artwork</p>
+                            <p className={`prodArtWork ${!img1 && !img2 && !oldImg && !oldImg1 ? 'invisible' : ''}`}>Production Sample Artwork</p>
                             <div className='flex gap-2 prodflex'>
-                                <Image src='/product.jpeg' alt='#' width={400} height={400} className='img1'/>
-                                <Image src='/product.jpeg' alt='#' width={400} height={400} className='img2'/>
+                                <Image src={img1 ? img1 : oldImg ? oldImg : '/white.png'} alt='#' width={400} height={400} className='img1'/>
+                                <Image src={img2 ? img2 : oldImg1 ? oldImg1 : '/white.png'} alt='#' width={400} height={400} className='img2'/>
                             </div>
                         </td>
                         {

@@ -377,6 +377,7 @@ const Receipting = () => {
         router.push('/receipt/table')
       }
     };
+    setPending(false)
 
     document.addEventListener('keydown', handleKeyPress);
 

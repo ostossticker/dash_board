@@ -197,6 +197,7 @@ const Editadmin = () => {
   const ulRef = useRef<HTMLUListElement>(null);
   const [selectedItemId, setSelectedItemId] = useState<string>("");
   const [test , setTest] = useState<Option[]>([])
+  const [isError , setIsError] = useState<boolean>(false)
   const [busVal , setBusVal] = useState<string>('')
   const [focus , setFocus] = useState<boolean>(false)
   const [val , setVal] = useState<adminProps>({
@@ -475,6 +476,11 @@ const Editadmin = () => {
     setBusiness(updateName);
   }
 
+  useEffect(()=>{
+    setPending(false)
+  },[])
+
+
   const onUpdate = () =>{
     const {name , email , phoneNumber , password , role , invoice , quotation , receipt , business , employee , customer , product , telegramReport , purchase , payment , isTwoFactorEnabled} = val
     setPending(true)
@@ -513,15 +519,18 @@ const Editadmin = () => {
     }).then((data)=>{
         if(data?.error){
             toast.error(data.error)
-            setPending(false)
+            setPending(true)
+            setIsError(true)
           }
           if(data?.success){
             toast.success(data.success)
             setPending(false)
+            setIsError(false)
           }
         }).catch(()=>{
           toast.error("something went wrong")
-          setPending(false)
+          setPending(true)
+          setIsError(true)
         })
   }
 
@@ -636,7 +645,7 @@ const Editadmin = () => {
         )
     }
     <div className='flex justify-center items-center gap-5'>
-        <button className={`px-4 py-1 duration-200 ease-in-out bg-insomnia-primary text-white w-[185px] rounded-md `} onClick={onUpdate}>{pending ? <span className='loading loading-spinner text-default'></span> : <p>Update</p>}</button>
+        <button className={`px-4 py-1 duration-200 ease-in-out bg-insomnia-primary text-white w-[185px] rounded-md `} onClick={onUpdate}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
         <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>closeModal('my_modal_5')}>Cancel</button>
     </div>
     </>

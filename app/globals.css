@@ -159,6 +159,10 @@ input[type="number"] {
       font-size: 20px;
       font-weight: bold;
   }
+  .qt{
+    font-size: 25px;
+    font-weight: bold;
+  }
   .de{
     font-size: 13px;
     font-weight: bold;
@@ -272,9 +276,11 @@ input[type="number"] {
   /*************************************************************/
   .img1{
       width: 60px;
+      height: 30px;
   }
   .img2{
       width: 60px;
+      height: 30px;
   }
   .paymentTitle{
       font-size: 9px;
@@ -341,11 +347,11 @@ input[type="number"] {
         height: 970px;
         padding-left: 50px;
         padding-right: 50px;
-        
+        zoom: 125%;
     }
     .cartInv{
       padding-top: 45px;
-        padding-bottom: 35px;
+      padding-bottom: 35px;
     }
     .cartDe{
       padding-top: 50px;
@@ -363,6 +369,10 @@ input[type="number"] {
         font-size: 35px;
         font-weight: bold;
     }
+    .qt{
+      font-size: 35px;
+      font-weight: bold;
+    }
     .de{
       font-size: 25px;
       font-weight: bold;
@@ -376,7 +386,7 @@ input[type="number"] {
     }
     .des{
         font-size: 15px;
-        width: 400px;
+        width: 300px;
         line-height: 24px;
         height: 118px;
     }
@@ -479,9 +489,11 @@ input[type="number"] {
     /*************************************************************/
   .img1{
       width: 80px;
+      height: 40px;
   }
   .img2{
       width: 80px;
+      height: 40px;
   }
   .paymentTitle{
       font-size: 13px;

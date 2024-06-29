@@ -114,6 +114,10 @@ const Create = () => {
   })
 
   useEffect(()=>{
+    setPending(false)
+  },[])
+
+  useEffect(()=>{
     setVal({
       prodItemName: edit ? prods.prodItemName : '',
       prodUnitPrice: edit ? (typeof prods.prodUnitPrice === 'number' ? prods.prodUnitPrice === 0 ? '' : `$${prods.prodUnitPrice.toFixed(2)}` : prods.prodUnitPrice) : '',

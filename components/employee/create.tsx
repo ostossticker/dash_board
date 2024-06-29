@@ -109,6 +109,10 @@ const Create = () => {
   })
 
   useEffect(()=>{
+    setPending(false)
+  },[])
+
+  useEffect(()=>{
     setVal(prev=>({
       ...prev,
       empName:edit ? emps.empName : '',

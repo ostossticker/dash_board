@@ -170,6 +170,10 @@ const Create = () => {
         })
       },[passingId, edit, buses ]);
 
+      useEffect(()=>{
+        setPending(false)
+      },[])
+
     const [image , setImage] = useState<busImgProps>({
         abaQr:undefined,
         signature:undefined,

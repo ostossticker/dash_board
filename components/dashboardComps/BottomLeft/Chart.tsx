@@ -197,7 +197,7 @@ const Charts = () => {
             marginTop:'8px',
             fontSize:'10px',
         },
-        colors: ["#005D85","#F04846"]
+        colors: ["#F04846","#005D85"]
     };
 
     const options1 = {
@@ -255,7 +255,7 @@ const Charts = () => {
             marginTop:'6px',
             fontSize:'8px',
         },
-        colors: ["#005D85","#F04846"]
+        colors: ["#F04846","#005D85"]
     };
 
     const thead = 'px-[8px]  bg-mainBlue text-white'
