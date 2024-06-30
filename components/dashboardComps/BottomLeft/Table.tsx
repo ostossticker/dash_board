@@ -109,7 +109,7 @@ useEffect(()=>{
                 {
                   thead?.map((item,i)=>{
                     return(
-                      <th key={item.label} className={`${item.textAlign} ${i === 0 ? 'rounded-tl-md' : ''} ${i === 6 ? 'rounded-tr-md' : ''} text-white bg-thead-primary xl:text-[16px] lg:text-[10px] xl:leading-7 pt-[3px] `}>{item.label}</th>
+                      <th key={item.label} className={`${item.textAlign} ${i === 0 ? 'rounded-tl-md' : ''} ${i === 5 ? 'rounded-tr-md' : ''} text-white bg-thead-primary xl:text-[16px] lg:text-[10px] xl:leading-7 pt-[3px] `}>{item.label}</th>
                     )
                   })
                 }

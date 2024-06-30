@@ -783,6 +783,7 @@ const calculateBalance = () => {
 
   const buttons = [
     {
+      id:'btn-d',
       label:"RECEIPT",
       clss:`${form === 'quotation' ? "!hidden" : ""} bg-[#00BCD4] hover:bg-[#036080]`,
       type:"",
@@ -795,6 +796,7 @@ const calculateBalance = () => {
       }
     },
     {
+      id:'btn-d1',
       label:"PDF",
       clss:"bg-[#00BCD4] hover:bg-[#036080]",
       type:"inv",
@@ -805,6 +807,7 @@ const calculateBalance = () => {
       }
     },
     {
+      id:'btn-d2',
       label:"PDF",
       clss:"bg-[#00BCD4] hover:bg-[#036080]",
       type:"qty",
@@ -815,6 +818,7 @@ const calculateBalance = () => {
       }
     },
     {
+      id:'btn-d3',
       label:"PRINT",
       clss:"bg-[#00BCD4] hover:bg-[#036080]",
       type:"inv",
@@ -825,6 +829,7 @@ const calculateBalance = () => {
       }
     },
     {
+      id:'btn-d4',
       label:"PRINT",
       clss:"bg-[#00BCD4] hover:bg-[#036080]",
       type:"qty",
@@ -835,6 +840,7 @@ const calculateBalance = () => {
       }
     },
     {
+      id:'btn-d5',
       label:`${pending ? "Loading..." : "SAVE"}`,
       clss:`bg-[#024466] hover:bg-[#00BCD4] ${form === 'invoice' ? "!hidden" : ""}`,
       type:"quotation",
@@ -847,6 +853,7 @@ const calculateBalance = () => {
       }
     },
     {
+      id:'btn-d6',
       label:`${pending ? "Loading..." : "SAVE"}`,
       clss:`bg-[#024466] hover:bg-[#00BCD4] ${form === 'quotation' ? "!hidden" : ""}`,
       type:"invoice",
@@ -859,12 +866,14 @@ const calculateBalance = () => {
       } 
     },
     {
+      id:'btn-d7',
       label:"CANCEL",
       clss:`${form === 'quotation' ? "!hidden" : ""} bg-insomnia-primary hover:bg-[#E94043]`,
       type:"",
       func:()=>router.push('/invoice/table')
     },
     {
+      id:'btn-d8',
       label:"CANCEL",
       clss:`${form === 'invoice' ? "!hidden" : ""} bg-insomnia-primary hover:bg-[#E94043]`,
       type:"",
@@ -1510,7 +1519,7 @@ const calculateBalance = () => {
      {
             buttons.map((item)=>{
               return(
-                <React.Fragment key={crypto.randomUUID()}>
+                <React.Fragment key={item.id}>
                   {
                     item.label !== "PRINT" && item.label !== 'PDF' && item.label !== 'SAVE' ? (
                       <button className={`text-dark-lg-color h-[35px] px-2 font-bold text-[20px] w-[120px] rounded-md  ${item.clss}`} onClick={item.func} >{item.label}</button>
@@ -1544,6 +1553,7 @@ const calculateBalance = () => {
               )
             })
           }
+          
      </div>
        </div>
     </div>

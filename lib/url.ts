@@ -1,1 +1,1 @@
-export const url = "https://dashapi-pak1.onrender.com"
+export const url = "https://dashapi-somx.onrender.com"

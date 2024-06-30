@@ -428,7 +428,7 @@ const filteredUsers = anagramFilter
                   thead?.map((item,i)=>{
                     return(
                       <React.Fragment key={item.label}>
-                        <th className={`${item.textAlign} ${i === 0 ? 'rounded-tl-md' : ''} ${i === 9 ? 'rounded-tr-md' : ''} text-white bg-thead-primary xl:text-[16px] lg:text-[10px] xl:leading-7 pt-[3px] ${routerSwitch === 'delivery' && item.label === 'STATUS' && "hidden"} text-[14px]`}>{ routerSwitch === 'delivery' && item.label === 'INVOICE#' ? "DELIVERY#" : item.label === 'CREATE DATE' ? !switched ? "INV DATE" : "CREATE DATE" : item.label } </th>
+                        <th className={`${item.textAlign} ${i === 0 ? 'rounded-tl-md' : ''} ${i === 8 ? 'rounded-tr-md' : ''} text-white bg-thead-primary xl:text-[16px] lg:text-[10px] xl:leading-7 pt-[3px] ${routerSwitch === 'delivery' && item.label === 'STATUS' && "hidden"} text-[14px]`}>{ routerSwitch === 'delivery' && item.label === 'INVOICE#' ? "DELIVERY#" : item.label === 'CREATE DATE' ? !switched ? "INV DATE" : "CREATE DATE" : item.label } </th>
                       </React.Fragment>
                     )
                   })

@@ -345,7 +345,11 @@ const Charts = () => {
                                     {
                                         monthData.map((item)=>{
                                             return(
-                                                <option className='text-black' key={crypto.randomUUID()} value={item}>{months[item]}</option>
+                                                <React.Fragment key={crypto.randomUUID()}>
+                                                    {
+                                                        item !== 0 && <option className='text-black' value={item}>{months[item]}</option>
+                                                    }
+                                                </React.Fragment>
                                             )
                                         })
                                     }
@@ -363,7 +367,11 @@ const Charts = () => {
                                     {
                                         monthData.map((item)=>{
                                             return(
-                                                <option className='text-black' key={crypto.randomUUID()} value={item}>{months[item]}</option>
+                                                <React.Fragment key={crypto.randomUUID()}>
+                                                    {
+                                                        item !== 0 && <option className='text-black' value={item}>{months[item]}</option>
+                                                    }
+                                                </React.Fragment>
                                             )
                                         })
                                     }
