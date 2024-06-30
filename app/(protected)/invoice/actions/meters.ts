@@ -199,7 +199,7 @@ export const editMeter = async ({
 }:invoiceProps) =>{
     const isValid = items?.every(item => isArrValid(item));
     if(!isValid){
-        return {error:"all array of the object must not be empty"}
+        return {error:"description and total of items field must not empty []"}
     }
     if(!cusName1){
         return {error:"customer name is required!"}

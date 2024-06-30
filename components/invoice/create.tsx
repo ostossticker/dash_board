@@ -34,6 +34,7 @@ type optionDrop = {
     busBankNumber:string
     busLogo:string;
     abaQr:string;
+    bankLogo:string;
     signature:string;
     busDes:string;
     busAddr:string;
@@ -1029,6 +1030,7 @@ const Createinv = () => {
                             bankdes={item.busBankDes}
                             busPhone={item.busPhone1}
                             busEng={item.busInvEng}
+                            bankLogo={item.bankLogo}
                             invNote={note}
                             busKh={item.busInvkh}
                             togglePo={toggle.invPo}
@@ -1072,6 +1074,7 @@ const Createinv = () => {
                             busEmail={item.busEmail}
                             bankdes={item.busBankDes}
                             busPhone2={item.busPhone2}
+                            bankLogo={item.bankLogo}
                             invNote={note}
                             busTelegram={item.busTelegram}
                             busPhone={item.busPhone1}

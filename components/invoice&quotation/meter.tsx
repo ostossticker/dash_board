@@ -43,6 +43,7 @@ type meterProps = {
   cusEmail:string;
   cusAddr:string;
   invBus:string;
+  bankLogo:string;
   invNo:string;
   invPo?:string;
   invTitle:string;
@@ -137,6 +138,7 @@ const Meters = ({meterItems,
   busDes,
   staff, 
   toggleAddr , 
+  bankLogo,
   togglePo ,
   busEmail,
   busAddr,
@@ -1717,6 +1719,7 @@ const calculateBalance = () => {
               invNo={invNo}
               busDes={busDes}
               cusName={cusName}
+              bankLogo={bankLogo}
               cusComp={cusComp}
               bankdes={bankdes}
               cusPhone={cusPhone}
@@ -1748,6 +1751,7 @@ const calculateBalance = () => {
                 abaNumber={abaNumber}
                 busInvEng={busEng}
                 busInvkh={busKh}
+                bankLogo={bankLogo}
                 busLogo={busLogo}
                 busAddr={busAddr}
                 busEmail={busEmail}

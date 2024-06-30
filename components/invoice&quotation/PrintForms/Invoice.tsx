@@ -57,6 +57,7 @@ type meterProps = {
     ////
     busInvEng?:string;
     busInvkh?:string;
+    bankLogo?:string;
 
 }
 
@@ -96,7 +97,8 @@ const Invprint = ({
     busTelegram,
     bankdes,
     busInvEng,
-    busInvkh
+    busInvkh,
+    bankLogo
 }:meterProps) => {
     const {logo , address , signature , bankInfo , routerSwitch} = useToggle()
     const meters = useMemo(()=>[
@@ -141,7 +143,7 @@ const Invprint = ({
         },
         {
             label:"Qty",
-            class:'text-end'
+            class:'text-center'
         },
         {
             label:"Unit Price",
@@ -223,7 +225,7 @@ const Invprint = ({
     },[items])
   return ( 
         <>
-        <div className="bg-white py-[20px] px-[30px] w-[561px] h-[795px] border-[1px] border-black mx-auto my-auto">
+        <div className="bg-white py-[10px] px-[30px] w-[561px] h-[795px] border-[1px] border-black mx-auto my-auto">
                     
                     <div className={`flex justify-between  mt-[15px]`}>
                             <div className={`flex justify-start items-start`}>
@@ -264,15 +266,15 @@ const Invprint = ({
                         </div>
                         <div className='grid grid-cols-2'>
                             <div className='col-span-1'>
-                                <div className={`flex py-[1px] justify-start items-center invisible ${cusName === "" ? "invisible" : "hidden"}`} style={{fontFamily:"khmerContent"}}>
+                                <div className={`flex py-[1px] justify-start items-center ${cusName === "" ? "invisible" : "hidden"}`} style={{fontFamily:"khmerContent"}}>
                                     <p className='text-[9px]'>mp</p>
                                     <p className='text-[9px]'>ddd</p>
                                 </div>
-                                <div className={`flex  py-[1px] justify-start items-center invisible ${cusComp === "" ? "invisible" : "hidden"}`} style={{fontFamily:"khmerContent"}}>
+                                <div className={`flex  py-[1px] justify-start items-center ${cusComp === "" ? "invisible" : "hidden"}`} style={{fontFamily:"khmerContent"}}>
                                     <p className='text-[9px]'>mp</p>
                                     <p className='text-[9px]'>ddd</p>
                                 </div>
-                                <div className={`flex  py-[1px] justify-start items-center invisible ${cusPhone === "" ? "invisible" : "hidden"}`} style={{fontFamily:"khmerContent"}}>
+                                <div className={`flex  py-[1px] justify-start items-center ${cusPhone === "" ? "invisible" : "hidden"}`} style={{fontFamily:"khmerContent"}}>
                                     <p className='text-[9px]'>mp</p>
                                     <p className='text-[9px]'>ddd</p>
                                 </div>
@@ -300,7 +302,7 @@ const Invprint = ({
                                                     ) : (
                                                         <div className={` py-[1px] ${item.class} ${!item.val ? "hidden" : "flex"}  items-start gap-1`} style={{fontFamily:"khmerContent"}}>
                                                             <p className='text-[9px]'>{item.label}</p>
-                                                            <textarea className='text-[9px] outline-none resize-none overflow-hidden w-[170px]' rows={3} value={item.val}>
+                                                            <textarea className='text-[9px] outline-none resize-none overflow-hidden w-[200px]' rows={3} value={item.val}>
 
                                                             </textarea>
                                                         </div>
@@ -449,7 +451,7 @@ const Invprint = ({
                                                             <td className={`text-[9px] text-start py-[2px] ${i === 0 ? "pt-[5px]" : ""}`} style={{fontFamily:"khmerContent"}}>
                                                                 {!item.description ? "" : item.description.length < 44 ? item.description : <input className='w-[220px] outline-none' style={{fontFamily:"khmerContent"}} value={item.description}/>}
                                                             </td>
-                                                            <td className={`text-[9px] text-end py-[2px] ${i === 0 ? "pt-[5px]" : ""}`}>{item.quantity}</td>
+                                                            <td className={`text-[9px] text-center py-[2px] ${i === 0 ? "pt-[5px]" : ""}`}>{item.quantity}</td>
                                                             <td className={`text-[9px] text-end py-[2px] ${i === 0 ? "pt-[5px]" : ""}`}>{item.unitPrice} </td>
                                                             <td className={`text-[9px] text-end pr-3 py-[2px] ${i === 0 ? "pt-[5px]" : ""}`}>{item.total}</td>
                                                     </tr>
@@ -501,7 +503,7 @@ const Invprint = ({
                                                 width={80} 
                                                 height={80} 
                                                 alt='#' 
-                                                src="https://bankerjobs.asia/storage/files/kh/7/thumb-816x460-8bb28995e73226227d77d1c107b05228.png"
+                                                src={!bankLogo ? '/white.png' : bankLogo}
                                             />
                                             </div>
                                                         <div className='text-[9px] pl-[10px]' style={{fontFamily:"khmerContent"}}>
@@ -572,7 +574,7 @@ const Invprint = ({
 
                                         </textarea>
                                     </div> 
-                                <div className='flex justify-end pt-[22px]'>
+                                <div className='flex justify-end pt-[10px]'>
                                     <div className='text-end pr-[40px]'>
                                         <Image src='/white.png' width={500} height={500} alt='#' className={`invisible mx-auto w-[auto]  h-[50px]`}/>
                                         {/*****************origin 50x50***************/}

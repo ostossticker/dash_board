@@ -1,1 +1,1 @@
-export const url = "https://dashapi-przq.onrender.com"
+export const url = "http://localhost:4040"

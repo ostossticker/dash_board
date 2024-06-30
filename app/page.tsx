@@ -8,10 +8,12 @@ export default function Home() {
   const user = useCurrentUser()
   if(!user){
     router.push('/auth/login')
+  }else{
+    router.push('/dashboard')
   }
   return (
     <div>
-      Welcome :D!
+      
     </div>
   );
 }

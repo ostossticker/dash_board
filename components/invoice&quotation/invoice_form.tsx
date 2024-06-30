@@ -53,6 +53,7 @@ type invFormProps = {
     busLogo?:string;
     abaLogo?:string;
     sigLogo?:string;
+    bankLogo?:string;
     ///busDes
     bankdes?:string;
     busEng?:string;
@@ -98,7 +99,8 @@ const PrintForm = ({
     busTelegram,
     bankdes,
     busEng,
-    busKh
+    busKh,
+    bankLogo,
 }:invFormProps) => {
     const {logo , address , onCancel , setPrint , setPrinting , signature , bankInfo , routerSwitch} = useToggle()
     
@@ -195,6 +197,7 @@ const PrintForm = ({
             }
         }
     }
+
     useEffect(()=>{
         const start = () =>{
             if(invStatus === "partial" || !Number.isNaN(discount) && discount !== 0){
@@ -234,9 +237,7 @@ const PrintForm = ({
                 <h1 className={`inv ${routerSwitch === 'invoice' ? 'invOn' : 'dnOn'}`}>{routerSwitch === 'invoice' ? 'INVOICE' : routerSwitch === 'delivery' ? 'DELIVERY NOTE' : ''}</h1>
               </div>
             ) : (
-                <div className="img">
-                <Image src={!busLogo ? '/white.png' : busLogo} alt="#" width={400} height={400}/>
-               </div>
+                <Image src={!busLogo ? '/white.png' : busLogo} className='img' alt="#" width={400} height={400}/>
             )
           }
           <div className="flex-row justify-start">
@@ -402,11 +403,11 @@ const PrintForm = ({
                         arr.map((item,i)=>{
                             return(
                                 <tr  key={item.id} draggable="true" onDragStart={(e)=>handleDragStart(e,item.id)} onDragOver={handleDragOver} onDrop={(e)=>handleDrop(e,item.id)}>
-                                    <td className={` text-center`}>{i + 1}</td>
-                                    <td className={` text-start`}>{!item.description ? "" : item.description.length < 44 ? item.description : <input className='w-[220px] outline-none' value={item.description}/>}</td>
-                                    <td className={` text-center`}>{item.quantity === "" ? "" : item.quantity}</td>
-                                    <td className={` text-end`}>{item.unitPrice}</td>
-                                    <td className={` text-end pr-[12px]`}>{item.total}</td>
+                                    <td className={`${i === 0 ? 'pt' : ''} text-center`}>{i + 1}</td>
+                                    <td className={`${i === 0 ? 'pt' : ''} text-start`}>{!item.description ? "" : item.description.length < 44 ? item.description : <input className='w-[201px] outline-none' value={item.description}/>}</td>
+                                    <td className={`${i === 0 ? 'pt' : ''} text-center`}>{item.quantity === "" ? "" : item.quantity}</td>
+                                    <td className={`${i === 0 ? 'pt' : ''} text-end`}>{item.unitPrice}</td>
+                                    <td className={`${i === 0 ? 'pt' : ''} text-end pr-[12px]`}>{item.total}</td>
                                 </tr>
                             )
                         })
@@ -446,7 +447,7 @@ const PrintForm = ({
                           width={400} 
                           height={400} 
                           alt='#' 
-                          src="https://bankerjobs.asia/storage/files/kh/7/thumb-816x460-8bb28995e73226227d77d1c107b05228.png"
+                          src={!bankLogo ? '/white.png' : bankLogo}
                       />
                       <div>
                             <p className='abaText'>{bankdes}</p>

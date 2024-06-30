@@ -80,7 +80,7 @@ type generalProps = {
   busLogo?:string;
   abaQr?:string;
   sigLogo?:string;
-
+  bankLogo?:string;
   ///// old img
   oldImg?:string;
   oldImg1?:string;
@@ -135,6 +135,7 @@ const General = ({
   busPhone,
   busTelegram,
   abaName , 
+  bankLogo,
   mode,
   abaNumber ,
   invStatus , 
@@ -699,6 +700,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
   ]
 
   const save = async(receip?:string) =>{
+    console.log('save')
     setPending(true)
 
     let validation = ''
@@ -776,6 +778,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
   }
 
   const save1 = async(convert?:string) =>{
+    console.log('save1')
     setPending(true)
     let validation = ''
 
@@ -1605,6 +1608,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
               abaName={abaName}
               busDes={busDes}
               abaNumber={abaNumber}
+              bankLogo={bankLogo}
               invNo={invNo}
               busAddr={busAddr}
               busEmail={busEmail}
@@ -1645,6 +1649,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
                 busInvEng={busEng}
                 busInvkh={busKh}
                 busAddr={busAddr}
+                bankLogo={bankLogo}
                 busEmail={busEmail}
                 bankdes={bankdes}
                 busTelegram={busTelegram}

@@ -137,7 +137,7 @@ input[type="number"] {
       height: 672px;
       padding-left: 35px;
       padding-right: 35px;
-      
+      zoom: 125%;
   }
   .cartInv{
     padding-top: 33px;
@@ -154,6 +154,7 @@ input[type="number"] {
       padding-right: 35px;
       padding-top: 28px;
       padding-bottom: 25px;
+      zoom: 125%;
   }
   .inv{
       font-size: 20px;
@@ -172,7 +173,8 @@ input[type="number"] {
       font-weight: bold;
   }
   .img{
-      width: 80px;
+      width: auto;
+      height: 80px;
   }
   .des{
       font-size: 10px;
@@ -347,7 +349,7 @@ input[type="number"] {
         height: 970px;
         padding-left: 50px;
         padding-right: 50px;
-        zoom: 125%;
+        
     }
     .cartInv{
       padding-top: 45px;
@@ -382,11 +384,12 @@ input[type="number"] {
         font-weight: bold;
     }
     .img{
-        width: 120px;
+        width: auto;
+        height: 90px;
     }
     .des{
         font-size: 15px;
-        width: 300px;
+        width: 360px;
         line-height: 24px;
         height: 118px;
     }
@@ -403,7 +406,7 @@ input[type="number"] {
       font-family: 'khmerContent';
     }
     .textarea0{
-        width: 200px;
+        width: 250px;
         font-family: 'khmerContent';
     }
     .textarea1{

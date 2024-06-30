@@ -46,6 +46,7 @@ import useSWR from 'swr';
 
   type busImgProps = {
     abaQr:File | undefined;
+    bankLogo:File | undefined;
     signature:File | undefined;
     busLogo:File | undefined;
     Rec1:File | undefined;
@@ -107,10 +108,12 @@ type createProps = {
     busPayTerm:string;
     /////image type 
     abaQr:string;
+    bankLogo:string;
     signature:string;
     busLogo:string;
     Rec1:string;
     Rec2:string
+    abaLogo:string;
 }
 
 const Create = () => {
@@ -121,6 +124,7 @@ const Create = () => {
     const ref2 = useRef<HTMLInputElement>(null)
     const ref3 = useRef<HTMLInputElement>(null)
     const ref4 = useRef<HTMLInputElement>(null)
+    const ref5 = useRef<HTMLInputElement>(null)
 
     const { data , error } = useSWR(`${url}/api/business/${passingId}?email=${user?.id}`,fetchData)
 
@@ -145,6 +149,7 @@ const Create = () => {
         oldImg1:'',
         oldImg2:'',
         oldImg3:'',
+        oldImg4:''
     })
 
     useEffect(()=>{
@@ -167,6 +172,7 @@ const Create = () => {
             oldImg1:edit ? !buses.signature ? '' : buses.signature : '',
             oldImg2:edit ? !buses.busLogo ? '' : buses.busLogo : '',
             oldImg3:edit ? !buses.Rec1 ? '' : buses.Rec1 : '',
+            oldImg4:edit ? !buses.bankLogo ? '' : buses.bankLogo : ''
         })
       },[passingId, edit, buses ]);
 
@@ -176,6 +182,7 @@ const Create = () => {
 
     const [image , setImage] = useState<busImgProps>({
         abaQr:undefined,
+        bankLogo:undefined,
         signature:undefined,
         busLogo:undefined,
         Rec1:undefined,
@@ -270,21 +277,23 @@ const Create = () => {
             name:'busBankDes',
             val:val.busBankDes
         },
-        {
-            label:"Payment Term",
-            type:'text',
-            name:'busPayTerm',
-            val:val.busPayTerm
-        },
-    ],[val.busBankName , val.busBankNumber,val.busBankDes , val.busPayTerm])
+    ],[val.busBankName , val.busBankNumber,val.busBankDes])
     const Payright = useMemo(()=>[
         {
-            label:"Aba Qr",
+            label:"Bank Qr",
             type:"button",
             name:"abaQr",
             func:()=>handleImageSelection(ref1,'abaQr' as keyof busImgProps),
             val:image.abaQr,
             oldImg:val.oldImg
+        },
+        {
+            label:"Bank Logo",
+            type:"button",
+            name:"bankLogo",
+            func:()=>handleImageSelection(ref5 , 'bankLogo' as keyof busImgProps),
+            val:image.bankLogo,
+            oldImg:val.oldImg4
         },
         {
             label:"Signature",
@@ -311,7 +320,7 @@ const Create = () => {
             oldImg:val.oldImg3
         },
 
-    ],[image.abaQr,image.busLogo,image.signature , image.Rec1 , val.oldImg , val.oldImg1 , val.oldImg2 , val.oldImg3])
+    ],[image.abaQr,image.busLogo,image.signature , image.Rec1 , image.bankLogo , val.oldImg , val.oldImg1 , val.oldImg2 , val.oldImg3 , val.oldImg4])
 
     useEffect(()=>{
         if(isModal === true){
@@ -330,17 +339,17 @@ const Create = () => {
                 busPhone1:'',
                 busPhone2:'',
                 busTelegram:'',
-                busType:'',
-                
+                busType:'',   
                 oldImg:'',
                 oldImg1:'',
                 oldImg2:'',
-                oldImg3:''
+                oldImg3:'',
+                oldImg4:''
             }))
         }
     },[isModal])
 
-    const handleBusChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
+    const handleBusChange = (e:React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) =>{
         const {name , value} = e.target
 
         if((name === 'busPhone1' || name === 'busPhone2' || name === 'busBankNumber') && isNaN(Number(value))){
@@ -430,6 +439,10 @@ const Create = () => {
         if(image.Rec1){
             formData.append("Rec1",image.Rec1)
         }
+
+        if(image.bankLogo){
+            formData.append('bankLogo',image.bankLogo)
+        }
     
         if(!busName || !busPhone1 ){
           validation= "sorry business name , phone number is required"
@@ -461,6 +474,7 @@ const Create = () => {
            .then((data)=>{
             setImage({
               abaQr:undefined,
+              bankLogo:undefined,
               signature:undefined,
               busLogo:undefined,
               Rec1:undefined,
@@ -502,7 +516,7 @@ const Create = () => {
 
     const onUpdate = async() =>{
         setPending(true)
-        const {busName ,oldImg , oldImg1 , oldImg2 , oldImg3 , busAddr , busBankDes, busBankName , busBankNumber , busDes , busEmail , busInvEng , busInvkh , busPayTerm , busPhone1 , busPhone2 , busTelegram , busType} = val
+        const {busName ,oldImg , oldImg1 , oldImg2 , oldImg3 ,oldImg4 , busAddr , busBankDes, busBankName , busBankNumber , busDes , busEmail , busInvEng , busInvkh , busPayTerm , busPhone1 , busPhone2 , busTelegram , busType} = val
         let validation = ''
     
         const formData = new FormData();
@@ -521,6 +535,10 @@ const Create = () => {
 
         if(image.Rec1){
             formData.append("Rec1",image.Rec1)
+        }
+
+        if(image.bankLogo){
+            formData.append('bankLogo',image.bankLogo)
         }
     
         if(!busName || !busPhone1 || !busType){
@@ -548,11 +566,13 @@ const Create = () => {
             oldImg:oldImg,
             oldImg1:oldImg1,
             oldImg2:oldImg2,
-            oldImg3:oldImg3
+            oldImg3:oldImg3,
+            oldImg4:oldImg4
            },formData)
            .then((data)=>{
             setImage({
               abaQr:undefined,
+              bankLogo:undefined,
               signature:undefined,
               busLogo:undefined,
               Rec1:undefined,
@@ -639,7 +659,7 @@ const Create = () => {
                     {
                         Payleft.map((item)=>{
                             return(
-                                <CompInput key={item.label} value={item.val} label={item.label} list={item.label} func={handleBusChange} name={item.name} type={item.name}/>
+                                <CompInput key={item.label} value={item.val} label={item.label} list={item.label} func={handleBusChange} name={item.name} type={item.type}/>
                             )
                         })
                     }
@@ -660,6 +680,13 @@ const Create = () => {
                     }
                 </div>
             </div>
+            <div className='[&>span]:focus-within:text-mainBlue col-span-3 lg:col-span-1  px-3 py-1 pb-3'>
+                <span className='text-[12px] font-bold text-slate-400'>Payment Term</span><br />
+                <textarea name='busPayTerm' className='w-[390px] text-[13px] outline-none shadow-sm border-full solid 
+                 border-[1px] rounded-md border-slate-200 focus:border-mainLightBlue px-1 bg-[#F8F8F8]
+                ' value={val.busPayTerm}  onChange={handleBusChange}>
+                </textarea>
+            </div>
             <div className='flex justify-center items-center gap-5 mt-[88px]'>
                 <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.busName  !== "" || val.busType !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
                 <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-insomnia-primary w-[185px] rounded-md`} onClick={()=>{closeModal('my_modal_5') , setModalisopen(false)}}>Cancel</button>
@@ -671,10 +698,12 @@ const Create = () => {
     <input type="file" ref={ref2} className='hidden' name='signature' onChange={(e)=>handleImageChange(e,'signature')}/>
     <input type="file" ref={ref3} className='hidden' name='busLogo' onChange={(e)=>handleImageChange(e,'busLogo')}/>
     <input type="file" ref={ref4} className='hidden' name='Rec1' onChange={(e)=>handleImageChange(e,'Rec1')}/>
+    <input type="file" ref={ref5} className='hidden' name='bankLogo' onChange={(e)=>handleImageChange(e,'bankLogo')}/>
     <input className='hidden' type="text" value={val.oldImg === '' ? 'empty' : val.oldImg}/>
     <input className='hidden' type="text" value={val.oldImg1 === '' ? 'empty' : val.oldImg1}/>
     <input className='hidden' type="text" value={val.oldImg2 === '' ? 'empty' : val.oldImg2}/>
     <input className='hidden' type="text" value={val.oldImg3 === '' ? 'empty' : val.oldImg3}/>
+    <input className='hidden' type="text" value={val.oldImg4 === '' ? 'empty' : val.oldImg4}/>
     </>
   )
 }

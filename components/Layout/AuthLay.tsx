@@ -42,7 +42,7 @@ const AuthLay = ({children,session}:authLay) => {
         {
           !session && !['/auth/login' , '/auth/register' , '/auth/errror' , '/auth/reset' , '/auth/new-password' , '/auth/new-verification'].includes(pathname) ? (
             <>
-            Logout!
+            
             </>
           ) : (
             <>

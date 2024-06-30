@@ -29,16 +29,6 @@ export const addCustomer = async ({
     cusWebsite
 }:customerProps) =>{
 
- const unique = await prisma.customer.findUnique({
-    where:{
-        cusName
-    }
- })   
-
- if(unique){
-    return {error: "this customer name already exist!"}
- }
-
  if(!cusName){
     return {error:"customer name is required!"}
  }else if(!cusBus){

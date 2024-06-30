@@ -158,32 +158,32 @@ const Qtprint = ({
         {
             label:"",
             val:staffName,
-            clss:`${employee === true || staffName === "" ? "invisible" : ""}`
+            clss:`${employee === true || staffName === "" ? "hidden" : ""}`
         },
         {
             label:"Tel:",
             val:staffPhone,
-            clss:`${employee === true || staffPhone === "" ? "invisible" : ""}`
+            clss:`${employee === true || staffPhone === "" ? "hidden" : ""}`
         },
         {
             label:"Add:",
             val:busAddr,
-            clss:`${address === true || busAddr === "" ? "invisible" : ""}`
+            clss:`${address === true || busAddr === "" ? "hidden" : ""}`
         },
         {
             label:"Email:",
             val:busEmail,
-            clss:`${address === true || busEmail === "" ? "invisible" : ""}`
+            clss:`${address === true || busEmail === "" ? "hidden" : ""}`
         },
         {
             label:"Tel:",
             val:`${busPhone} | ${busPhone2}`,
-            clss:`${address === true || busPhone === "" ? "invisible" : ""}`
+            clss:`${address === true || busPhone === "" ? "hidden" : ""}`
         },
         {
             label:"Telegram",
             val:busTelegram,
-            clss:`${address === true || busTelegram === "" ? "invisible" : ""}`
+            clss:`${address === true || busTelegram === "" ? "hidden" : ""}`
         }
     ],[address , employee])
     const cusInfo = useMemo(()=>[
@@ -233,14 +233,12 @@ const Qtprint = ({
     useEffect(()=>{
         setArr(items || [])
     },[items])
-    let test2 = cusInfo.reduce((a:number[], e ,i)=>(e.val !== "") ? a.concat(i) : a , [] )
-    let test3 = busInfo.reduce((a:number[] , e ,i) => (e.val !== "") ? a.concat(i) : a ,[])
   return ( 
         <div className={`bg-white py-[20px] px-[30px] w-[561px] h-[795px] mx-auto my-auto`}>
             <div>
                     
-                    <div className={`flex justify-between ${logo === true ? "mb-[41.8px]" : ""}`}>
-                            <div className='flex justify-start items-center'>
+                    <div className={`flex justify-between mt-[10px]`}>
+                            <div className='flex justify-start items-start'>
                                    {
                                     logo === true ? (
                                         <h1 className='font-semibold text-[35px] leading-[10px] mb-[40px]'>Quotation</h1>
@@ -255,19 +253,15 @@ const Qtprint = ({
                                 {/*****************Image size w-160 h-160**************/}
                             </div>
                             <div className='text-end'>
-                                    <textarea className={`text-end text-[10.5px] w-[300px] h-[90px] leading-[20.5px] overflow-hidden outline-none resize-none`} style={{fontFamily:"khmerContent"}}
+                                    <textarea className={`text-end text-[10.5px] w-[300px] h-[80px] leading-[20.5px] overflow-hidden outline-none resize-none`} style={{fontFamily:"khmerContent"}}
                                     value={busDes}>
                                         
                                 </textarea>
                             </div>
                         </div>
-                        <div className='grid grid-cols-2 py-[3px]  px-[5px]'>
+                        <div className='grid grid-cols-2 py-[3px] '>
                             <div className='col-span-1'>
-                                {
-                                    logo === false && (
-                                        <h1 className='font-bold text-[27px]'>Quotation</h1>
-                                    )
-                                }
+                                <h1 className={`font-bold text-[27px] ${logo === false ? '' : 'invisible'}`}>Quotation</h1>                    
                                 <p className='text-[12px] font-bold'>
                                 No. {invNo}
                                 </p>
@@ -276,63 +270,122 @@ const Qtprint = ({
                                 Date. {dateFormat(invDate === undefined ? '' : invDate)}
                             </p>
                         </div>
-                        <div className='grid grid-cols-2'>
+                        <div className='grid grid-cols-2 pt-[5px]'>
                             <div className='col-span-1 flex flex-col justify-end'>
-                            {(()=>{
-                                    let row = []
-                                    for(let i = 6; i > (test2?.length || 0); i--){
-                                        row.push(
-                                            <div key={crypto.randomUUID()} className={`flex pl-[5px] justify-start items-center invisible`} style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[9.6px]'>mp</p>
-                                                    <p className='text-[9px]'>ddd</p>
-                                            </div>
-                                        )
-                                    }
-                                    return row
-                                })()
-                                }
-                                {
+                            <div className={`flex py-[1px] justify-start items-center ${cusName === "" ? "invisible" : "hidden"}`} style={{fontFamily:"khmerContent"}}>
+                                    <p className='text-[9px]'>mp</p>
+                                    <p className='text-[9px]'>ddd</p>
+                                </div>
+                                <div className={`flex  py-[1px] justify-start items-center  ${cusComp === "" ? "invisible" : "hidden"}`} style={{fontFamily:"khmerContent"}}>
+                                    <p className='text-[9px]'>mp</p>
+                                    <p className='text-[9px]'>ddd</p>
+                                </div>
+                                <div className={`flex  py-[1px] justify-start items-center  ${cusPhone === "" ? "invisible" : "hidden"}`} style={{fontFamily:"khmerContent"}}>
+                                    <p className='text-[9px]'>mp</p>
+                                    <p className='text-[9px]'>ddd</p>
+                                </div>
+                                <div className={`flex py-[1px] justify-start items-center ${cusEmail === "" ? "invisible" : "hidden"}`} style={{fontFamily:"khmerContent"}}>
+                                    <p className='text-[9px]'>mp</p>
+                                    <p className='text-[9px]'>ddd</p>
+                                </div>
+                                <div className={` py-[1px] ${cusAddr === "" ? "invisible" : "hidden"}  items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                        <p className='text-[9px]'>N</p>
+                                        <textarea className='text-[9px] outline-none resize-none overflow-hidden w-[170px]' rows={3}>
+
+                                        </textarea>
+                                    </div>
+                                    {
                                     cusInfo.map((item)=>{
                                         return(
-                                            <div key={item.id} className={`pl-[5px] ${item.class} ${!item.val ? "hidden" : "flex"} items-start gap-1 w-[200px]`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[9.6px]'>{item.label}</p>
-                                                <p className='text-[9px]'>{item.val}</p>
-                                            </div>
+                                            <React.Fragment key={item.id}>
+                                                {
+                                                    item.label !== 'Add:' ? (
+                                                        <div className={` py-[1px] ${item.class} ${!item.val ? "hidden" : "flex"} w-[200px] items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                                            <p className='text-[9px]'>{item.label}</p>
+                                                            <p className='text-[9px]'>{item.val}</p>
+                                                        </div>
+                                                    ) : (
+                                                        <div className={` py-[1px] ${item.class} ${!item.val ? "hidden" : "flex"}  items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                                            <p className='text-[9px]'>{item.label}</p>
+                                                            <textarea className='text-[9px] outline-none resize-none overflow-hidden w-[170px]' rows={3} value={item.val}>
+
+                                                            </textarea>
+                                                        </div>
+                                                    )
+                                                }
+                                            </React.Fragment>
+                                            
                                         )
                                     })
                                 }
                             </div>
                             <div className='col-span-1 flex flex-col justify-end'>
                             <div>
-                                {(()=>{
-                                    let row = []
-                                    for(let i = 5; i > (test3?.length || 0); i--){
-                                        row.push(
-                                            <div key={crypto.randomUUID()} className={`flex pl-[5px] justify-start items-center invisible`} style={{fontFamily:"khmerContent"}}>
-                                                    <p className='text-[9.6px]'>mp</p>
-                                                    <p className='text-[9px]'>ddd</p>
-                                            </div>
-                                        )
-                                    }
-                                    return row
-                                })()
-                                }
+                            <div className={`flex justify-end ${staffName === "" ? "invisible" : "hidden"}`}>
+                                    <div className={`flex  w-[150px] py-[1px] justify-end items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                    <p className='text-[9px]'>n</p>
+                                        <p className='text-[9px] text-end'>n</p>
+                                    </div>
+                                </div>
+                                <div className={`flex justify-end ${staffPhone === "" ? "invisible" : "hidden"}`}>
+                                    <div className={`flex  w-[150px] py-[1px] justify-end items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                    <p className='text-[9px]'>n</p>
+                                        <p className='text-[9px] text-end'>n</p>
+                                    </div>
+                                </div>
+                            <div className={`flex justify-end ${busAddr === "" ? "invisible" : "hidden"}`}>
+                                    <div className={`flex  w-[150px] py-[1px] justify-end items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                        <p className='text-[9px]'>n</p>
+                                        <textarea className='text-[9px] text-end  outline-none resize-none overflow-hidden w-[120px]' rows={2}>n</textarea>
+                                    </div>
+                                </div>
+                                <div className={`flex justify-end ${busEmail === "" ? 'invisible' : 'hidden'}`}>
+                                    <div className={`flex  w-[150px] py-[1px] justify-end items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                        <p className='text-[9px]'>n</p>
+                                        <p className='text-[9px] text-end'>n</p>
+                                    </div>
+                                </div>
+                                <div className={`flex justify-end ${busPhone === "" ? "invisible" : "hidden"}`}>
+                                    <div className={`flex  w-[150px] py-[1px] justify-end items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                        <p className='text-[9px]'>n</p>
+                                        <p className='text-[9px] text-end'>n</p>
+                                    </div>
+                                </div>
+                                <div className={`flex justify-end ${busTelegram === "" ? "invisible" : "hidden"}`}>
+                                    <div className={`flex  w-[150px] py-[1px] justify-end items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                        <p className='text-[9px]'>n</p>
+                                        <p className='text-[9px] text-end'>n</p>
+                                    </div>
+                                </div>
                                 {
                                     busInfo.map((item)=>{
                                         return(
-                                           <div key={item.label} className='flex justify-end'>
-                                             <div  className={`flex pl-[5px] justify-end w-[200px] ${item.clss} items-start gap-1 pt-[1px]`} style={{fontFamily:"khmerContent"}}>
-                                                <p className='text-[9.6px]'>{item.label}</p>
-                                                <p className='text-[9px] text-end'>{item.val}</p>
-                                            </div>
-                                           </div>
+                                            <React.Fragment key={item.label}>
+                                                {
+                                                    item.label !== 'Add:' ? (
+                                                        <div  className='flex justify-end'>
+                                                            <div  className={`flex pl-[5px] w-[150px] py-[1px] justify-end ${item.clss} items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                                                <p className='text-[9px]'>{item.label}</p>
+                                                                <p className='text-[9px] text-end'>{item.val}</p>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className='flex justify-end'>
+                                                            <div className={`flex pl-[5px]  py-[1px] justify-end items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                                                <p className='text-[9px]'>{item.label}</p>
+                                                                <textarea className='text-[9px] text-end  outline-none resize-none overflow-hidden w-[120px]' rows={2} value={item.val}></textarea>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }
+                                            </React.Fragment>
                                         )
                                     })
                                 }
                             </div>
                             </div>
                         </div>
-                        <table className={`w-full ${ !cusAddr ? "" : cusAddr.length > 44 ? "mt-[18px]" : "mt-[25px]"} border-[1px] border-black`}>
+                        <table className={`w-full mt-[10px] border-[1px] border-black`}>
                         <thead>
                                 <tr>
                                 {

@@ -23,6 +23,7 @@ type businessProps = {
     oldImg1?:string;
     oldImg2?:string;
     oldImg3?:string;
+    oldImg4?:string;
     
 }
 
@@ -94,11 +95,13 @@ export const addBus = async ({
     const file1: File | null = data.get('signature') as unknown as File
     const file2: File | null = data.get('busLogo') as unknown as File
     const file3: File | null = data.get('Rec1') as unknown as File
+    const file4: File | null = data.get('bankLogo') as unknown as File
 
     let path = ''
     let path1 = ''
     let path2 = ''
     let path3 = ''
+    let path4 = ''
     
     if(!file){
         console.log("image not founded")
@@ -152,6 +155,19 @@ export const addBus = async ({
         console.log(`open ${path} to see the uploaded file`)
     }
 
+    if(!file4){
+        console.log('image4 not founded')
+    }else{
+        const bucketName = 'ostospos'
+        const bytes3 = await file3.arrayBuffer()
+        const buffer = Buffer.from(bytes3)
+
+        const s3key4 = `business/${Date.now()}-${file4.name}`
+        await uploadToS3({fileBuffer:buffer , key: s3key4 , file:file4})
+        path4 = `https://${bucketName}.s3.${region}.amazonaws.com/${s3key4}`
+        console.log(`open ${path} to see the uploaded file`)
+    }
+
     const user = await prisma.business.findUnique({
         where:{
             busName
@@ -184,6 +200,7 @@ export const addBus = async ({
             signature:!file1 ? null : path1,
             busLogo:!file2 ? null : path2,
             Rec1:!file3 ? null : path3,
+            bankLogo:!file4 ? null : path4
         }
     })
     return {success:"created business!"}
@@ -209,17 +226,20 @@ export const editBusiness = async ({
     oldImg,
     oldImg1,
     oldImg2,
-    oldImg3
+    oldImg3,
+    oldImg4
 }:businessProps,data:FormData) =>{
     const file: File | null = data.get('abaQr') as unknown as File
     const file1: File | null = data.get('signature') as unknown as File
     const file2: File | null = data.get('busLogo') as unknown as File
     const file3: File | null = data.get('Rec1') as unknown as File
+    const file4: File | null = data.get('bankLogo') as unknown as File
 
     let path = ''
     let path1 = ''
     let path2 = ''
     let path3 = ''
+    let path4 = ''
     
     if(!file){
         console.log("image not founded")
@@ -289,6 +309,23 @@ export const editBusiness = async ({
         console.log(`open ${path} to see the uploaded file`)
     }
 
+    if(!file4){
+        console.log("image3 not founded")
+    }else{
+        if(oldImg4){
+            const result = oldImg4.substring(oldImg4.indexOf("business"))
+            await deleteObjectFromS3('ostospos',result)
+        }
+        const bucketName = 'ostospos'
+        const bytes3 = await file4.arrayBuffer()
+        const buffer = Buffer.from(bytes3);
+
+        const s3key4 = `business/${Date.now()}-${file4.name}`
+        await uploadToS3({fileBuffer:buffer , key:s3key4 , file:file4})
+        path4 = `https://${bucketName}.s3.${region}.amazonaws.com/${s3key4}`
+        console.log(`open ${path} to see the uploaded file`)
+    }
+
     if(!id){
         return {error : "id is undefined!"}
     }else if (!busName){
@@ -323,13 +360,14 @@ export const editBusiness = async ({
             signature:!file1 ? oldImg1 : path1,
             busLogo:!file2 ? oldImg2 : path2,
             Rec1:!file3 ? oldImg3 : path3,
+            bankLogo:!file4 ? oldImg4 : path4
 
         }
     })
     return {success:"updated! business"}
 }
 
-export const deleteBusiness = async (id:string , oldImg:string , oldImg1:string , oldImg2:string , oldImg3:string) =>{
+export const deleteBusiness = async (id:string , oldImg:string , oldImg1:string , oldImg2:string , oldImg3:string , oldImg4:string) =>{
     if(!id){
         return {error:"id is undefined!"}
     }
@@ -347,6 +385,10 @@ export const deleteBusiness = async (id:string , oldImg:string , oldImg1:string 
     }
     if(oldImg3){
         const result = oldImg3.substring(oldImg3.indexOf("business/"))
+        await deleteObjectFromS3('ostospos',result)
+    }
+    if(oldImg4){
+        const result = oldImg4.substring(oldImg4.indexOf("business/"))
         await deleteObjectFromS3('ostospos',result)
     }
     await prisma.business.delete({
