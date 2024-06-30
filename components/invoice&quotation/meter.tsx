@@ -43,7 +43,7 @@ type meterProps = {
   cusEmail:string;
   cusAddr:string;
   invBus:string;
-  bankLogo:string;
+  bankLogo?:string;
   invNo:string;
   invPo?:string;
   invTitle:string;
