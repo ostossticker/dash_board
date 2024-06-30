@@ -25,19 +25,16 @@ type businessProps = {
   Rec1:string;
   abaQr:string;
   see:boolean;
+  bankLogo:string;
 }
 
-type Option = {
-  id:string;
-  busName:string;
-  busEmail:string;
-}
 
 type displayProps = {
   abaQr:string;
   signature:string;
   busLogo:string;
   Rec1:string;
+  bankLogo:string;
 }
 
 
@@ -57,7 +54,8 @@ const BusTable = () => {
     abaQr:'',
     signature:'',
     busLogo:'',
-    Rec1:''
+    Rec1:'',
+    bankLogo:''
   })
   const [passing , setPassing] = useState<string>('')
   const {data , error} = useSWR(`${url}/api/businesstable?email=${user.id}&name=${user.name}&page=${page}&take=${take}&filter=${filter}`,fetchData)
@@ -123,9 +121,9 @@ const BusTable = () => {
 
   if(error) return <div>Error fetching data</div>
 
-  const handleDelete = async (id:string , oldImg:string , oldImg1:string , oldImg2:string , oldImg3:string) =>{
+  const handleDelete = async (id:string , oldImg:string , oldImg1:string , oldImg2:string , oldImg3:string , oldimg4:string) =>{
     setPending(true)
-    await deleteBusiness(id , oldImg , oldImg1 , oldImg2 , oldImg3)
+    await deleteBusiness(id , oldImg , oldImg1 , oldImg2 , oldImg3,oldimg4)
     .then((data)=>{
       if(data?.success){
         toast.success(data.success)
@@ -219,7 +217,8 @@ const BusTable = () => {
                             busLogo:item.busLogo,
                             signature:item.signature,
                             abaQr:item.abaQr,
-                            Rec1:item.Rec1
+                            Rec1:item.Rec1,
+                            bankLogo:item.bankLogo
                           }))
                         }}>
                             <PiTrashLight/>
@@ -291,7 +290,7 @@ const BusTable = () => {
           
         </div>
         {/****************** */}
-        <Modal typeSelect='caution' id='business' handlingAction={()=>handleDelete(passing , display.abaQr , display.signature , display.busLogo , display.Rec1)} CautionText={'Deletion'}/>
+        <Modal typeSelect='caution' id='business' handlingAction={()=>handleDelete(passing , display.abaQr , display.signature , display.busLogo , display.Rec1 , display.bankLogo)} CautionText={'Deletion'}/>
     </div>
   )
 }
