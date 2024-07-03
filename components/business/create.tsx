@@ -118,7 +118,7 @@ type createProps = {
 
 const Create = () => {
     const [isError , setIsError] = useState<boolean>(false)
-    const { pending , setPending , isModal , bgModal ,edit , setModalisopen , passingId} = useToggle()
+    const { pending , setPending , isModal , bgModal ,edit , setPassingId , onCancel , setModalisopen , passingId} = useToggle()
     const user = useCurrentUser()
     const ref1 = useRef<HTMLInputElement>(null)
     const ref2 = useRef<HTMLInputElement>(null)
@@ -581,17 +581,23 @@ const Create = () => {
               toast.error(data.error)
               setPending(true)
               setIsError(true)
+              onCancel()
+              setPassingId('')
             }
             if(data?.success){
               toast.success(data.success)
               setPending(false)
               setIsError(false)
               setModalisopen(false)
+              onCancel()
+              setPassingId('')
             }
           }).catch(()=>{
             toast.error("something went wrong")
             setPending(true)
               setIsError(true)
+              onCancel()
+              setPassingId('')
           })
         }
     }
@@ -699,11 +705,11 @@ const Create = () => {
     <input type="file" ref={ref3} className='hidden' name='busLogo' onChange={(e)=>handleImageChange(e,'busLogo')}/>
     <input type="file" ref={ref4} className='hidden' name='Rec1' onChange={(e)=>handleImageChange(e,'Rec1')}/>
     <input type="file" ref={ref5} className='hidden' name='bankLogo' onChange={(e)=>handleImageChange(e,'bankLogo')}/>
-    <input className='hidden' type="text" value={val.oldImg === '' ? 'empty' : val.oldImg}/>
-    <input className='hidden' type="text" value={val.oldImg1 === '' ? 'empty' : val.oldImg1}/>
-    <input className='hidden' type="text" value={val.oldImg2 === '' ? 'empty' : val.oldImg2}/>
-    <input className='hidden' type="text" value={val.oldImg3 === '' ? 'empty' : val.oldImg3}/>
-    <input className='hidden' type="text" value={val.oldImg4 === '' ? 'empty' : val.oldImg4}/>
+    <input className='' type="text" value={val.oldImg === '' ? 'empty' : val.oldImg}/>
+    <input className='' type="text" value={val.oldImg1 === '' ? 'empty' : val.oldImg1}/>
+    <input className='' type="text" value={val.oldImg2 === '' ? 'empty' : val.oldImg2}/>
+    <input className='' type="text" value={val.oldImg3 === '' ? 'empty' : val.oldImg3}/>
+    <input className='' type="text" value={val.oldImg4 === '' ? 'empty' : val.oldImg4}/>
     </>
   )
 }

@@ -79,16 +79,6 @@ export const editCustomer = async (
     }:customerProps
 ) =>{
 
-    const unique = await prisma.customer.findUnique({
-        where:{
-            cusName
-        }
-     })   
-    
-     if(unique){
-        return {error: "this customer name already exist!"}
-     }
-
     if(!id){
         return {error: "please refresh the page or try it again"}
     }else if(!cusName){

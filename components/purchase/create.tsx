@@ -86,7 +86,7 @@ type optionDrop = {
 }
 
 const Create = () => {
-  const { pending , setPending  ,edit , passingId , isModal , setModalisopen} = useToggle()
+  const { pending , setPending  ,edit , onCancel , setPassingId, passingId , isModal , setModalisopen} = useToggle()
   const [suggest , setSuggest] = useState<optionDrop[]>([])
   const [isError , setIsError] = useState<boolean>(false)
   const user = useCurrentUser()
@@ -449,17 +449,23 @@ const Create = () => {
           toast.error(data.error)
           setPending(true)
           setIsError(true)
+          onCancel()
+          setPassingId('')
         }
         if(data?.success){
           toast.success(data.success)
           setPending(false)
           setIsError(false)
           setModalisopen(false)
+          onCancel()
+          setPassingId('')
         }
       }).catch(()=>{
         toast.error("something went wrong")
         setPending(true)
         setIsError(true)
+        onCancel()
+        setPassingId('')
       })
     }
   }

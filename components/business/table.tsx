@@ -39,7 +39,7 @@ type displayProps = {
 
 
 const BusTable = () => {
-  const { isOpen , isHover ,darkMode , pending,setPending,onEdit ,setPassingId} = useToggle()
+  const { isOpen , isHover ,darkMode , pending,setPending,onEdit ,setPassingId } = useToggle()
   const vall = typeof window !== 'undefined' ? localStorage.getItem("businessCheck") : null
   const user = useCurrentUser()                                            
   const router = useRouter()

@@ -758,7 +758,8 @@ const Option = ({
 
   return (
     <>
-    <div className={`flex justify-center mx-auto gap-4 `} style={{width:elementSize.width}}>
+    <div className='flex items-center justify-center py-[20px]'>
+    <div className={`flex justify-center mx-auto gap-4`} style={{width:elementSize.width}}>
     {child}
     <ResponsiveElement width={100} height={'auto'} className='flex flex-col justify-end'>
     <div >
@@ -870,9 +871,10 @@ const Option = ({
     
     </ResponsiveElement>
     </div>
+    </div>
 
 
-    <div className='show'>
+    <div className='hidden'>
     {
       printing === 'invoice' && (
         <div ref={printableComponent}>
@@ -881,7 +883,7 @@ const Option = ({
       )
     }
     </div>
-    <div className='show'>
+    <div className='hidden'>
     {
       printing === 'quotation' && (
         <div ref={printableComponent1}>

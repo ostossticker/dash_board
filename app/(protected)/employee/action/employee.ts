@@ -192,8 +192,6 @@ export const editEmployee =async ({
     }
     if(!id){
         return {error:"please refresh the page or try it again"}
-    }else if(!empName){
-        return {error:"employee must have a name given"}
     }else if(!empOcc){
         return {error:"employee occupation is required!"}
     }else if(!empPhone){
