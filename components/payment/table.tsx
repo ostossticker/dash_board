@@ -47,7 +47,7 @@ type balanceStatus = {
   invStatus:string;
 }
 
-const InvTable = () => {
+const Paytable = () => {
   const router = useRouter()
   const user = useCurrentUser()
   const role = useCurrentRole()
@@ -157,31 +157,6 @@ const InvTable = () => {
         document.removeEventListener("keydown", handleKeyDownDocument);
       };
     }, [selectedItemId]);
-
-    useEffect(() => {
-      const handleBackspace = (event: KeyboardEvent) => {
-          event.preventDefault();
-  
-          if (event.key === 'Backspace') {
-            setIcon(false) /// set switching invoice and delivery as text withy icon instead
-            setSwitching('group')
-            setVal(prev=>({
-              ...prev,
-              filter:'',
-              filter1:'',
-              status:'',
-              fromDate:'',
-              toDate:''
-            }))
-          }
-      };
-  
-      window.addEventListener('keydown', handleBackspace);
-  
-      return () => {
-          window.removeEventListener('keydown', handleBackspace);
-      };
-  }, []);
 
   const renderPageNumbers = () =>{
     const maxPagesToShow = 3;
@@ -305,9 +280,10 @@ const InvTable = () => {
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
     const {name , value} = e.target
-    setVal({
-      ...val , [name]:value
-    })
+    setVal(prev => ({
+      ...prev,
+      [name]: value,
+    }));
     if(name === 'filter1' && value !== ""){
       setFocus(1)
     }else{
@@ -532,7 +508,7 @@ const InvTable = () => {
                     <td className={placeholderClass}>
                     <div className='flex justify-center items-center gap-1'>
                         <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
-                          if(item._count.invCusName !== undefined){
+                          if(item._count && item._count.invCusName !== undefined){
                             setSwitching('ungroup')
                             setIcon(true)
                             setVal(prev=>({
@@ -551,7 +527,7 @@ const InvTable = () => {
                         </button>
                         <button className={`${darkMode ? "text-red-400 " : "text-red-700" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
                             openModal('invtable')
-                            if(item._count.invCusName){
+                            if(item._count !== undefined){
                                 setPassing(item.invCusName)
                                 setCusComp(item.invCusComp)
                                 setBus(item.invBus)
@@ -639,15 +615,25 @@ const InvTable = () => {
     <div className='flex justify-end gap-4'>
 
               {
-                totalStatus.filter(item => val.status === '' || item.invStatus === val.status).map((item,id)=>{
-                  return(
-                    <div key={item.id} className='bg-insomnia-primary  mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>
-                    <p className='w-[195px] text-center'>
-                      {item.invStatus === 'unpay' ? "Unpaid" : item.invStatus.charAt(0).toUpperCase() + item.invStatus.slice(1)}: ${item._sum.balance.toFixed(2)}
-                    </p>
-                    </div>
-                  )
-                })
+                switching === 'ungroup' ? (
+                  <>
+                  {
+                    totalStatus.filter(item => val.status === '' || item.invStatus === val.status).map((item,id)=>{
+                      return(
+                        <div key={item.id} className='bg-insomnia-primary  mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>
+                        <p className='w-[195px] text-center'>
+                          {item.invStatus === 'unpay' ? "Unpaid" : item.invStatus.charAt(0).toUpperCase() + item.invStatus.slice(1)}: ${item._sum.balance.toFixed(2)}
+                        </p>
+                        </div>
+                      )
+                    })
+                  }
+                  </>
+                ) : (
+                  <div>
+
+                  </div>
+                )
               }
              {
               val.status === '' && (
@@ -663,4 +649,4 @@ const InvTable = () => {
   )
 }
 
-export default InvTable
+export default Paytable

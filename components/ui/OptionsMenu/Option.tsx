@@ -802,7 +802,7 @@ const Option = ({
     {
         printing === 'invoice' && (
               <button onClick={()=>{
-                if(edit && routerSwitch === changeMode){
+                if(edit){
                   update({id:passingId})
                 }else{
                   save()
@@ -810,7 +810,7 @@ const Option = ({
               }}>
               <ResponsiveElement className='bg-insomnia-primary text-white rounded-lg' width={80} height={'auto'} py={2} mt={5} mb={5} fontSize={10} >
                   <div>
-                    {edit && routerSwitch === changeMode ? "UPDATED" : "SAVE"}
+                    {edit ? "UPDATED" : "SAVE"}
                   </div>
               </ResponsiveElement>
               </button>
