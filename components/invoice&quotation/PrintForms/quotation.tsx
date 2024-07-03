@@ -290,7 +290,7 @@ const Qtprint = ({
                                 </div>
                                 <div className={` py-[1px] ${cusAddr === "" ? "invisible" : "hidden"}  items-start gap-1`} style={{fontFamily:"khmerContent"}}>
                                         <p className='text-[9px]'>N</p>
-                                        <textarea className='text-[9px] outline-none resize-none overflow-hidden w-[170px]' rows={3}>
+                                        <textarea className='text-[9px] outline-none resize-none overflow-hidden w-[170px]' rows={4}>
 
                                         </textarea>
                                     </div>
@@ -307,7 +307,7 @@ const Qtprint = ({
                                                     ) : (
                                                         <div className={` py-[1px] ${item.class} ${!item.val ? "hidden" : "flex"}  items-start gap-1`} style={{fontFamily:"khmerContent"}}>
                                                             <p className='text-[9px]'>{item.label}</p>
-                                                            <textarea className='text-[9px] outline-none resize-none overflow-hidden w-[170px]' rows={3} value={item.val}>
+                                                            <textarea className='text-[9px] outline-none resize-none overflow-hidden w-[200px]' rows={4} value={item.val}>
 
                                                             </textarea>
                                                         </div>
@@ -371,7 +371,7 @@ const Qtprint = ({
                                                         </div>
                                                     ) : (
                                                         <div className='flex justify-end'>
-                                                            <div className={`flex pl-[5px]  py-[1px] justify-end items-start gap-1`} style={{fontFamily:"khmerContent"}}>
+                                                            <div className={`flex pl-[5px]  py-[1px] justify-end items-start gap-1 ${item.clss}`} style={{fontFamily:"khmerContent"}}>
                                                                 <p className='text-[9px]'>{item.label}</p>
                                                                 <textarea className='text-[9px] text-end  outline-none resize-none overflow-hidden w-[120px]' rows={2} value={item.val}></textarea>
                                                             </div>

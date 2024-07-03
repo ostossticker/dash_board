@@ -149,6 +149,10 @@ const Create = () => {
         oldImg1:'',
         purSince:new Date().toISOString().split('T')[0]
       }))
+      setImage({
+        image:undefined,
+        image1:undefined
+      })
     }
 
   },[passingId, edit, pur,isModal]);

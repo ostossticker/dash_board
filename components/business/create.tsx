@@ -346,6 +346,13 @@ const Create = () => {
                 oldImg3:'',
                 oldImg4:''
             }))
+            setImage({
+                abaQr:undefined,
+                bankLogo:undefined,
+                signature:undefined,
+                busLogo:undefined,
+                Rec1:undefined,
+            })
         }
     },[isModal])
 
@@ -705,11 +712,11 @@ const Create = () => {
     <input type="file" ref={ref3} className='hidden' name='busLogo' onChange={(e)=>handleImageChange(e,'busLogo')}/>
     <input type="file" ref={ref4} className='hidden' name='Rec1' onChange={(e)=>handleImageChange(e,'Rec1')}/>
     <input type="file" ref={ref5} className='hidden' name='bankLogo' onChange={(e)=>handleImageChange(e,'bankLogo')}/>
-    <input className='' type="text" value={val.oldImg === '' ? 'empty' : val.oldImg}/>
-    <input className='' type="text" value={val.oldImg1 === '' ? 'empty' : val.oldImg1}/>
-    <input className='' type="text" value={val.oldImg2 === '' ? 'empty' : val.oldImg2}/>
-    <input className='' type="text" value={val.oldImg3 === '' ? 'empty' : val.oldImg3}/>
-    <input className='' type="text" value={val.oldImg4 === '' ? 'empty' : val.oldImg4}/>
+    <input className='hidden' type="text" value={val.oldImg === '' ? 'empty' : val.oldImg}/>
+    <input className='hidden' type="text" value={val.oldImg1 === '' ? 'empty' : val.oldImg1}/>
+    <input className='hidden' type="text" value={val.oldImg2 === '' ? 'empty' : val.oldImg2}/>
+    <input className='hidden' type="text" value={val.oldImg3 === '' ? 'empty' : val.oldImg3}/>
+    <input className='hidden' type="text" value={val.oldImg4 === '' ? 'empty' : val.oldImg4}/>
     </>
   )
 }

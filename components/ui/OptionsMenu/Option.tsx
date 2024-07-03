@@ -243,7 +243,7 @@ const Option = ({
   const save = async(receip?:string) =>{
     setPending(true)
     let validation = ''
-    if(!cusName1 || !invCusPhone1){
+    if(!cusName1 ){
       validation = "sorry this field is reuqired"
       toast.error(validation)
       setPending(false)
@@ -386,7 +386,7 @@ const Option = ({
       formData.append('img2',img2)
     }
 
-    if(!cusName1 || !invCusPhone1){
+    if(!cusName1){
       validation = "sorry this field is reuqired"
       toast.error(validation)
       setPending(false)
@@ -507,7 +507,7 @@ const Option = ({
   const update = ({id,receip}:{id:string , receip?:string}) =>{ 
     setPending(true)
     let validation = ''
-    if(!cusName1 || !invCusPhone1){
+    if(!cusName1){
       validation = "sorry this field is reuqired"
       toast.error(validation)
       setPending(false)
@@ -636,7 +636,7 @@ const Option = ({
     if(img2){
       formData.append('img2',img2)
     }
-    if(!cusName1 || !invCusPhone1){
+    if(!cusName1){
       validation = "sorry this field is reuqired"
       toast.error(validation)
       setPending(false)

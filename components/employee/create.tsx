@@ -142,6 +142,7 @@ const Create = () => {
         empTelegram:'',
         memberSince:new Date().toISOString().split('T')[0]
       }))
+      setImage(undefined)
     }
 
   },[edit ,emps , isModal])

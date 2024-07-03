@@ -160,6 +160,11 @@ input[type="number"] {
       font-size: 20px;
       font-weight: bold;
   }
+  .qtImge{
+    width: auto;
+    height: 65px !important;
+  }
+  
   .qt{
     font-size: 25px;
     font-weight: bold;
@@ -174,13 +179,13 @@ input[type="number"] {
   }
   .img{
       width: auto;
-      height: 80px;
+      height: 70px;
   }
   .des{
       font-size: 10px;
-      width: 200px;
+      width: 250px;
       line-height: 17px;
-      height: 85px;
+      height: 70px;
   }
   .cusInfo{
       font-size: 7.5px;
@@ -195,7 +200,7 @@ input[type="number"] {
       font-family: 'khmerContent';
   }
   .textarea0{
-      width: 120px;
+      width: 150px;
       font-family: 'khmerContent';
   }
   .textarea1{
@@ -364,12 +369,15 @@ input[type="number"] {
       height: 970px;
       padding-left: 50px;
       padding-right: 50px;
-      padding-top: 30px;
+      padding-top: 35px;
       padding-bottom: 30px;
   }
     .inv{
         font-size: 35px;
         font-weight: bold;
+    }
+    .qtImge{
+        padding-right: 50px;
     }
     .qt{
       font-size: 35px;
@@ -391,7 +399,7 @@ input[type="number"] {
         font-size: 15px;
         width: 360px;
         line-height: 24px;
-        height: 118px;
+        height: 100px;
     }
     .cusInfo{
         font-size: 11px;   
@@ -450,13 +458,13 @@ input[type="number"] {
 
     .eng{
         font-size: 11px;
-        width: 260px;
+        width: 280px;
         font-family: 'khmerContent';
         padding-bottom: 5px;
     }
     .kh{
         font-size: 11px;
-        width: 260px;
+        width: 280px;
         padding-bottom: 5px;
     }
     .sigText{
@@ -466,6 +474,7 @@ input[type="number"] {
     .sigImg{
         width: 60px;
         height: 50px;
+        margin-top: 10px;
     }
 
 

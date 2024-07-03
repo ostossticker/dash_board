@@ -639,7 +639,7 @@ const InvTable = () => {
     <div className='flex justify-end gap-4'>
 
               {
-                totalStatus.map((item,id)=>{
+                totalStatus.filter(item => val.status === '' || item.invStatus === val.status).map((item,id)=>{
                   return(
                     <div key={item.id} className='bg-insomnia-primary  mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>
                     <p className='w-[195px] text-center'>
@@ -649,11 +649,15 @@ const InvTable = () => {
                   )
                 })
               }
-              <div className='bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>       
-              <p>
-              Total Sale: ${totalValue.toFixed(2)}  
-              </p>
-            </div>
+             {
+              val.status === '' && (
+                <div className='bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>       
+                <p>
+                Total Sale: ${totalValue.toFixed(2)}  
+                </p>
+              </div>
+              )
+             }
     </div>
     </>
   )

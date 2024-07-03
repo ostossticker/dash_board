@@ -241,9 +241,7 @@ const QuotationForm = ({
                         <h1 className='qt'>QUOTATION</h1>
                     </div>
                 ) : (
-                    <div className="img">
-                     <Image src={!busLogo ? '/white.png' : busLogo} alt="#" width={400} height={400}/>
-                    </div>
+                     <Image src={!busLogo ? '/white.png' : busLogo} className="img qtImge" alt="#" width={400} height={400}/>
                 )
             }
               <div className="flex-row justify-start">
@@ -272,7 +270,7 @@ const QuotationForm = ({
                 <p className={`cusInfo ${cusEmail === "" ? "invisible" : "hidden"}`}>Email: renko@gmail.com</p>
                 <div className={`flex cusInfo ${cusAddr === "" ? "invisible" : "hidden"}`}>
                 <p>Add:</p>
-                <textarea className="outline-none textarea0 resize-none bg-transparent overflow-hidden" rows={3}>
+                <textarea className="outline-none textarea0 resize-none bg-transparent overflow-hidden" rows={4}>
                     dhwajkdhajkjakwdajkwha
                     dwajkldajdklwajdlkwajdakjdw
                     dwajkldwajkldawjldjdawldj
@@ -289,7 +287,7 @@ const QuotationForm = ({
                                     ) : (
                                         <div className={`flex cusInfo ${item.class} ${!item.val ? "hidden" : ''}`}>
                                             <p>Add:</p>
-                                            <textarea className="outline-none textarea0 resize-none bg-transparent overflow-hidden" rows={3} value={item.val}>
+                                            <textarea className="outline-none textarea0 resize-none bg-transparent overflow-hidden" rows={4} value={item.val}>
 
                                             </textarea>
                                         </div>
