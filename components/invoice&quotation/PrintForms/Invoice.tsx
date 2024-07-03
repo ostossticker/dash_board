@@ -284,7 +284,7 @@ const Invprint = ({
                                 </div>
                                 <div className={` py-[1px] ${cusAddr === "" ? "invisible" : "hidden"}  items-start gap-1`} style={{fontFamily:"khmerContent"}}>
                                         <p className='text-[9px]'>N</p>
-                                        <textarea className='text-[9px] outline-none resize-none overflow-hidden w-[170px]' rows={4}>
+                                        <textarea className='text-[9px] outline-none resize-none overflow-hidden w-[200px]' rows={4}>
 
                                         </textarea>
                                     </div>
@@ -485,10 +485,10 @@ const Invprint = ({
                                 {
                                         bankInfo === true && (
                                             <div style={{fontFamily:"khmerContent"}}>
-                                                    <textarea rows={2} className='outline-none text-[9px] resize-none pt-[3px] overflow-hidden text-start w-[200px] ' value={busInvkh}>
+                                                    <textarea rows={2} className='outline-none text-[8px] resize-none pt-[3px] overflow-hidden text-start w-[220px] ' value={busInvkh}>
 
                                                     </textarea><br />
-                                                    <textarea rows={2} className='outline-none text-[9px] resize-none overflow-hidden text-start w-[200px] ' value={busInvEng}>
+                                                    <textarea rows={2} className='outline-none text-[8px] resize-none overflow-hidden text-start w-[220px] ' value={busInvEng}>
 
                                                     </textarea>
                                             </div>
@@ -566,14 +566,21 @@ const Invprint = ({
                                 {/*******************original size 140 x 90******************/}
                             </div>
                             <div>
-                                    <div className={` ${!isNaN(discount) && discount !== 0 ? "text-[8px]" : "text-[9px]"}  ${bankInfo === false ? "" : "invisible"}`} style={{fontFamily:"khmerContent"}}>
-                                        <textarea rows={2} className='outline-none resize-none overflow-hidden text-end w-[220px] pt-[3px]' value={busInvkh}>
+                                    {
+                                        bankInfo === false ? ( 
+                                            <div className={` text-[8px]`} style={{fontFamily:"khmerContent"}}>
+                                                <textarea rows={2} className='outline-none resize-none overflow-hidden text-end w-[220px] pt-[3px]' value={busInvkh}>
 
-                                        </textarea><br />
-                                        <textarea rows={2} className='outline-none resize-none overflow-hidden text-end w-[220px]' value={busInvEng}>
+                                                </textarea><br />
+                                                <textarea rows={2} className='outline-none resize-none overflow-hidden text-end w-[220px]' value={busInvEng}>
 
-                                        </textarea>
-                                    </div> 
+                                                </textarea>
+                                            </div>
+                                        ) : (
+                                            <div className='w-[20px] h-[39px]'>
+                                            </div>
+                                        )
+                                    } 
                                 <div className='flex justify-end pt-[10px]'>
                                     <div className='text-end pr-[40px]'>
                                         <Image src='/white.png' width={500} height={500} alt='#' className={`invisible mx-auto w-[auto]  h-[50px]`}/>
