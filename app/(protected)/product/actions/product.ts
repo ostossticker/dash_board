@@ -1,6 +1,7 @@
 "use server"
 
 import { prisma } from "@/lib/db/prisma";
+import { error } from "console";
 
 type productProps = {
     id?:string;
@@ -20,6 +21,15 @@ export const addProduct = async ({
     proditemDes,
     prodBusType
 }:productProps) =>{
+
+    const unique = await prisma.product.findUnique({
+        where:{
+            prodItemName
+        }
+    })
+
+    if(unique) return {error:"sorry this product name already exist!"}
+
     if(!prodItemName){
         return {error : "u forgot to giving an item a name"}
     }else if(!prodBus){

@@ -55,6 +55,7 @@ const QtTable = () => {
   const [paperNo , setPaperno] = useState<string>('')
   const [test , setTest] = useState<Option[]>([])
   const [passing , setPassing] = useState<string>('')
+  const date = new Date()
   const [val , setVal] = useState({
     filter:'',
     filter1:'',
@@ -66,7 +67,7 @@ const QtTable = () => {
 
   const qt:qtProps[] = data?.quotations || []
   const totalPages: number = data?.pagination.totalPages || 0;
-  const totalFilter:number = data?.totalFilter || 0
+  const totalFilter:number = data?.totalFilter._sum.total || 0
 
   const loadPage = (newPage:number) =>{
     setPage(newPage);
@@ -78,6 +79,11 @@ const QtTable = () => {
       setPrint(false)
       setPrinting('')
     }
+    setVal(prev=>({
+      ...prev,
+      fromDate:`${date.getFullYear()}-01-01`,
+      toDate:`${date.getFullYear()}-12-31`
+    }))
   },[])
 
   const ulRef = useRef<HTMLUListElement>(null);

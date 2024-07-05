@@ -50,7 +50,7 @@ type invoiceProps = {
 }
 
 function isArrValid(item: arr): boolean {
-    return !!item.description && !!item.total;
+    return !!item.description ;
 }
 
 export const addGeneral = async ({

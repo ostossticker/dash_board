@@ -52,7 +52,7 @@ type quotationProps = {
 }
 
 function isArrValid(item: arr): boolean {
-    return !!item.description && !!item.total;
+    return !!item.description;
 }
 
 const region = process.env.AWS_S3_REGION as string

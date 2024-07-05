@@ -15,6 +15,7 @@ import { deletePaymentAll } from '@/app/(protected)/payment/actions/payment';
 import { softDelete } from '@/app/(protected)/invoice/actions/meters';
 import { useCurrentRole } from '@/hooks/use-current-role';
 import { usePayment } from '@/hooks/usedatas';
+import { waitForDebugger } from 'inspector';
 
 type arr = {
   id:string;
@@ -39,12 +40,11 @@ type optionDrop = {
   id:string;
   busName:string;
 }
-type balanceStatus = {
-  id:string;
-  _sum:{
-    balance:number
-  }
-  invStatus:string;
+
+type groupProps ={
+  paid:number,
+  unpaid:number,
+  partial:number
 }
 
 const Paytable = () => {
@@ -59,11 +59,23 @@ const Paytable = () => {
   const [focus , setFocus] = useState<number | null>(0)
   const [selectedItemId, setSelectedItemId] = useState<string>("");
   const [test , setTest] = useState<optionDrop[]>([])
-  const [totalStatus , setTotalStatus] = useState<balanceStatus[]>([])
   const [passing , setPassing] = useState<string>('')
   const [cusComp , setCusComp] = useState<string>('')
   const [bus , setBus] = useState<string>('')
   const ulRef = useRef<HTMLUListElement>(null);
+  const [groupTotal , setGroupTotal] = useState<groupProps>({
+    paid:0,
+    unpaid:0,
+    partial:0
+  })
+  const [upgroupTotal , setUngroupTotal] = useState<groupProps>({
+    paid:0,
+    unpaid:0,
+    partial:0
+  })
+
+  const date = new Date()
+  
   const [val , setVal] = useState({
     filter:'',
     filter1:'',
@@ -78,7 +90,7 @@ const Paytable = () => {
 
   const invoices:arr[] = data?.payment || []
   const totalPages: number = data?.pagination.totalPages || 0;
-  const totalValue: number = data?.totalV || 0
+  const totalValue: number = data?.totalV._sum.balance || 0
 
   const loadPage = (newPage:number) =>{
     setPage(newPage);
@@ -90,10 +102,58 @@ const Paytable = () => {
     setTest(data)
 }
 
- const fetchdatas1 = async () =>{
-  const {data} = await axios.get(`${url}/api/paymentStatus?email=${user.id}&name=${user.name}`)
-  setTotalStatus(data)
+
+ const ungroupTotal = async(val?:string , val1?:string) =>{
+  const {data}  = await axios.get(`${url}/api/ungrouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=paid`)
+  console.log(data)
+  setUngroupTotal(prev=>({
+    ...prev,
+    paid:parseFloat(data._sum.balance)
+  }))
  }
+
+ const ungroupUnpaid = async(val?:string , val1?:string) =>{
+  const {data}  = await axios.get(`${url}/api/ungrouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=unpay`)
+  console.log(data)
+  setUngroupTotal(prev=>({
+    ...prev,
+    unpaid:parseFloat(data._sum.balance)
+  }))
+ }
+
+ const ungroupPartial = async(val?:string , val1?:string) =>{
+  const {data}  = await axios.get(`${url}/api/ungrouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=partial&`)
+  console.log(data)
+  setUngroupTotal(prev=>({
+    ...prev,
+    partial:parseFloat(data._sum.balance)
+  }))
+ }
+
+ const totalPaid = async (val?:string , val1?:string) =>{
+  const {data}  = await axios.get(`${url}/api/grouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=paid`)
+  console.log(data)
+  setGroupTotal(prev=>({
+    ...prev,
+    paid:parseFloat(data)
+  }))
+ }
+ 
+ const totalUNpaid = async(val?:string , val1?:string)=>{
+  const {data}  = await axios.get(`${url}/api/grouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=unpay`)
+  setGroupTotal(prev=>({
+    ...prev,
+    unpaid:parseFloat(data)
+  }))
+ }
+ const totalPartial = async (val?:string , val1?:string) =>{
+  const {data}  = await axios.get(`${url}/api/grouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=partial`)
+  setGroupTotal(prev=>({
+    ...prev,
+    partial:parseFloat(data)
+  }))
+ }
+
 
   useEffect(()=>{
     if(!val.filter || !val.filter1 || !val.status){
@@ -103,13 +163,21 @@ const Paytable = () => {
     if(val.filter !== '' && val.filter1 !== '' && val.status !== '' ){
         setPage(currentPage)
         mutate(`${url}/api/getPayment?switched=${switching}&email=${user.id}&name=${user.name}&page=1&take=${take}&filter=${val.filter}&filter1=${val.filter1}&filter2=${val.status}&fromDate=${val.fromDate}&toDate=${val.toDate}`)
+        
     }
     
     if(val.filter1 !== ""){
       fetchDatas(val.filter1)
     }
 
-    fetchdatas1()
+    totalPaid(val.filter , val.filter1)
+    totalUNpaid(val.filter , val.filter1)
+    totalPartial(val.filter , val.filter1)
+
+    
+    ungroupTotal(val.filter , val.filter1)
+    ungroupPartial(val.filter , val.filter1)
+    ungroupUnpaid(val.filter , val.filter1)
      /// fix this part it need loop 4 times
   },[take , currentPage , user , val , pending ])
 
@@ -145,6 +213,15 @@ const Paytable = () => {
       }
     }
   };
+
+  useEffect(()=>{
+    
+    setVal(prev=>({
+      ...prev,
+      fromDate:`${String(date.getFullYear()).padStart(2, '0')}-01-01`,
+      toDate:`${String(date.getFullYear()).padStart(2, '0')}-12-31`
+    }))
+  },[])
   
     useEffect(() => {
       const handleKeyDownDocument = (event: KeyboardEvent) => {
@@ -184,10 +261,6 @@ const Paytable = () => {
     {
       label:"CUSTOMER",
       textAlign:"text-start pl-[50px]"
-    },
-    {
-      label:"COMPANY",
-      textAlign:"text-start"
     },
     {
       label:"BUSINESS",
@@ -403,9 +476,7 @@ const Paytable = () => {
                   ...prev,
                   filter:'',
                   filter1:'',
-                  status:'',
-                  fromDate:'',
-                  toDate:''
+                  status:''
                 }))
                 setIcon(!icon) /// set switching invoice and delivery as text withy icon instead
                 setSwitching(!icon ? 'ungroup' : "group")
@@ -447,7 +518,6 @@ const Paytable = () => {
                     <td className={placeholderClass}>{i + 1}</td>
                     <td className={`${placeholderClass} text-start pl-[30px] ${switching === 'ungroup' ? "" : "!hidden"}`}>{item.invNo}</td>
                     <td className={`${placeholderClass} text-start pl-[50px]`}>{item.invCusName}</td>
-                    <td className={`${placeholderClass} text-start`}>{item.invCusComp}</td>
                     <td className={`${placeholderClass} text-start`}>{item.invBus}</td>
                     {
                         item._count && (
@@ -554,7 +624,6 @@ const Paytable = () => {
                         <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>
                         <td className={placeholderClass}></td>
-                        <td className={placeholderClass}></td>
                         {switching === 'ungroup' && <td className={placeholderClass}></td>}
                         {switching === 'ungroup' && <td className={placeholderClass}></td>}
                         {switching === 'ungroup' && <td className={placeholderClass}></td>}
@@ -618,32 +687,69 @@ const Paytable = () => {
                 switching === 'ungroup' ? (
                   <>
                   {
-                    totalStatus.filter(item => val.status === '' || item.invStatus === val.status).map((item,id)=>{
-                      return(
-                        <div key={item.id} className='bg-insomnia-primary  mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>
-                        <p className='w-[195px] text-center'>
-                          {item.invStatus === 'unpay' ? "Unpaid" : item.invStatus.charAt(0).toUpperCase() + item.invStatus.slice(1)}: ${item._sum.balance.toFixed(2)}
-                        </p>
-                        </div>
-                      )
-                    })
+                    val.status === '' ? (
+                      <>
+                      <div className={`${ !isNaN(upgroupTotal.paid) ? '' : 'hidden'} bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+                      <p className='w-[195px] text-center'>Paid: ${upgroupTotal.paid.toFixed(2)}</p>
+                    </div>
+                    <div className={`${ !isNaN(upgroupTotal.unpaid) ? '' : 'hidden'} bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+                      <p className='w-[195px] text-center'>Unpaid: ${upgroupTotal.unpaid.toFixed(2)}</p>
+                    </div>
+                    <div className={`${ !isNaN(upgroupTotal.partial) ? '' : 'hidden'} bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+                      <p className='w-[195px] text-center'>Partial: ${upgroupTotal.partial.toFixed(2)}</p>
+                    </div>
+                      </>
+                    ) : (
+                      <>
+                      <div className={`${val.status === 'paid' && !isNaN(upgroupTotal.paid) ? '' : 'hidden'} bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+                        <p className='w-[195px] text-center'>Paid: ${upgroupTotal.paid.toFixed(2)}</p>
+                      </div>
+                      <div className={`${val.status === 'unpay' && !isNaN(upgroupTotal.unpaid) ? '' : 'hidden'} bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+                        <p className='w-[195px] text-center'>Unpaid: ${upgroupTotal.unpaid.toFixed(2)}</p>
+                      </div>
+                      <div className={`${val.status === 'partial' && !isNaN(upgroupTotal.partial) ? '' : 'hidden'} bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+                        <p className='w-[195px] text-center'>Partial: ${upgroupTotal.partial.toFixed(2)}</p>
+                      </div>
+                      </>
+                    )
                   }
                   </>
                 ) : (
-                  <div>
-
-                  </div>
+                  <>
+                    <div className={`${val.status === 'paid' && groupTotal.paid !== 0 ? '' : 'hidden'} bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+                      <p className='w-[195px] text-center'>Paid: ${groupTotal.paid.toFixed(2)}</p>
+                    </div>
+                    <div className={`${val.status === 'unpay' && groupTotal.unpaid !== 0 ? '' : 'hidden'} bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+                      <p className='w-[195px] text-center'>Unpaid: ${groupTotal.unpaid.toFixed(2)}</p>
+                    </div>
+                    <div className={`${val.status === 'partial' && groupTotal.partial !== 0 ? '' : 'hidden'} bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+                      <p className='w-[195px] text-center'>Partial: ${groupTotal.partial.toFixed(2)}</p>
+                    </div>
+                  </>
                 )
               }
-             {
-              val.status === '' && (
+              {
+                switching !== 'ungroup' && val.status === '' && (
+                  <>
+                  <div className={`${ groupTotal.paid !== 0 ? '' : 'hidden'} bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+                      <p className='w-[195px] text-center'>Paid: ${groupTotal.paid.toFixed(2)}</p>
+                    </div>
+                    <div className={`${ groupTotal.unpaid !== 0 ? '' : 'hidden'} bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+                      <p className='w-[195px] text-center'>Unpaid: ${groupTotal.unpaid.toFixed(2)}</p>
+                    </div>
+                    <div className={`${ groupTotal.partial !== 0 ? '' : 'hidden'} bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+                      <p className='w-[195px] text-center'>Partial: ${groupTotal.partial.toFixed(2)}</p>
+                    </div>
+                  </>
+                )
+              }
+             
                 <div className='bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md'>       
                 <p>
                 Total Sale: ${totalValue.toFixed(2)}  
                 </p>
               </div>
-              )
-             }
+              
     </div>
     </>
   )

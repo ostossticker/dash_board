@@ -48,6 +48,7 @@ const RecTable = () => {
   const [take , setTake] = useState<number>(15)
   const [test , setTest] = useState<Option[]>([])
   const [passing , setPassing] = useState<string>('')
+  const date = new Date()
   const [val , setVal] = useState({
     filter:'',
     filter1:'',
@@ -59,7 +60,7 @@ const RecTable = () => {
 
   const rec:recProps[] = data?.receipts || []
   const totalPages: number = data?.pagination.totalPages || 0;
-  const totalFilter:number = data?.totalFilter || 0
+  const totalFilter:number = data?.totalFilter._sum.usd || 0
 
   const ulRef = useRef<HTMLUListElement>(null);
 
@@ -107,6 +108,14 @@ const RecTable = () => {
     }
   };
   
+  useEffect(()=>{
+    setVal(prev=>({
+      ...prev,
+      fromDate:`${date.getFullYear()}-01-01`,
+      toDate:`${date.getFullYear()}-12-31`
+    }))
+  },[])
+
     useEffect(() => {
       const handleKeyDownDocument = (event: KeyboardEvent) => {
         handleKeyDown(event as any as React.KeyboardEvent<HTMLInputElement>);

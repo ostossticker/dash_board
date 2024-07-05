@@ -333,7 +333,7 @@ const CusTable = () => {
                     <td className={`${placeholderClass} text-end`}>{item.cusPhone2}</td>
                     <td className={`${placeholderClass} text-end`}>{item.cusTelegram}</td>
                     <td className={`${placeholderClass} text-start pl-[50px]`}>{item.cusEmail}</td>
-                    <td className={`${placeholderClass} text-start`}>{item.cusAddr}</td>
+                    <td className={`${placeholderClass} text-start`}>{item.cusAddr.length >= 44 ? <input value={item.cusAddr} className='outline-none bg-transparent'/> : item.cusAddr}</td>
                     <td className={placeholderClass}>
                         <div className='flex justify-center items-center gap-1'>
                         <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{

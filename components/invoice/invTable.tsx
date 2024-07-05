@@ -55,7 +55,7 @@ const InvTable = () => {
   const [take , setTake] = useState<number>(15)
   const [test , setTest] = useState<optionDrop[]>([])
   const [passing , setPassing] = useState<string>('')
-
+  const date = new Date()
   const [val , setVal] = useState({
     filter:'',
     filter1:'',
@@ -75,11 +75,16 @@ const InvTable = () => {
       setPrint(false)
       setPrinting('')
     }
+    setVal(prev=>({
+      ...prev,
+      fromDate:`${date.getFullYear()}-01-01`,
+      toDate:`${date.getFullYear()}-12-31`
+    }))
   },[])
 
   const invoices:arr[] = data?.invoices || []
   const totalPages: number = data?.pagination.totalPages || 0;
-  const totalFilter:number = data?.totalFilter || 0
+  const totalFilter:number = data?.totalFilter._sum.balance || 0
   
 
   const ulRef = useRef<HTMLUListElement>(null);
