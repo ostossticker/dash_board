@@ -85,14 +85,32 @@ type optionDrop = {
   busName:string;
 }
 
+type cusProps ={
+  id:string;
+  cusName:string;
+}
+
+type focusProps ={
+  check:boolean;
+  check1:boolean;
+  check2:boolean;
+}
+
 const Create = () => {
   const { pending , setPending  ,edit , onCancel , setPassingId, passingId , isModal , setModalisopen} = useToggle()
   const [suggest , setSuggest] = useState<optionDrop[]>([])
+  const [suggest1 , setSuggest1] = useState<cusProps[]>([])
   const [isError , setIsError] = useState<boolean>(false)
   const user = useCurrentUser()
-  const [focus , setFocus] = useState<number | null>(0)
+  const [focus , setFocus] = useState<focusProps>({
+    check:false,
+    check1:false,
+    check2:false
+  })
   const [selectedItemId, setSelectedItemId] = useState<string>("");
   const ulRef = useRef<HTMLUListElement>(null);
+  const ulRef1 = useRef<HTMLUListElement>(null);
+  const ulRef2 = useRef<HTMLUListElement>(null)
   const MIN_TEXTAREA_HEIGHT = 32;
   const textareaRef = useRef<any>(null);
   const [text , setText] = useState("")
@@ -161,38 +179,92 @@ const Create = () => {
       const {data} = await axios.get(`${url}/api/businesss?email=${user.id}&name=${user.name}&filter=${newString}`)
       setSuggest(data)
     }
+
+    const fetchDatas1 = async(newString:string) =>{
+      const {data} = await axios.get(`${url}/api/customerss?email=${user.id}&filter=${newString}`)
+      setSuggest1(data)
+    }
   
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if(focus === 1){
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement> , name?:string) => {
+      if(focus.check === true || focus.check1 === true || focus.check2 === true){
         if (event.keyCode === 38) {
           // Up arrow key
-          const index = suggest.findIndex(item => item.id === selectedItemId);
-          setSelectedItemId(index === -1 ? suggest[suggest.length - 1].id : suggest[Math.max(index - 1, 0)].id);
-          scrollToSelectedIndex();
+          if(name === 'Business'){
+            const index = suggest.findIndex(item => item.id === selectedItemId);
+            setSelectedItemId(index === -1 ? suggest[suggest.length - 1].id : suggest[Math.max(index - 1, 0)].id);
+            scrollToSelectedIndex(ulRef);
+          }
+          if(name === 'Item Name'){
+            const index = suggest1.findIndex(item => item.id === selectedItemId);
+            setSelectedItemId(index === -1 ? suggest1[suggest1.length - 1].id : suggest1[Math.max(index - 1, 0)].id);
+            scrollToSelectedIndex(ulRef1);
+          }
+          if(name === 'Supplier'){
+            const index = suggest1.findIndex(item => item.id === selectedItemId);
+            setSelectedItemId(index === -1 ? suggest1[suggest1.length - 1].id : suggest1[Math.max(index - 1, 0)].id);
+            scrollToSelectedIndex(ulRef2);
+          }
         } else if (event.keyCode === 40) {
           // Down arrow key
-          const index = suggest.findIndex(item => item.id === selectedItemId);
-          setSelectedItemId(index === -1 ? suggest[0].id : suggest[Math.min(index + 1, suggest.length - 1)].id);
-          scrollToSelectedIndex();
+          if(name === 'Business'){
+            const index = suggest.findIndex(item => item.id === selectedItemId);
+            setSelectedItemId(index === -1 ? suggest[0].id : suggest[Math.min(index + 1, suggest.length - 1)].id);
+            scrollToSelectedIndex(ulRef);
+          }
+          if(name === 'Item Name'){
+            const index = suggest1.findIndex(item => item.id === selectedItemId);
+            setSelectedItemId(index === -1 ? suggest1[0].id : suggest1[Math.min(index + 1, suggest1.length - 1)].id);
+            scrollToSelectedIndex(ulRef1);
+          }
+          if(name === 'Supplier'){
+            const index = suggest1.findIndex(item => item.id === selectedItemId);
+            setSelectedItemId(index === -1 ? suggest1[0].id : suggest1[Math.min(index + 1, suggest1.length - 1)].id);
+            scrollToSelectedIndex(ulRef2);
+          }
         } else if (event.keyCode === 13) {
           // Enter key
-          setVal(prev=>({
-            ...prev,
-            purBus:suggest.find(item => item.id === selectedItemId)?.busName || ""
-          }));
-          setFocus(null)
+          if(name === 'Business'){
+            setVal(prev=>({
+              ...prev,
+              purBus:suggest.find(item => item.id === selectedItemId)?.busName || ""
+            }));
+            setFocus(prev=>({
+              ...prev,
+              check:false
+            }))
+          }
+          if(name === 'Item Name'){
+            setVal(prev=>({
+              ...prev,
+              purName:suggest1.find(item => item.id === selectedItemId)?.cusName || ""
+            }));
+            setFocus(prev=>({
+              ...prev,
+              check1:false
+            }))
+          }
+          if(name === 'Supplier'){
+            setVal(prev=>({
+              ...prev,
+              purSupp:suggest1.find(item => item.id === selectedItemId)?.cusName || ""
+            }));
+            setFocus(prev=>({
+              ...prev,
+              check2:false
+            }))
+          }
         }
       }
     };
     
     
-    const scrollToSelectedIndex = () => {
-      if (ulRef.current && selectedItemId) {
-        const selectedItem = ulRef.current.querySelector(`[data-id="${selectedItemId}"]`) as HTMLLIElement | null;
-        if (selectedItem) {
-          selectedItem.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    const scrollToSelectedIndex = (reful: React.RefObject<HTMLUListElement>) => {
+      if (reful.current && selectedItemId) {
+          const selectedItem = reful.current.querySelector(`[data-id="${selectedItemId}"]`) as HTMLLIElement | null;
+          if (selectedItem) {
+            selectedItem.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }
         }
-      }
     };
     
       useEffect(() => {
@@ -322,9 +394,28 @@ const Create = () => {
       [name]: newValue,
     });
     if(name === 'purBus' && value !== ""){
-      setFocus(1)
+      setFocus(prev=>({
+        ...prev,
+        check:true
+      }))
     }else{
       fetchDatas('')
+    }
+    if(name === 'purName' && value !== ""){
+      setFocus(prev=>({
+        ...prev,
+        check1:true
+      }))
+    }else{
+      fetchDatas1('')
+    }
+    if(name === 'purSupp' && value !== ""){
+      setFocus(prev=>({
+        ...prev,
+        check2:true
+      }))
+    }else{
+      fetchDatas1('')
     }
   };
 
@@ -341,7 +432,13 @@ const Create = () => {
     if(val.purBus !== ""){
       fetchDatas(val.purBus)
     }
-  },[val.purBus])
+    if(val.purName !== ""){
+      fetchDatas1(val.purName)
+    }
+    if(val.purSupp !== ""){
+      fetchDatas1(val.purSupp)
+    }
+  },[val.purBus,val.purName , val.purSupp])
 
   const onSave = async () => {
     const {purName , purBus , purInvN , purPrice ,purSupp,purSince} = val
@@ -359,7 +456,7 @@ const Create = () => {
         formData.append('image1', image.image1);
     }
 
-    if(!purName || !purPrice || !purBus  || !purSupp || !text || !purSince){
+    if(!purName || !purPrice || !purBus  || !purSupp || !purSince){
       validation= "purchase name , purchase price , purchase business , purchase since , purchase supply & textarea is required!"
       toast.error(validation)
       setPending(true)
@@ -426,7 +523,7 @@ const Create = () => {
         formData.append('image1', image.image1);
     }
 
-    if(!purName || !purPrice || !purBus  || !purSupp || !text || !purSince){
+    if(!purName || !purPrice || !purBus  || !purSupp || !purSince){
       validation= "purchase name , purchase price , purchase business , purchase since , purchase supply & textarea is required!"
       toast.error(validation)
       setPending(true)
@@ -475,19 +572,7 @@ const Create = () => {
   }
 
 
-  const handleFilClick = (value:string | undefined) =>{
-    if(value === undefined){
-      setVal({
-        ...val,
-        purBus:''
-      })
-    }else{
-      setVal({
-        ...val,
-        purBus:value
-      })
-    }
-  }
+
 
   return (
     <>
@@ -498,21 +583,29 @@ const Create = () => {
           return(
             <React.Fragment key={item.label}>
             {
-              item.label !== "Business" ? (
-                <CompInput  value={item.val} label={item.label}  func={handleChange} name={item.name} type={item.type}/>
-              ) : (
+              item.label === "Business" ? (
                 <div>
-                  <CompInput  value={item.val} label={item.label}  func={handleChange} name={item.name} type={item.type} handleClick={()=>fetchDatas('')} handleKeyDown={handleKeyDown}  handleFocuss={()=>setFocus(1)} handleBlur={()=>setTimeout(()=>{
-                          setFocus(null)
-                        }, 150)}/>
+                  <CompInput  value={item.val} label={item.label}  func={handleChange} name={item.name} type={item.type} handleClick={()=>fetchDatas('')} 
+                  handleKeyDown={(event)=>handleKeyDown(event,"Business")}  handleFocuss={()=>setFocus(prev=>({
+                    ...prev,
+                    check:true
+                  }))} handleBlur={()=>setTimeout(()=>{
+                    setFocus(prev=>({
+                      ...prev,
+                      check:false
+                    }))
+                  },150)}/>
                   <div className='relative mx-[13px]'>
                     {
-                      focus === 1 && (
+                      focus.check === true && (
                         <ul ref={ulRef} className='absolute bg-white w-full rounded-md max-h-[100px] overflow-auto'>
                           {
                             suggest.map((item)=>{
                               return(
-                                <li key={item.id} data-id={item.id} className={`cursor-pointer px-2 ${selectedItemId === item.id ? "bg-gray-200" : "bg-transparent" }`}   onClick={()=>handleFilClick(item?.busName)}>
+                                <li key={item.id} data-id={item.id} className={`cursor-pointer px-2 ${selectedItemId === item.id ? "bg-gray-200" : "bg-transparent" }`}   onClick={()=>setVal(prev=>({
+                                  ...prev,
+                                  purBus:item.busName
+                                }))}>
                                   {item.busName}
                                 </li>
                               )
@@ -523,6 +616,74 @@ const Create = () => {
                     }
                 </div>
                 </div>
+              ) : item.label === 'Item Name' ? (
+                <div>
+                  <CompInput  value={item.val} label={item.label}  func={handleChange} name={item.name} type={item.type} handleClick={()=>fetchDatas1('')} 
+                  handleKeyDown={(event)=>handleKeyDown(event,"Item Name")}  handleFocuss={()=>setFocus(prev=>({
+                    ...prev,
+                    check1:true
+                  }))} handleBlur={()=>setTimeout(()=>{
+                    setFocus(prev=>({
+                      ...prev,
+                      check1:false
+                    }))
+                  },150)}/>
+                  <div className='relative mx-[13px]'>
+                    {
+                      focus.check1 === true && (
+                        <ul ref={ulRef1} className='absolute bg-white w-full rounded-md max-h-[100px] overflow-auto'>
+                          {
+                            suggest1.map((item)=>{
+                              return(
+                                <li key={item.id} data-id={item.id} className={`cursor-pointer px-2 ${selectedItemId === item.id ? "bg-gray-200" : "bg-transparent" }`}   onClick={()=>setVal(prev=>({
+                                  ...prev,
+                                  purName:item.cusName
+                                }))}>
+                                  {item.cusName}
+                                </li>
+                              )
+                            })
+                          }
+                        </ul>
+                      )
+                    }
+                </div>
+                </div>
+              ) : item.label === 'Supplier' ? (
+                <div>
+                  <CompInput  value={item.val} label={item.label}  func={handleChange} name={item.name} type={item.type} handleClick={()=>fetchDatas1('')} 
+                  handleKeyDown={(event)=>handleKeyDown(event,"Supplier")}  handleFocuss={()=>setFocus(prev=>({
+                    ...prev,
+                    check2:true
+                  }))} handleBlur={()=>setTimeout(()=>{
+                    setFocus(prev=>({
+                      ...prev,
+                      check2:false
+                    }))
+                  },150)}/>
+                  <div className='relative mx-[13px]'>
+                    {
+                      focus.check2 === true && (
+                        <ul ref={ulRef2} className='absolute bg-white w-full rounded-md max-h-[100px] overflow-auto'>
+                          {
+                            suggest1.map((item)=>{
+                              return(
+                                <li key={item.id} data-id={item.id} className={`cursor-pointer px-2 ${selectedItemId === item.id ? "bg-gray-200" : "bg-transparent" }`}   onClick={()=>setVal(prev=>({
+                                  ...prev,
+                                  purSupp:item.cusName
+                                }))}>
+                                  {item.cusName}
+                                </li>
+                              )
+                            })
+                          }
+                        </ul>
+                      )
+                    }
+                </div>
+                </div>
+              ) : (
+                <CompInput  value={item.val} label={item.label}  func={handleChange} name={item.name} type={item.type}/>
               )
             }
           </React.Fragment>

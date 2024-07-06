@@ -1175,6 +1175,13 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
       }
   }
 
+  const openModal = () =>{
+    const modal = document.getElementById('my_modal_4') as HTMLDialogElement | null;
+    if (modal) {
+      modal.showModal();
+    }
+  }
+
   return (
     <>
     <div className={`${busType === 'general' ? "block" : "hidden"} ${print === true ? "!hidden" : ""}`}>
@@ -1309,6 +1316,7 @@ const handleTotalKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index:
             1
           </div>
           <button onClick={handleAddCalculation} className={`${darkMode ? "text-dark-lg-color" : ""} ml-[10px] hover:bg-[#E94043] bg-insomnia-primary text-white rounded-md px-[45px] py-[5px] text-[18px] font-bold`}>Add</button>
+          <button onClick={()=>openModal()} className={`ml-[10px] ${darkMode ? "text-dark-lg-color" : ""} hover:bg-[#E94043] bg-insomnia-primary text-white rounded-md px-[30px] py-[5px] text-[18px] font-bold`}>Product</button>
       </div>
       
   

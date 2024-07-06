@@ -758,13 +758,14 @@ const calculateBalance = () => {
       clss:""
     },
     {
-      label:"M2",
-      clss:""
-    },
-    {
       label:"QUANTITY",
       clss:""
     },
+    {
+      label:"M2",
+      clss:""
+    },
+    
     {
       label:"UNIT PRICE",
       clss:""
@@ -1248,6 +1249,13 @@ const calculateBalance = () => {
       }
   }
 
+  const openModal = () =>{
+    const modal = document.getElementById('my_modal_4') as HTMLDialogElement | null;
+    if (modal) {
+      modal.showModal();
+    }
+  }
+
   return (
     <>
     <div className={`${busType === "meter" ? "block" : "hidden"} ${print === true ? "!hidden" : ""}`}>
@@ -1345,16 +1353,7 @@ const calculateBalance = () => {
             />
             </div>
           </td>
-          <td className=" px-[10px] py-2">
-            <input
-              type="number"
-              value={item.m2 === 0 || item.m2 === undefined ? '' : item.m2.toFixed(2)}
-              onChange={(e) => handleChange(index , 'm2' , e.target.value)}
-              onBlur={(e) => handleM2(e.target.value, index)}
-              onKeyDown={(e) => handleM2Key(e, index , item.m2.toString())}
-              className={`${darkMode ? "text-dark-lg-color" : ""} w-full text-center outline-none border px-2 py-1 bg-transparent border-input-primary rounded-md`}
-            />
-          </td>
+          
           <td className=" px-[10px] py-2">
             <input
               type="text"
@@ -1372,6 +1371,16 @@ const calculateBalance = () => {
               )
             }
             </div>
+          </td>
+          <td className=" px-[10px] py-2">
+            <input
+              type="number"
+              value={item.m2 === 0 || item.m2 === null || item.m2 === undefined ? '' : item.m2.toFixed(2)}
+              onChange={(e) => handleChange(index , 'm2' , e.target.value)}
+              onBlur={(e) => handleM2(e.target.value, index)}
+              onKeyDown={(e) => handleM2Key(e, index , item.m2.toString())}
+              className={`${darkMode ? "text-dark-lg-color" : ""} w-full text-center outline-none border px-2 py-1 bg-transparent border-input-primary rounded-md`}
+            />
           </td>
           <td className=" px-[10px] py-2">
             <input
@@ -1395,7 +1404,7 @@ const calculateBalance = () => {
           </td>
           <td className=" px-[10px] py-2">
           <div className={`flex justify-center items-center gap-2`}>
-            <button className={`${darkMode ? "text-blue-400" : "text-[#024466]"} p-1 rounded-md`} onClick={()=>handleCopy(item.description , item.sizeHeight , item.sizeHeight , item.m2 , item.quantity, item.unitPrice,item.total)}><PiCopySimpleLight size={25}/></button>
+            <button className={`${darkMode ? "text-blue-400" : "text-[#024466]"} p-1 rounded-md`} onClick={()=>handleCopy(item.description , item.sizeWidth , item.sizeHeight , item.m2 , item.quantity, item.unitPrice,item.total)}><PiCopySimpleLight size={25}/></button>
             <button className={`${darkMode ? "text-red-400" : "text-red-700"} p-1 rounded-md`} onClick={() => handleRemoveCalculation(index)}><PiTrashLight size={25}/></button>
           </div>
           </td>
@@ -1409,6 +1418,7 @@ const calculateBalance = () => {
             1
           </div>
           <button onClick={handleAddCalculation} className={`${darkMode ? "text-dark-lg-color" : ""} ml-[10px] hover:bg-[#E94043] bg-insomnia-primary text-white rounded-md px-[45px] py-[5px] text-[18px] font-bold`}>Add</button>
+          <button onClick={()=>openModal()} className={`ml-[10px] ${darkMode ? "text-dark-lg-color" : ""} hover:bg-[#E94043] bg-insomnia-primary text-white rounded-md px-[30px] py-[5px] text-[18px] font-bold`}>Product</button>
       </div>
       <div className="flex items-center">
       <div className={`${darkMode ? "text-dark-lg-color" : ""} bg-insomnia-primary text-white rounded-md px-[20px] py-[5px] flex text-[18px] mr-[10px]`}>

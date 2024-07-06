@@ -5,6 +5,7 @@ import { IoIosNotifications } from 'react-icons/io'
 import { PiNotePencilBold } from "react-icons/pi";
 import Modal from '../ui/modal/modal';
 import Create from '../customer/create';
+import Create1 from '../product/create'
 
 type topProps = {
   children:React.ReactNode;
@@ -63,6 +64,9 @@ const Top = ({topTitle,text,classname,which,children,...props}:topProps) => {
     </div>
     <Modal id='my_modal_5' title='Customer' showCancel={false}>
         <Create/>
+    </Modal>
+    <Modal id='my_modal_4' title='Product' showCancel={false}>
+        <Create1 showModal4/>
     </Modal>
     </>
   )

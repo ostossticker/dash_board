@@ -111,8 +111,6 @@ export const addPurchase = async ({
         return {error:"business is required!"}
     }else if(!purSupp){
         return {error:"supplier is required!"}
-    }else if(!purDes){
-        return {error:"supply description is required!"}
     }else if(!purSince){
         return {error:"purchase date is required!"}
     }else{
@@ -214,8 +212,6 @@ export const editPurchase = async ({
             return {error:"business is required!"}
         }else if(!purSupp){
             return {error:"supplier is required!"}
-        }else if(!purDes){
-            return {error:"supply description is required!"}
         }else if(!purSince){
             return {error:"purchase date is required!"}
         }else{

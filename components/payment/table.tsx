@@ -577,6 +577,24 @@ const Paytable = () => {
                     <td className={`${placeholderClass} text-end`}>${item._sum && item._sum.balance !== undefined && item._sum.balance.toFixed(2)} {item.balance !== undefined && parseFloat(item.balance).toFixed(2)}</td>
                     <td className={placeholderClass}>
                     <div className='flex justify-center items-center gap-1'>
+                        {
+                          item._count && item._count.invCusName  ? (
+                            <>
+                            </>
+                          ) : (
+                            <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
+                              setSwitching('group')
+                              setIcon(false)
+                              setVal(prev=>({
+                                ...prev,
+                                filter:'',
+                                filter1:''
+                            }))
+                            }}>
+                              <PiEyeLight/>
+                            </button>
+                          )
+                        }
                         <button className={`${darkMode ? "text-thead-primary" : "text-thead-primary" } p-1 lg:text-[14px] xl:text-[20px]`} onClick={()=>{
                           if(item._count && item._count.invCusName !== undefined){
                             setSwitching('ungroup')

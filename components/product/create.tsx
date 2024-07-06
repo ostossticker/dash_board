@@ -81,7 +81,11 @@ type optionDrop = {
   busType:string;
 }
 
-const Create = () => {
+type prodPropss ={
+  showModal4?:boolean;
+}
+
+const Create = ({showModal4}:prodPropss) => {
   const { pending , setPending  ,edit , passingId , setModalisopen , isModal} = useToggle()
   const user = useCurrentUser()
 
@@ -445,7 +449,14 @@ const Create = () => {
           <input className='hidden' type="text" name='prodBustype' value={val.prodBustype} onChange={handleChange}/>
     <div className='flex justify-center items-center gap-5'>
     <button className={`px-4 py-1 text-white duration-200 ease-in-out ${val.prodItemName  !== "" || val.prodBus !== "" ? "shadowHover bg-mainLightBlue text-white" : "bg-slate-300"} w-[185px] rounded-md `} onClick={edit ? onUpdate : onSave}>{pending ? isError ? <p>{edit ? "Update" : "Save"}</p> : <span className='loading loading-spinner text-default'></span> : <p>{edit ? "Update" : "Save"}</p>}</button>
-      <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>{closeModal('my_modal_5') , setModalisopen(false)}}>Cancel</button>
+      
+    {
+      showModal4 ? (
+        <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>{closeModal('my_modal_4') , setModalisopen(false)}}>Cancel</button>
+      ) : (
+        <button className={`px-4 py-1 text-white duration-200 ease-in-out bg-slate-300 hover:bg-mainLightRed w-[185px] rounded-md`} onClick={()=>{closeModal('my_modal_5') , setModalisopen(false)}}>Cancel</button>
+      )
+    }
     </div>
     </>
   )
