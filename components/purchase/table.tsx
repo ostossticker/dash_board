@@ -2,7 +2,7 @@
 import { deletePurchase } from '@/app/(protected)/purchase/actions/purchase';
 import useToggle from '@/hooks/stores';
 import { useCurrentUser } from '@/hooks/use-current-user';
-import { areAnagrams, closeModal, fetchData, openModal } from '@/lib/functions';
+import { areAnagrams, closeModal, dateFormat, fetchData, openModal } from '@/lib/functions';
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { PiTrashLight , PiPencilSimpleLineLight } from "react-icons/pi";
 import { MdOutlineArrowDropDown } from "react-icons/md";
@@ -72,6 +72,7 @@ const PurTable = () => {
   const ulRef = useRef<HTMLUListElement>(null);
   const purs:purProps[] = data?.purchase || []
   const totalPages: number = data?.pagination.totalPages || 0;
+  const totalPurcahse:number = data?.totalFilter._sum.purPrice || 0
 
   const loadPage = (newPage:number) =>{
     setPage(newPage);
@@ -357,7 +358,7 @@ const PurTable = () => {
                     <td className={`${placeholderClass} text-start`}>{item.purName}</td>
                     <td className={`${placeholderClass} text-start`}>{item.purDes}</td>
                     <td className={`${placeholderClass} text-start`}>{item.purBus}</td>
-                    <td className={`${placeholderClass} text-end`}>{item.purSince}</td>
+                    <td className={`${placeholderClass} text-end`}>{dateFormat(item.purSince)}</td>
                     <td className={`${placeholderClass} text-end`}>${parseFloat(item.purPrice).toFixed(2)}
                     </td>    
                     <td className={placeholderClass}>
@@ -464,6 +465,7 @@ const PurTable = () => {
           
         </div>
         {/****************** */}
+      
         <Modal typeSelect='caution' id='purchases' handlingAction={()=>handleDelete(passing, display.img1 , display.img2)} CautionText={'Deletion'}/>
         <Modal id='viewimage' title='View Images' showCancel={true}>
           <div className='w-full flex'>
@@ -513,6 +515,11 @@ const PurTable = () => {
           )
         }
     </div>
+    <div className='flex justify-end'>
+            <div className={`bg-insomnia-primary mt-[15px] font-bold text-white px-5 xl:text-[20px] lg:text-[13px] py-[5px] xl:rounded-lg lg:rounded-md`}>
+              TOTAL: ${totalPurcahse.toFixed(2)}
+            </div>
+        </div>
     </>
   )
 }

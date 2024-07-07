@@ -405,8 +405,9 @@ const formatTotal = (value: string): string => {
         // Calculate m2
         const width = updatedCalculation.sizeWidth;
         const height = updatedCalculation.sizeHeight;
-        if (!isNaN(width) && width !== 0 && !isNaN(height) && height !== 0) {
-            updatedCalculation.m2 = ((width * height) / 10000);
+        const qty = updatedCalculation.quantity;
+        if (!isNaN(width) && width !== 0 && !isNaN(height) && height !== 0 && !isNaN(parseInt(qty)) && parseInt(qty) !== 0) {
+            updatedCalculation.m2 = ((width * height) / 10000 * parseInt(qty));
         } else {
             updatedCalculation.m2 = updatedCalculation.m2;
         }
@@ -1382,6 +1383,7 @@ const calculateBalance = () => {
               className={`${darkMode ? "text-dark-lg-color" : ""} w-full text-center outline-none border px-2 py-1 bg-transparent border-input-primary rounded-md`}
             />
           </td>
+          
           <td className=" px-[10px] py-2">
             <input
               type="text"
@@ -1392,6 +1394,7 @@ const calculateBalance = () => {
               className={`${darkMode ? "text-dark-lg-color" : ""} w-full text-center border outline-none px-2 py-1 bg-transparent border-input-primary rounded-md`}
             />
           </td>
+          
           <td className=" px-[10px] py-2">
             <input
               type="text"

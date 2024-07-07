@@ -349,8 +349,8 @@ const PrintForm = ({
                         <th className="text-center ">No.</th>
                         <th className="text-start">Description</th>
                         <th className='text-center'>Size cm</th>
-                        <th className="text-center">Qty</th>
                         <th className='text-center'>M2</th>
+                        <th className="text-center">Qty</th>
                         <th className="text-end">Unit Price</th>
                         <th className="text-end pr-[10px]">Total Amount</th>
                     </tr>
@@ -385,8 +385,8 @@ const PrintForm = ({
                                             <div>{item.sizeHeight === 0 ? "" : item.sizeHeight}</div>
                                         </div>
                                     </td>
-                                    <td className={`${i === 0 ? 'pt' : ''} text-center`}>{item.quantity === "" ? "" : item.quantity}</td>
                                     <td className={`${i === 0 ? 'pt' : ''} text-center`}>{item.m2 === 0 ? "" : item.m2?.toFixed(2)}</td>
+                                    <td className={`${i === 0 ? 'pt' : ''} text-center`}>{item.quantity === "" ? "" : item.quantity}</td>
                                     <td className={`${i === 0 ? 'pt' : ''} text-end`}>{item.unitPrice} </td>
                                     <td className={`${i === 0 ? 'pt' : ''} text-end pr-[12px]`}>{item.total}</td>
                                 </tr>

@@ -115,14 +115,13 @@ const Invprint = ({
             class:'text-center'
         },
         {
-            label:"Qty",
-            class:'text-center'
-        },
-        {
             label:"M2",
             class:"text-center"
         },
-        
+        {
+            label:"Qty",
+            class:'text-center'
+        },
         {
             label:"Unit Price",
             class:'text-end'
@@ -425,11 +424,10 @@ const Invprint = ({
                                                                 {item.sizeHeight === 0 ? "" : item.sizeHeight}
                                                               </div> 
                                                             </td>
-                                                            <td className={`text-[9px] text-center py-[2px] ${i === 0 ? "pt-[5px]" : ""}`}>{item.quantity !== '' ? item.quantity : ""}</td>
                                                             <td className={`text-[9px] text-center py-[2px] ${i === 0 ? "pt-[5px]" : ""}`}>
                                                                 {item.m2 === 0 ? "" : item.m2}
                                                             </td>
-                                                            
+                                                            <td className={`text-[9px] text-center py-[2px] ${i === 0 ? "pt-[5px]" : ""}`}>{item.quantity !== '' ? item.quantity : ""}</td>                                                           
                                                             <td className={`text-[9px] text-end py-[2px] ${i === 0 ? "pt-[5px]" : ""}`}>{item.unitPrice} </td>
                                                             <td className={`text-[9px] text-end pr-3 py-[2px] ${i === 0 ? "pt-[5px]" : ""}`}>{item.total}</td>
                                                     </tr>

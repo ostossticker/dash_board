@@ -103,8 +103,8 @@ const Paytable = () => {
 }
 
 
- const ungroupTotal = async(val?:string , val1?:string) =>{
-  const {data}  = await axios.get(`${url}/api/ungrouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=paid`)
+ const ungroupTotal = async( fromDate:string , toDate:string , val?:string , val1?:string)  =>{
+  const {data}  = await axios.get(`${url}/api/ungrouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=paid&fromDate=${fromDate}&toDate=${toDate}`)
   console.log(data)
   setUngroupTotal(prev=>({
     ...prev,
@@ -112,8 +112,8 @@ const Paytable = () => {
   }))
  }
 
- const ungroupUnpaid = async(val?:string , val1?:string) =>{
-  const {data}  = await axios.get(`${url}/api/ungrouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=unpay`)
+ const ungroupUnpaid = async(fromDate:string , toDate:string , val?:string , val1?:string) =>{
+  const {data}  = await axios.get(`${url}/api/ungrouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=unpay&fromDate=${fromDate}&toDate=${toDate}`)
   console.log(data)
   setUngroupTotal(prev=>({
     ...prev,
@@ -121,8 +121,8 @@ const Paytable = () => {
   }))
  }
 
- const ungroupPartial = async(val?:string , val1?:string) =>{
-  const {data}  = await axios.get(`${url}/api/ungrouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=partial&`)
+ const ungroupPartial = async(fromDate:string , toDate:string , val?:string , val1?:string ) =>{
+  const {data}  = await axios.get(`${url}/api/ungrouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=partial&fromDate=${fromDate}&toDate=${toDate}`)
   console.log(data)
   setUngroupTotal(prev=>({
     ...prev,
@@ -130,8 +130,8 @@ const Paytable = () => {
   }))
  }
 
- const totalPaid = async (val?:string , val1?:string) =>{
-  const {data}  = await axios.get(`${url}/api/grouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=paid`)
+ const totalPaid = async (fromDate:string , toDate:string ,val?:string , val1?:string) =>{
+  const {data}  = await axios.get(`${url}/api/grouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=paid&fromDate=${fromDate}&toDate=${toDate}`)
   console.log(data)
   setGroupTotal(prev=>({
     ...prev,
@@ -139,15 +139,15 @@ const Paytable = () => {
   }))
  }
  
- const totalUNpaid = async(val?:string , val1?:string)=>{
-  const {data}  = await axios.get(`${url}/api/grouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=unpay`)
+ const totalUNpaid = async(fromDate:string , toDate:string, val?:string , val1?:string)=>{
+  const {data}  = await axios.get(`${url}/api/grouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=unpay&fromDate=${fromDate}&toDate=${toDate}`)
   setGroupTotal(prev=>({
     ...prev,
     unpaid:parseFloat(data)
   }))
  }
- const totalPartial = async (val?:string , val1?:string) =>{
-  const {data}  = await axios.get(`${url}/api/grouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=partial`)
+ const totalPartial = async (fromDate:string , toDate:string , val?:string , val1?:string  ) =>{
+  const {data}  = await axios.get(`${url}/api/grouping?email=${user.id}&name=${user.name}&filter=${val}&filter1=${val1}&filter2=partial&fromDate=${fromDate}&toDate=${toDate}`)
   setGroupTotal(prev=>({
     ...prev,
     partial:parseFloat(data)
@@ -170,14 +170,14 @@ const Paytable = () => {
       fetchDatas(val.filter1)
     }
 
-    totalPaid(val.filter , val.filter1)
-    totalUNpaid(val.filter , val.filter1)
-    totalPartial(val.filter , val.filter1)
+    totalPaid(val.filter , val.filter1 , val.fromDate , val.toDate)
+    totalUNpaid(val.filter , val.filter1 , val.fromDate , val.toDate)
+    totalPartial(val.filter , val.filter1 , val.fromDate , val.toDate)
 
     
-    ungroupTotal(val.filter , val.filter1)
-    ungroupPartial(val.filter , val.filter1)
-    ungroupUnpaid(val.filter , val.filter1)
+    ungroupTotal(val.filter , val.filter1 , val.fromDate , val.toDate)
+    ungroupPartial(val.filter , val.filter1 , val.fromDate , val.toDate)
+    ungroupUnpaid(val.filter , val.filter1 , val.fromDate , val.toDate)
      /// fix this part it need loop 4 times
   },[take , currentPage , user , val , pending ])
 
